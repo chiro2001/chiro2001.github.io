@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <title>文档 - MDUI 开发文档, Material Design 前端框架</title>
+  <link rel="stylesheet" href="src_files/mdui.css">
+  <link rel="stylesheet" href="src_files/github-gist.css">
+  <link rel="stylesheet" href="src_files/railscasts.css">
+  <link rel="stylesheet" href="src_files/docs.css">
+  <script type="text/javascript" async="" src="src_files/analytics.js"></script><script async="" src="src_files/js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-88818678-1');
+</script>
+
+</head>
+<body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-loaded mdui-theme-primary-indigo mdui-theme-accent-pink" style="">
+<header class="mdui-appbar mdui-appbar-fixed">
+  <div class="mdui-toolbar mdui-color-theme">
+    <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-drawer="{target: '#main-drawer', swipe: true}"><i class="mdui-icon material-icons">menu</i></span>
+    <a href="https://www.mdui.org/" class="mdui-typo-headline mdui-hidden-xs">MDUI</a>
+    <a href="https://www.mdui.org/docs/" class="mdui-typo-title">文档</a>
+    <div class="mdui-toolbar-spacer"></div>
+    <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-dialog="{target: '#dialog-docs-theme'}" mdui-tooltip="{content: '设置主题'}"><i class="mdui-icon material-icons">color_lens</i></span>
+    <a href="https://github.com/zdhxiong/mdui" target="_blank" class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-tooltip="{content: '查看 Github'}">
+      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 36 36" enable-background="new 0 0 36 36" xml:space="preserve" class="mdui-icon" style="width: 24px;height:24px;">
+        <path fill-rule="evenodd" clip-rule="evenodd" fill="#ffffff" d="M18,1.4C9,1.4,1.7,8.7,1.7,17.7c0,7.2,4.7,13.3,11.1,15.5
+	c0.8,0.1,1.1-0.4,1.1-0.8c0-0.4,0-1.4,0-2.8c-4.5,1-5.5-2.2-5.5-2.2c-0.7-1.9-1.8-2.4-1.8-2.4c-1.5-1,0.1-1,0.1-1
+	c1.6,0.1,2.5,1.7,2.5,1.7c1.5,2.5,3.8,1.8,4.7,1.4c0.1-1.1,0.6-1.8,1-2.2c-3.6-0.4-7.4-1.8-7.4-8.1c0-1.8,0.6-3.2,1.7-4.4
+	c-0.2-0.4-0.7-2.1,0.2-4.3c0,0,1.4-0.4,4.5,1.7c1.3-0.4,2.7-0.5,4.1-0.5c1.4,0,2.8,0.2,4.1,0.5c3.1-2.1,4.5-1.7,4.5-1.7
+	c0.9,2.2,0.3,3.9,0.2,4.3c1,1.1,1.7,2.6,1.7,4.4c0,6.3-3.8,7.6-7.4,8c0.6,0.5,1.1,1.5,1.1,3c0,2.2,0,3.9,0,4.5
+	c0,0.4,0.3,0.9,1.1,0.8c6.5-2.2,11.1-8.3,11.1-15.5C34.3,8.7,27,1.4,18,1.4z"></path>
+      </svg>
+    </a>
+  </div>
+</header>
+
+<div class="mdui-drawer" id="main-drawer">
+  <div class="mdui-list" mdui-collapse="{accordion: true}" style="margin-bottom: 76px;">
+    <div class="mdui-collapse-item ">
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-blue">near_me</i>
+        <div class="mdui-list-item-content">开始使用</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list">
+        <a href="https://www.mdui.org/docs/download" class="mdui-list-item mdui-ripple ">安装</a>
+        <a href="https://www.mdui.org/docs/compatibility" class="mdui-list-item mdui-ripple ">兼容性</a>
+        <a href="https://www.mdui.org/docs/jq" class="mdui-list-item mdui-ripple ">JavaScript 工具库</a>
+        <a href="https://www.mdui.org/docs/global" class="mdui-list-item mdui-ripple ">JavaScript 全局方法</a>
+      </div>
+    </div>
+
+    <div class="mdui-collapse-item ">
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-deep-orange">layers</i>
+        <div class="mdui-list-item-content">样式</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list">
+        <a href="https://www.mdui.org/docs/color" class="mdui-list-item mdui-ripple ">颜色与主题</a>
+        <a href="https://www.mdui.org/docs/font" class="mdui-list-item mdui-ripple ">字体</a>
+        <a href="https://www.mdui.org/docs/grid" class="mdui-list-item mdui-ripple ">网格布局</a>
+        <a href="https://www.mdui.org/docs/typo" class="mdui-list-item mdui-ripple ">排版</a>
+        <a href="https://www.mdui.org/docs/icon" class="mdui-list-item mdui-ripple ">图标</a>
+        <a href="https://www.mdui.org/docs/media" class="mdui-list-item mdui-ripple ">媒体</a>
+        <a href="https://www.mdui.org/docs/helper" class="mdui-list-item mdui-ripple ">辅助类</a>
+        <a href="https://www.mdui.org/docs/shadow" class="mdui-list-item mdui-ripple ">阴影</a>
+      </div>
+    </div>
+
+    <div class="mdui-collapse-item ">
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-green">widgets</i>
+        <div class="mdui-list-item-content">组件</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list">
+        <a href="https://www.mdui.org/docs/ripple" class="mdui-list-item mdui-ripple ">涟漪动画效果</a>
+        <a href="https://www.mdui.org/docs/button" class="mdui-list-item mdui-ripple ">按钮</a>
+        <a href="https://www.mdui.org/docs/fab" class="mdui-list-item mdui-ripple ">浮动操作按钮</a>
+        <a href="https://www.mdui.org/docs/select" class="mdui-list-item mdui-ripple ">下拉选择</a>
+        <a href="https://www.mdui.org/docs/divider" class="mdui-list-item mdui-ripple ">分隔线</a>
+        <a href="https://www.mdui.org/docs/panel" class="mdui-list-item mdui-ripple ">可扩展面板</a>
+        <a href="https://www.mdui.org/docs/textfield" class="mdui-list-item mdui-ripple ">文本框</a>
+        <a href="https://www.mdui.org/docs/selection_control" class="mdui-list-item mdui-ripple ">选择控件</a>
+        <a href="https://www.mdui.org/docs/slider" class="mdui-list-item mdui-ripple ">滑块</a>
+        <a href="https://www.mdui.org/docs/list" class="mdui-list-item mdui-ripple ">列表</a>
+        <a href="https://www.mdui.org/docs/list_control" class="mdui-list-item mdui-ripple ">列表控制</a>
+        <a href="https://www.mdui.org/docs/grid_list" class="mdui-list-item mdui-ripple ">网格列表</a>
+        <a href="https://www.mdui.org/docs/tab" class="mdui-list-item mdui-ripple ">Tab 选项卡</a>
+        <a href="https://www.mdui.org/docs/toolbar" class="mdui-list-item mdui-ripple ">工具栏</a>
+        <a href="https://www.mdui.org/docs/appbar" class="mdui-list-item mdui-ripple ">应用栏</a>
+        <a href="https://www.mdui.org/docs/drawer" class="mdui-list-item mdui-ripple ">抽屉式导航</a>
+        <a href="https://www.mdui.org/docs/bottom_nav" class="mdui-list-item mdui-ripple ">底部导航栏</a>
+        <a href="https://www.mdui.org/docs/card" class="mdui-list-item mdui-ripple ">卡片</a>
+        <a href="https://www.mdui.org/docs/chip" class="mdui-list-item mdui-ripple ">纸片</a>
+        <a href="https://www.mdui.org/docs/tooltip" class="mdui-list-item mdui-ripple ">工具提示</a>
+        <a href="https://www.mdui.org/docs/snackbar" class="mdui-list-item mdui-ripple ">Snackbar</a>
+        <a href="https://www.mdui.org/docs/table" class="mdui-list-item mdui-ripple ">表格</a>
+        <a href="https://www.mdui.org/docs/dialog" class="mdui-list-item mdui-ripple ">对话框</a>
+        <a href="https://www.mdui.org/docs/menu" class="mdui-list-item mdui-ripple ">菜单</a>
+        <a href="https://www.mdui.org/docs/progress" class="mdui-list-item mdui-ripple ">进度指示器</a>
+      </div>
+    </div>
+
+    <div class="mdui-collapse-item ">
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-brown">view_carousel</i>
+        <div class="mdui-list-item-content">JavaScript 插件</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list">
+        <a href="https://www.mdui.org/docs/collapse" class="mdui-list-item mdui-ripple ">Collapse</a>
+        <a href="https://www.mdui.org/docs/headroom" class="mdui-list-item mdui-ripple ">Headroom</a>
+      </div>
+    </div>
+
+    <div class="mdui-collapse-item ">
+      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-purple">local_mall</i>
+        <div class="mdui-list-item-content">资源</div>
+        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+      </div>
+      <div class="mdui-collapse-item-body mdui-list">
+        <a href="https://www.mdui.org/docs/material_icon" class="mdui-list-item mdui-ripple ">Material 图标</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a id="anchor-top"></a>
+
+<div class="mdui-container doc-container doc-no-cover">
+    <textarea class="src" style="width: 284px; height: 107px;">
+# 测试标题
+## 测试标题2
+
+- 测试内容
+    - 这里是源码
+</textarea>
+    <button id="btn" onclick="btn_click()">渲染</button><br>
+    <div class="doc-chapter" id='my_container'>
+        <p id="p_containr">测试</p>
+    </div>
+  <h1 class="doc-title mdui-text-color-theme">MDUI 文档</h1>
+
+  <div class="doc-chapter">
+    <div class="mdui-typo">
+      <p>这是 MDUI 0.4.3 的文档。如需历史版本文档，可<a href="https://github.com/zdhxiong/mdui-docs-builds/releases" target="_blank">在此下载</a>。</p>
+      <h4 class="doc-article-title">样式</h4>
+    </div>
+    <div class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3 mdui-row-lg-4">
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/color" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">颜色与主题</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/font" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">字体</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/grid" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">网格布局</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/typo" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">排版</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/icon" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">图标</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/media" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">媒体</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/helper" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">辅助类</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/shadow" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">阴影</a>
+      </div>
+    </div>
+
+    <div class="mdui-typo">
+      <h4 class="doc-article-title">组件</h4>
+    </div>
+    <div class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3 mdui-row-lg-4">
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/ripple" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">涟漪动画效果</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/button" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">按钮</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/fab" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">浮动操作按钮</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/select" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">下拉选择</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/divider" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">分割线</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/panel" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">可扩展面板</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/textfield" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">文本框</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/selection_control" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">选择控件</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/slider" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">滑块</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/list" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">列表</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/list_control" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">列表控制</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/grid_list" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">网格列表</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/tab" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">Tab 选项卡</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/toolbar" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">工具栏</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/appbar" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">应用栏</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/drawer" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">抽屉式导航</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/bottom_nav" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">底部导航栏</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/card" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">卡片</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/chip" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">纸片</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/tooltip" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">工具提示</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/snackbar" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">Snackbar</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/table" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">表格</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/dialog" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">对话框</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/menu" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">菜单</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/progress" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">进度指示器</a>
+      </div>
+    </div>
+
+    <div class="mdui-typo">
+      <h4 class="doc-article-title">JavaScript 插件</h4>
+    </div>
+    <div class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3 mdui-row-lg-4">
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/collapse" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">Collapse</a>
+      </div>
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/headroom" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">Headroom</a>
+      </div>
+    </div>
+
+    <div class="mdui-typo">
+      <h4 class="doc-article-title">资源</h4>
+    </div>
+    <div class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3 mdui-row-lg-4">
+      <div class="mdui-col mdui-m-b-1">
+        <a href="https://www.mdui.org/docs/material_icon" class="mdui-btn mdui-btn-block mdui-text-left mdui-ripple">Material 图标</a>
+      </div>
+    </div>
+
+    <div class="mdui-typo">
+      <h4 class="doc-article-title">相关资源</h4>
+      <p><label>MDUI 官网：<a href="https://mdui.org/" target="_blank">mdui.org</a></label></p>
+      <p><label>Material Design 中文指南：<a href="https://www.mdui.org/design/" target="_blank">mdui.org/design/</a></label></p>
+    </div>
+
+  </div>
+</div>
+
+
+
+<div class="doc-footer-nav mdui-color-theme">
+  <div class="mdui-container">
+    <div class="mdui-row">
+            <div class="mdui-col-xs-2 mdui-col-sm-6 doc-footer-nav-left"></div>
+      
+            <a href="https://www.mdui.org/docs/download" class="mdui-ripple mdui-color-theme mdui-col-xs-10 mdui-col-sm-6 doc-footer-nav-right">
+        <div class="doc-footer-nav-text">
+          <i class="mdui-icon material-icons">arrow_forward</i>
+          <span class="doc-footer-nav-direction">Next</span>
+          <div class="doc-footer-nav-chapter">获取 MDUI</div>
+        </div>
+      </a>
+          </div>
+  </div>
+</div>
+
+<div class="mdui-dialog" id="dialog-docs-theme" style="display: none; top: 65.4px; height: 523.2px;">
+  <div class="mdui-dialog-title">设置文档主题</div>
+  <div class="mdui-dialog-content" style="height: 403.2px;">
+
+    <p class="mdui-typo-title">主题色</p>
+    <div class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3">
+      <div class="mdui-col">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-layout" value="" checked="checked">
+          <i class="mdui-radio-icon"></i>
+          Light
+        </label>
+      </div>
+      <div class="mdui-col">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-layout" value="dark">
+          <i class="mdui-radio-icon"></i>
+          Dark
+        </label>
+      </div>
+    </div>
+
+    <p class="mdui-typo-title mdui-text-color-theme">主色</p>
+    <form class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3">
+      <div class="mdui-col mdui-text-color-amber">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="amber">
+          <i class="mdui-radio-icon"></i>
+          Amber
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-blue">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="blue">
+          <i class="mdui-radio-icon"></i>
+          Blue
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-blue-grey">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="blue-grey">
+          <i class="mdui-radio-icon"></i>
+          Blue Grey
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-brown">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="brown">
+          <i class="mdui-radio-icon"></i>
+          Brown
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-cyan">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="cyan">
+          <i class="mdui-radio-icon"></i>
+          Cyan
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-deep-orange">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="deep-orange">
+          <i class="mdui-radio-icon"></i>
+          Deep Orange
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-deep-purple">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="deep-purple">
+          <i class="mdui-radio-icon"></i>
+          Deep Purple
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-green">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="green">
+          <i class="mdui-radio-icon"></i>
+          Green
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-grey">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="grey">
+          <i class="mdui-radio-icon"></i>
+          Grey
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-indigo">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="indigo" checked="checked">
+          <i class="mdui-radio-icon"></i>
+          Indigo
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-light-blue">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="light-blue">
+          <i class="mdui-radio-icon"></i>
+          Light Blue
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-light-green">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="light-green">
+          <i class="mdui-radio-icon"></i>
+          Light Green
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-lime">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="lime">
+          <i class="mdui-radio-icon"></i>
+          Lime
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-orange">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="orange">
+          <i class="mdui-radio-icon"></i>
+          Orange
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-pink">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="pink">
+          <i class="mdui-radio-icon"></i>
+          Pink
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-purple">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="purple">
+          <i class="mdui-radio-icon"></i>
+          Purple
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-red">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="red">
+          <i class="mdui-radio-icon"></i>
+          Red
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-teal">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="teal">
+          <i class="mdui-radio-icon"></i>
+          Teal
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-yellow">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-primary" value="yellow">
+          <i class="mdui-radio-icon"></i>
+          Yellow
+        </label>
+      </div>
+    </form>
+
+    <p class="mdui-typo-title mdui-text-color-theme-accent">强调色</p>
+    <form class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3">
+      <div class="mdui-col mdui-text-color-amber">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-accent" value="amber">
+          <i class="mdui-radio-icon"></i>
+          Amber
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-blue">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-accent" value="blue">
+          <i class="mdui-radio-icon"></i>
+          Blue
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-cyan">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-accent" value="cyan">
+          <i class="mdui-radio-icon"></i>
+          Cyan
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-deep-orange">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-accent" value="deep-orange">
+          <i class="mdui-radio-icon"></i>
+          Deep Orange
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-deep-purple">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-accent" value="deep-purple">
+          <i class="mdui-radio-icon"></i>
+          Deep Purple
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-green">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-accent" value="green">
+          <i class="mdui-radio-icon"></i>
+          Green
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-indigo">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-accent" value="indigo">
+          <i class="mdui-radio-icon"></i>
+          Indigo
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-light-blue">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-accent" value="light-blue">
+          <i class="mdui-radio-icon"></i>
+          Light Blue
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-light-green">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-accent" value="light-green">
+          <i class="mdui-radio-icon"></i>
+          Light Green
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-lime">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-accent" value="lime">
+          <i class="mdui-radio-icon"></i>
+          Lime
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-orange">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-accent" value="orange">
+          <i class="mdui-radio-icon"></i>
+          Orange
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-pink">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-accent" value="pink" checked="checked">
+          <i class="mdui-radio-icon"></i>
+          Pink
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-purple">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-accent" value="purple">
+          <i class="mdui-radio-icon"></i>
+          Purple
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-red">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-accent" value="red">
+          <i class="mdui-radio-icon"></i>
+          Red
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-teal">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-accent" value="teal">
+          <i class="mdui-radio-icon"></i>
+          Teal
+        </label>
+      </div>
+      <div class="mdui-col mdui-text-color-yellow">
+        <label class="mdui-radio mdui-m-b-1">
+          <input type="radio" name="doc-theme-accent" value="yellow">
+          <i class="mdui-radio-icon"></i>
+          Yellow
+        </label>
+      </div>
+    </form>
+
+  </div>
+  <div class="mdui-divider"></div>
+  <div class="mdui-dialog-actions">
+    <button class="mdui-btn mdui-ripple mdui-float-left" mdui-dialog-cancel="">恢复默认主题</button>
+    <button class="mdui-btn mdui-ripple" mdui-dialog-confirm="">ok</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
+<script src="https://cdn.staticfile.org/jquery/2.0.0/jquery.min.js"></script>
+<script src="src_files/smooth-scroll.js"></script>
+<script src="src_files/holder.js"></script>
+<script src="src_files/highlight.js"></script>
+<script src="src_files/mdui.js"></script>
+<script>var $$ = mdui.JQ;</script>
+<script src="src_files/docs.js"></script>
+
+<script>
+    var converter = new showdown.Converter();
+    function btn_click() {
+        var html = converter.makeHtml($('.src').val())
+        $('#dist').html(html)
+    }
+</script>
+
+<div class="mdui-tooltip" id="240a3f1a-d00c-35bc-80bd-44f1f798ade9">设置主题</div></body></html>

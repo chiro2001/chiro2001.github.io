@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <script src="https://cdn.staticfile.org/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
+    <script src="cos/cos-js-sdk-v5.min.js"></script>
+    <script src="cos_test.js"></script>
+    <script>
+        var Bucket = 'blog-1254016670';
+        var Region = 'ap-chengdu';
+
+        var cos = new COS({
+            SecretId: 'AKIDcq7HVrj0nlAWUYvPoslyMKKI2GNJ478z',
+            SecretKey: '70xZrtGAwmf6WdXGhcch3gRt7hV4SJGx',
+        });
+        cos.getBucket({
+            Bucket: Bucket,
+            Region: Region,
+            //Prefix: 'a/',
+        }, function(err, data) {
+            console.log(err || data.Contents);
+        });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
