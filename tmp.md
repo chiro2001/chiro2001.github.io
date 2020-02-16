@@ -5,3 +5,5 @@ mdui-text-color-theme h1 h2
 mdui-color-theme-accent strong em
 
 mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent button
+
+mdui-textfield-input input textarea
