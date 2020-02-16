@@ -6,21 +6,19 @@
     <script src="https://cdn.staticfile.org/jquery/2.0.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
     <script src="cos/cos-js-sdk-v5.min.js"></script>
-    <script src="cos_test.js"></script>
+    <script src="cbase.js"></script>
+    <script src="cdisk.js"></script>
     <script>
-        var Bucket = 'blog-1254016670';
-        var Region = 'ap-chengdu';
-
-        var cos = new COS({
-            SecretId: 'AKIDcq7HVrj0nlAWUYvPoslyMKKI2GNJ478z',
-            SecretKey: '70xZrtGAwmf6WdXGhcch3gRt7hV4SJGx',
-        });
-        cos.getBucket({
-            Bucket: Bucket,
-            Region: Region,
-            //Prefix: 'a/',
-        }, function(err, data) {
-            console.log(err || data.Contents);
+        cdisk = new CDisk();
+//        cdisk.indexRead();
+//        cdisk.articleWrite('untitled', '这里是文件内容！', function (err, data) {
+//            console.log('write:')
+//            console.log(err || data)
+//        });
+        $(document).ready(function () {
+            cdisk.indexRead(function(data) {
+                document.write(JSON.stringify(data));
+            })
         });
     </script>
 </head>
