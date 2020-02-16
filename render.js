@@ -3,7 +3,7 @@ var converter = new showdown.Converter();
 //应用一些特殊的类
 var map_table = {
     'mdui-text-color-theme': new Array('h1', 'h2'),
-    'mdui-color-theme-accent': new Array('strong', 'em'),
+    'mdui-text-color-theme-accent': new Array('strong', 'em'),
     'mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent': new Array('button'),
     'mdui-textfield-input': new Array('input', 'textarea')
 }
