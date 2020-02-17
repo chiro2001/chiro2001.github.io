@@ -28,7 +28,6 @@
     <a href="https://www.mdui.org/" class="mdui-typo-headline mdui-hidden-xs">MDUI</a>
     <a href="https://www.mdui.org/docs/" class="mdui-typo-title">文档</a>
     <div class="mdui-toolbar-spacer"></div>
-    <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-dialog="{target: '#dialog-new-article'}" mdui-tooltip="{content: '发表文章'}"><i class="mdui-icon material-icons">publish</i></span>
     <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-dialog="{target: '#dialog-docs-theme'}" mdui-tooltip="{content: '设置主题'}"><i class="mdui-icon material-icons">color_lens</i></span>
     <a href="https://github.com/zdhxiong/mdui" target="_blank" class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-tooltip="{content: '查看 Github'}">
       <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 36 36" enable-background="new 0 0 36 36" xml:space="preserve" class="mdui-icon" style="width: 24px;height:24px;">
@@ -139,40 +138,22 @@
 
 <a id="anchor-top"></a>
 
+<!-- 浮动标签 -->
+<div class="mdui-textfield mdui-textfield-floating-label">
+  <label class="mdui-textfield-label">Message</label>
+  <textarea class="mdui-textfield-input" id="contain-src"></textarea>
+</div>
+<button onclick="render()" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">渲染</button>
 
 <!--    这里是承载的内容-->
 <!--<p id="contain-src" style="display: none;"></p>-->
-    <div class="mdui-card mdui-text-truncate" id="tmp_card" style="display: none;">
-
-      <!-- 卡片的媒体内容，可以包含图片、视频等媒体内容，以及标题、副标题 -->
-      <div class="mdui-card-media">
-        <!-- 卡片中可以包含一个或多个菜单按钮 -->
-        <div class="mdui-card-menu">
-          <button class="mdui-btn mdui-btn-icon mdui-text-color-gray"><i class="mdui-icon material-icons">share</i></button>
-        </div>
-      </div>
-
-      <!-- 卡片的标题和副标题 -->
-      <div class="mdui-card-primary">
-        <div class="mdui-card-primary-title mdui-text-color-theme">Title</div>
-        <div class="mdui-card-primary-subtitle">Subtitle</div>
-      </div>
-
-      <!-- 卡片的内容 -->
-      <div class="mdui-card-content">子曰：「学而时习之，不亦说乎？有朋自远方来，不亦乐乎？人不知，而不愠，不亦君子乎？」</div>
-
-      <!-- 卡片的按钮 -->
-      <div class="mdui-card-actions">
-        <button class="mdui-btn mdui-ripple mdui-color-theme-accent">继续阅读</button>
-      </div>
-    </div>
 <div class="mdui-container doc-container doc-no-cover">
   <div id="contain-dist" class="mdui-typo">
     
-</div>
+  </div>
 </div>
 
-<div class="mdui-dialog" id="dialog-docs-theme">
+<div class="mdui-dialog" id="dialog-docs-theme" style="display: none; top: 65.4px; height: 523.2px;">
   <div class="mdui-dialog-title">设置文档主题</div>
   <div class="mdui-dialog-content" style="height: 403.2px;">
 
@@ -454,28 +435,6 @@
     <button class="mdui-btn mdui-ripple" mdui-dialog-confirm="">ok</button>
   </div>
 </div>
-    
-<div class="mdui-dialog" id="dialog-new-article" >
-<div class="mdui-dialog-title">发表新的文章</div>
-<div class="mdui-dialog-content">
-    
-<div class="mdui-textfield mdui-textfield-floating-label">
-  <label class="mdui-textfield-label">标题</label>
-  <input class="mdui-textfield-input" id="new-article-title"/>
-</div>
-
-<div class="mdui-textfield mdui-textfield-floating-label">
-  <label class="mdui-textfield-label">内容(支持Markdown)</label>
-    <textarea class="mdui-textfield-input" id="new-article-content"></textarea>
-</div>
-
-</div>
-<div class="mdui-divider"></div>
-<div class="mdui-dialog-actions">
-<button class="mdui-btn mdui-ripple mdui-float-left" mdui-dialog-cancel="">取消</button>
-<button class="mdui-btn mdui-ripple" mdui-dialog-confirm="" onclick="publishArticle()">发布</button>
-</div>
-</div>
 
 <script src="src_files/smooth-scroll.js"></script>
 <script src="src_files/holder.js"></script>
@@ -485,27 +444,9 @@
 <script src="src_files/docs.js"></script>
 <script src="https://cdn.staticfile.org/jquery/2.0.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
-<script src="cos/cos-js-sdk-v5.min.js"></script>
-<script src="cbase.js"></script>
-<script src="cdisk.js"></script>
 <script src="render.js"></script>
 <script type="application/javascript">
-    var cdisk = new CDisk();
-    cdisk.indexInit();
-    cdisk.indexRead(function (data) {
-        console.log(data);
-        formArticles(data.articles);
-    });
     
-    function publishArticle() {
-        cdisk.articleWrite($('#new-article-title').text(), $('#new-article-content').text(), function (err, data) {
-            if (err) {
-                mdui.snackbar('失败')
-            } else {
-                mdui.snackbar('成功')
-            }
-        })
-    }
 </script>
-</body>
-</html>
+
+<div class="mdui-tooltip" id="240a3f1a-d00c-35bc-80bd-44f1f798ade9">设置主题</div></body></html>

@@ -56,8 +56,8 @@ CDisk.prototype.indexInit = function () {
             return;
         }
         for (i in data.Contents) {
-            obj = data.Contents[i]
-            key = obj.Key
+            obj = data.Contents[i];
+            key = obj.Key;
             if (key.length > 0 && key[key.length-1] == "/" && key[key.length-2] != 's') {
                 range_articles = range_articles + 1;
             }
@@ -67,6 +67,7 @@ CDisk.prototype.indexInit = function () {
         for (i in data.Contents) {
             obj = data.Contents[i]
             key = obj.Key
+            console.log(key)
             // 判断是一个文件夹->一个文章
             if (key.length > 0 && key[key.length-1] == "/") {
                 // 尝试读取content.md和info.json
@@ -80,7 +81,7 @@ CDisk.prototype.indexInit = function () {
                     if (res.articles.length == range_articles) {
                         // 开始上传
                         var json_data = JSON.stringify(res)
-//                        console.log(json_data)
+                        console.log(json_data)
                         context.cbase.write(add_domin('index.json'), json_data, function(err, data) {
                             console.log('indexInit: done')
                         })
@@ -109,9 +110,12 @@ CDisk.prototype.articleWrite = function (title, fileObject, callback) {
 //    path = 
     var date = new Date();
     var ms = date.getTime();
+    var mpath = add_domin('articles/' + ms + '/');
+    console.log('try to write dir: ' + mpath)
+    this.cbase.write(mpath, '');
     var mpath = add_domin('articles/' + ms + '/content.md');
     console.log('try to write: ' + mpath)
-    this.cbase.write(mpath, fileObject, callback);
+    this.cbase.write(mpath, fileObject);
     var info = {
         'title': title
     };
