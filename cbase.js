@@ -20,7 +20,7 @@ CBase.prototype.listdir = function (prefix, callback) {
     this.cos.getBucket({
         Bucket: this.Bucket,
         Region: this.Region,
-        Prefix: add_domin(prefix)
+        Prefix: prefix
     }, callback);
 };
 

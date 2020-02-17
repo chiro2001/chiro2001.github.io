@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp">
-  <title>文档 - MDUI 开发文档, Material Design 前端框架</title>
+  <title>Lance的博客</title>
   <link rel="stylesheet" href="src_files/mdui.css">
   <link rel="stylesheet" href="src_files/github-gist.css">
   <link rel="stylesheet" href="src_files/railscasts.css">
@@ -491,14 +491,55 @@
 <script src="render.js"></script>
 <script type="application/javascript">
     var cdisk = new CDisk();
-    cdisk.indexInit();
-    cdisk.indexRead(function (data) {
-        console.log(data);
-        formArticles(data.articles);
+//    cdisk.indexInit();
+//    cdisk.indexRead(function (data) {
+//        console.log(data);
+//        formArticles(data.articles);
+//    });
+    cdisk.siteCheck(function (result) {
+        if (!result) {
+            mdui.snackbar('尝试初始化网站数据...');
+            cdisk.siteInit(function (result2) {
+                if (!result2) {
+                    mdui.snackbar('数据初始化失败！');
+                    return;
+                }
+                cdisk.indexInit(function (result2) {
+                    if (!result2) {
+                        mdui.snackbar('数据初始化失败！');
+                        return;
+                    }
+                });
+                cdisk.indexRead(function (data) {
+                    formArticles(data.articles);
+                })
+            })
+        }
+//        cdisk.siteInit(function (result2) {
+//                if (!result2) {
+//                    mdui.snackbar('数据初始化失败！');
+//                    return;
+//                }
+//                cdisk.indexInit(function (result2) {
+//                    if (!result2) {
+//                    mdui.snackbar('数据初始化失败！');
+//                    return;
+//                }
+//                });
+//                cdisk.indexRead(function (data) {
+//                    formArticles(data.articles);
+//                })
+//            })
+        console.log('网站已经初始化');
+        cdisk.indexRead(function (data) {
+            formArticles(data.articles);
+            console.log(data);
+        })
     });
     
     function publishArticle() {
-        cdisk.articleWrite($('#new-article-title').text(), $('#new-article-content').text(), function (err, data) {
+        console.log($('#new-article-title').val(), $('#new-article-content').val())
+        cdisk.articleWrite($('#new-article-title').val(), $('#new-article-content').val(), function (err, data) {
             if (err) {
                 mdui.snackbar('失败')
             } else {

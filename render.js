@@ -47,8 +47,8 @@ function formArticles (articles) {
         
         //在这里修改相关属性
         renderHtml(article.content, mdContent);
-        $('.mdui-card-primary-title').text(article.title);
-        $('.mdui-card-primary-subtitle').text('发布时间');
+        $('.mdui-card-primary-title', tmp).text(article.title);
+        $('.mdui-card-primary-subtitle', tmp).text(article.time);
         
         // 这里应该去掉一部分内容
 //        console.log('parent:')
