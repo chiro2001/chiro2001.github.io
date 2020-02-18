@@ -95,10 +95,12 @@ CDisk.prototype.indexInit = function (callback) {
         }
         console.log('->indexInit:');
         console.log(data);
-        for (i in data.Contents) {
-            obj = data.Contents[i];
-            key = obj.Key;
-            if (key.length > 0 && key[key.length-1] == "/" && key[key.length-2] != 's') {
+        for (i in data.CommonPrefixes) {
+            obj = data.CommonPrefixes[i];
+//            key = obj.Key;
+            key = obj.Prefix;
+            //if (key.length > 0 && key[key.length-1] == "/" && key[key.length-2] != 's') {
+            if (key.length > 0) {
                 console.log('获取key: ' + key);
                 range_articles = range_articles + 1;
             }
@@ -118,9 +120,10 @@ CDisk.prototype.indexInit = function (callback) {
         
         // 按照时间重新排序一下
         var key_sorted = new Array();
-        for (i in data.Contents) {
-            obj = data.Contents[i];
-            key = obj.Key;
+        for (i in data.CommonPrefixes) {
+            obj = data.CommonPrefixes[i];
+//            key = obj.Key;
+            key = obj.Prefix;
             // 判断是一个文件夹->一个文章
             if (key.length > 0 && key[key.length-1] == "/") {
                 key_sorted.push(key);
@@ -194,9 +197,9 @@ CDisk.prototype.articleWrite = function (title, fileObject, callback, callback2)
 //    path = 
     var date = new Date();
     var ms = date.getTime();
-    var mpath = add_domin('articles/' + ms + '/');
-    console.log('try to write dir: ' + mpath);
-    this.cbase.write(mpath, '');
+//    var mpath = add_domin('articles/' + ms + '/');
+//    console.log('try to write dir: ' + mpath);
+//    this.cbase.write(mpath, '');
     var mpath = add_domin('articles/' + ms + '/content.md');
     console.log('try to write: ' + mpath);
     this.cbase.write(mpath, fileObject);
@@ -216,4 +219,32 @@ CDisk.prototype.articleWrite = function (title, fileObject, callback, callback2)
             callback2(false);
         }
     });
+}
+
+CDisk.prototype.articleRemove = function (aid, callback) {
+    console.log('Try to remove:' + aid);
+    console.log(add_domin('articles/' + aid + '/content.md'))
+    var context = this;
+    this.cbase.delete(add_domin('articles/' + aid + '/content.md'), function(err, data) {
+        if (err) {
+            callback(false);
+            return;
+        }
+        context.cbase.delete(add_domin('articles/' + aid + '/info.json'), function(err, data) {
+            if (err) {
+                callback(false);
+                return;
+            }
+            context.cbase.delete(add_domin('artcles/' + aid + '/'), function(err, data) {
+                console.log(add_domin('artcles/' + aid + '/'))
+                if (err) {
+                    callback(false);
+                    return;
+                }
+                context.indexInit(function(result) {
+                    callback(result);
+                })
+            })
+        })
+    })
 }

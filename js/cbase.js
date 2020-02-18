@@ -11,16 +11,25 @@ function CBase() {
     this.Bucket = 'blog-1254016670';
     this.Region = 'ap-chengdu';
     this.cos = new COS({
-        SecretId: 'AKIDcq7HVrj0nlAWUYvPoslyMKKI2GNJ478z',
-        SecretKey: '70xZrtGAwmf6WdXGhcch3gRt7hV4SJGx'
+        SecretId: 'AKID2sTqzvX7NPCrHRP1RecKn00mJbfUOMQE',
+        SecretKey: 'iBOM5Ymk5C5jvsZ0DArITO9euufCamkT'
     });
 }
+
+CBase.prototype.listdirAll = function (prefix, callback) {
+    this.cos.getBucket({
+        Bucket: this.Bucket,
+        Region: this.Region,
+        Prefix: prefix
+    }, callback);
+};
 
 CBase.prototype.listdir = function (prefix, callback) {
     this.cos.getBucket({
         Bucket: this.Bucket,
         Region: this.Region,
-        Prefix: prefix
+        Prefix: prefix,
+        Delimiter: '/'
     }, callback);
 };
 
@@ -45,10 +54,10 @@ CBase.prototype.write = function (key, fileObject, callback) {
     }, callback);
 }
 
-CBase.prototype.delete = function (prefix, callback) {
+CBase.prototype.delete = function (key, callback) {
     this.cos.deleteObject({
         Bucket: this.Bucket,
         Region: this.Region,
-        Key: prefix
+        Key: key
     }, callback);
 };

@@ -44,6 +44,10 @@ function expandCard (aid) {
     $('.blog-btn-close-id-' + aid).show();
     
     var mdContent = $('.blog-content-id-' + aid);
+    
+    // 原来有多高
+    var height0 = $(mdContent).height();
+    
     $(mdContent).empty();
     for (i in g_res.articles) {
         if (g_res.articles[i].time == aid) {
@@ -51,15 +55,26 @@ function expandCard (aid) {
         }
     }
     $$(mdContent).mutation();
+    
+    // 现在多高
+    var height1 = $(mdContent).height();
+    $(mdContent).height(height0);
+    // 变换
+    $(mdContent).animate({
+        height: height1
+    }, 'swing');
 }
 
 function closeCard (aid) {
     $('.blog-btn-continue-id-' + aid).show();
     $('.blog-btn-close-id-' + aid).hide();
     
-    // 这里应该去掉一部分内容
     var mdContent = $('.blog-content-id-' + aid);
     
+    // 原来有多高
+    var height0 = $(mdContent).height();
+    $(mdContent).height('auto');
+
     // 这里应该去掉一部分内容
     var selected = new Array();
     var count = 0;
@@ -83,6 +98,15 @@ function closeCard (aid) {
     }
 
     $$(mdContent).mutation();
+    // 现在多高
+    var height1 = $(mdContent).height();
+    $(mdContent).height(height0);
+    // 变换
+    $(mdContent).animate({
+        height: height1
+    }, 'swing', function () {
+        $(mdContent).height('');
+    });
 }
 
 function formArticles (articles) {
@@ -95,6 +119,11 @@ function formArticles (articles) {
         
         var mdContent = $('.mdui-card-content', tmp);
         $(mdContent).addClass('blog-content-id-' + article.time);
+        
+        // 设置menu
+        $('.blog-menu', tmp).attr('id', 'blog-menu-id-' + article.time);
+        $('.blog-btn-menu', tmp).attr('mdui-menu', "{target: '#" + 'blog-menu-id-' + article.time + "'}");
+        $('.blog-a', tmp).attr('onclick', 'removeArticle(' + article.time + ')');
         
         //在这里修改相关属性
         renderHtml(article.content, mdContent);
@@ -147,6 +176,8 @@ function formArticles (articles) {
         if (isNeedExpand) {
             $('.blog-continue', tmp).show();
         }
+        
+        $$(tmp).mutation();
         
         $('#contain-dist').append($('<br>'));
         $('#contain-dist').append(tmp);

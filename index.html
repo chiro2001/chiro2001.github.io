@@ -51,12 +51,12 @@
   <div class="mdui-list" mdui-collapse="{accordion: true}" style="margin-bottom: 76px;">
     <div class="mdui-collapse-item ">
       <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
-        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-blue">near_me</i>
+        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color">near_me</i>
         <div class="mdui-list-item-content">TAGS</div>
         <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
       </div>
       <div class="mdui-collapse-item-body mdui-list">
-        <a href="" class="mdui-list-item mdui-ripple ">未分类</a>
+        <a href="" class="mdui-list-item mdui-ripple">未分类</a>
       </div>
     </div>
   </div>
@@ -73,7 +73,12 @@
       <div class="mdui-card-media">
         <!-- 卡片中可以包含一个或多个菜单按钮 -->
         <div class="mdui-card-menu">
-          <button class="mdui-btn mdui-btn-icon mdui-text-color-gray"><i class="mdui-icon material-icons">more_vert</i></button>
+          <button class="mdui-btn mdui-btn-icon mdui-text-color-gray blog-btn-menu" mdui-menu=''><i class="mdui-icon material-icons">more_vert</i></button>
+            <ul class="mdui-menu blog-menu">
+              <li class="mdui-menu-item">
+                <a href="javascript:void(0);" onclick="" class="mdui-ripple blog-a">删除</a>
+              </li>
+            </ul>
         </div>
       </div>
 
@@ -84,7 +89,7 @@
       </div>
 
       <!-- 卡片的内容 -->
-      <div class="mdui-card-content">子曰：「学而时习之，不亦说乎？有朋自远方来，不亦乐乎？人不知，而不愠，不亦君子乎？」</div>
+      <div class="mdui-card-content mdui-typo">子曰：「学而时习之，不亦说乎？有朋自远方来，不亦乐乎？人不知，而不愠，不亦君子乎？」</div>
 
       <!-- 卡片的按钮 -->
       <div class="mdui-card-actions">
@@ -92,11 +97,11 @@
       </div>
     </div>
 <div class="mdui-container doc-container doc-no-cover">
-  <div id="contain-dist" class="mdui-typo">
+  <div id="contain-dist">
     
 </div>
 </div>
-    
+    <br>
 <div class="mdui-dialog" id="dialog-new-article" >
 <div class="mdui-dialog-title">发表新的文章</div>
 <div class="mdui-dialog-content">
@@ -133,9 +138,15 @@
 <script src="https://cdn.staticfile.org/jquery/2.0.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
 <script src="http://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/blog/cos/cos-js-sdk-v5.min.js"></script>
+<!--
 <script src="http://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/blog/js/cbase.js"></script>
 <script src="http://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/blog/js/cdisk.js"></script>
 <script src="http://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/blog/js/render.js"></script>
+-->
+<script src="js/cbase.js"></script>
+<script src="js/cdisk.js"></script>
+<script src="js/render.js"></script>
+
 <script type="application/javascript">
     var cdisk = new CDisk();
 //    cdisk.indexInit();
@@ -199,6 +210,22 @@
                 mdui.snackbar('成功')
             }
         }, function(result) {
+            console.log('重新开始刷新')
+            cdisk.indexRead(function (data) {
+                formArticles(data.articles);
+                console.log(data);
+                g_res = data;
+            })
+        })
+    }
+    
+    function removeArticle(aid) {
+        cdisk.articleRemove(aid, function(result) {
+            if (result) {
+                mdui.snackbar('成功');
+            } else {
+                mdui.snackbar('失败');
+            }
             console.log('重新开始刷新')
             cdisk.indexRead(function (data) {
                 formArticles(data.articles);
