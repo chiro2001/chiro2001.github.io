@@ -38,6 +38,8 @@ function renderHtml(md, dist) {
 }
 
 function formArticles (articles) {
+    // 刷新
+    $('#contain-dist').empty();
     for (i in articles) {
         article = articles[i];
         var tmp = $('#tmp_card').clone(true);
@@ -72,7 +74,7 @@ function formArticles (articles) {
                 count += 1;
                 if (count == count_max) {
                     $(this).addClass('mdui-text-truncate');
-                    $(this).text($(this).text() + '......');
+                    $(this).text($(this).text() + '...');
                 }
                 selected.push($(this));
             }

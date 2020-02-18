@@ -545,6 +545,12 @@
             } else {
                 mdui.snackbar('成功')
             }
+        }, function(result) {
+            console.log('重新开始刷新')
+            cdisk.indexRead(function (data) {
+                formArticles(data.articles);
+                console.log(data);
+            })
         })
     }
 </script>

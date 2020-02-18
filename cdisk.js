@@ -18,12 +18,14 @@ CDisk.prototype.articleRead = function (path, callback) {
             console.log(err);
             return;
         }
-        if ('undefined' == typeof(data)) {
+        if (!data) {
             return;
         }
-        var title = JSON.parse(data.Body).title;
+        var body = JSON.parse(data.Body);
+        var title = body.title;
+        var time = body.time;
         context.cbase.read(path + 'content.md', function (err, data) {
-            if (null == typeof(err)) {
+            if (err) {
                 //alert('发生错误!');
                 console.log(err);
                 return;
@@ -33,7 +35,7 @@ CDisk.prototype.articleRead = function (path, callback) {
 //                'title': title,
 //                'content': content
 //            })
-            callback(title, content);
+            callback(title, content, time);
         })
     })
 }
@@ -125,15 +127,19 @@ CDisk.prototype.indexInit = function (callback) {
             }
         }
         
-        key_sorted.sort();
+        key_sorted = key_sorted.sort();
+//        console.log(key_sorted)
+        key_sorted = key_sorted.reverse();
+//        console.log(key_sorted)
         
         for (i in key_sorted) {
             key = key_sorted[i];
             // 尝试读取content.md和info.json
-            context.articleRead(key, function (title, content) {
+            context.articleRead(key, function (title, content, time) {
                 res.articles.push({
                     'title': title,
-                    'content': content
+                    'content': content,
+                    'time': time
                 })
 //                    console.log(res.articles.length);
                 // 判断有没有工作完（这里是bug）
@@ -171,12 +177,20 @@ CDisk.prototype.indexRead = function (callback) {
             return;
         }
         var result = JSON.parse(data.Body);
-        console.log(data.Body)
+//        console.log(data.Body)
+        
+        // 在这里排序好了
+        result.articles.sort(function (x, y) {return y.time - x.time;});
+        for (i in result.articles) {
+            var time = result.articles[i].time;
+            var mtime = new Date(time).toLocaleTimeString();
+            result.articles[i].time = mtime;
+        }
         callback(result);
     })
 }
 
-CDisk.prototype.articleWrite = function (title, fileObject, callback) {
+CDisk.prototype.articleWrite = function (title, fileObject, callback, callback2) {
 //    path = 
     var date = new Date();
     var ms = date.getTime();
@@ -196,8 +210,10 @@ CDisk.prototype.articleWrite = function (title, fileObject, callback) {
     this.indexInit(function (result) {
         if (result) {
             console.log('articleWrite OK');
+            callback2(true);
         } else {
             console.log('articleWrite Failed.(indexInit Failed)');
+            callback2(false);
         }
     });
 }
