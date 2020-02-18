@@ -202,7 +202,7 @@ CDisk.prototype.articleWrite = function (title, fileObject, callback, callback2)
 //    this.cbase.write(mpath, '');
     var mpath = add_domin('articles/' + ms + '/content.md');
     console.log('try to write: ' + mpath);
-    this.cbase.write(mpath, fileObject);
+    this.cbase.write(mpath, fileObject, undefined);
     var info = {
         'title': title,
         'time': ms
@@ -211,6 +211,8 @@ CDisk.prototype.articleWrite = function (title, fileObject, callback, callback2)
     console.log('try to write info: ' + mpath);
     this.cbase.write(mpath, JSON.stringify(info), callback);
     this.indexInit(function (result) {
+//        console.log('Will call callback2!');
+        sleep(3000);
         if (result) {
             console.log('articleWrite OK');
             callback2(true);

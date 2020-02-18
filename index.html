@@ -226,6 +226,7 @@
             } else {
                 mdui.snackbar('失败');
             }
+            sleep(3000);
             console.log('重新开始刷新')
             cdisk.indexRead(function (data) {
                 formArticles(data.articles);
