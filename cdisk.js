@@ -183,8 +183,8 @@ CDisk.prototype.indexRead = function (callback) {
         result.articles.sort(function (x, y) {return y.time - x.time;});
         for (i in result.articles) {
             var time = result.articles[i].time;
-            var mtime = new Date(time).toLocaleTimeString();
-            result.articles[i].time = mtime;
+            var mtime = new String(new Date(time).toLocaleTimeString()).slice(0, -3);
+            result.articles[i].mtime = mtime;
         }
         callback(result);
     })

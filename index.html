@@ -163,7 +163,7 @@
 
       <!-- 卡片的按钮 -->
       <div class="mdui-card-actions">
-        <button class="mdui-btn mdui-ripple mdui-color-theme-accent">继续阅读</button>
+        <button class="mdui-btn mdui-ripple mdui-color-theme-accent blog-continue" style="display: none;">继续阅读</button><button class="mdui-btn mdui-ripple mdui-color-theme-accent blog-close" style="display: none;">关闭</button>
       </div>
     </div>
 <div class="mdui-container doc-container doc-no-cover">
@@ -496,6 +496,11 @@
 //        console.log(data);
 //        formArticles(data.articles);
 //    });
+    // 用来保存已经获取的index数据
+    g_res = {
+        'articles': new Array(),
+        'comments': new Array()
+    };
     cdisk.siteCheck(function (result) {
         if (!result) {
             mdui.snackbar('尝试初始化网站数据...');
@@ -534,6 +539,7 @@
         cdisk.indexRead(function (data) {
             formArticles(data.articles);
             console.log(data);
+            g_res = data;
         })
     });
     
@@ -550,6 +556,7 @@
             cdisk.indexRead(function (data) {
                 formArticles(data.articles);
                 console.log(data);
+                g_res = data;
             })
         })
     }
