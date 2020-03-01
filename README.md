@@ -1,4 +1,4 @@
-# lanceliang2018.github.io
+# blog.lanceliang2001.top
 我的网站
 
 # 项目构思
@@ -61,3 +61,22 @@
 ## Markdown渲染
 
 - [x]测试√
+
+# v0.1已经更新
+
+完成了基本操作。用全异步实现了。
+
+# v0.2 规划
+
+## 计划的新功能
+
+- 鉴权认证系统：输入密码之后才能发布文章，申请到的appkey不一样。
+    - service-q8rodpb4-1254016670.gz.apigw.tencentcs.com/{{password}}
+    - cache 操作
+    - flask 后台
+- div分行
+- 分页
+    - 先获取现在最大页数
+    - 每页n个文章
+- TAGS系统，有文章分类
+    - tags存在于info.json里面...
