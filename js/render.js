@@ -111,9 +111,10 @@ function closeCard (aid) {
 
 function formArticles (articles) {
     // 刷新
+//    console.log('articles:', articles);
     $('#contain-dist').empty();
     for (i in articles) {
-        article = articles[i];
+        var article = articles[i];
         var tmp = $('#tmp_card').clone(true);
         tmp.show();
         
@@ -128,6 +129,7 @@ function formArticles (articles) {
         //在这里修改相关属性
         renderHtml(article.content, mdContent);
         $('.mdui-card-primary-title', tmp).text(article.title);
+//        console.log('mtine:', article.mtime);
         $('.mdui-card-primary-subtitle', tmp).text(article.mtime);
         // 绑定按钮（？）给他增加属性
         $('.blog-continue', tmp).click(function(event) {

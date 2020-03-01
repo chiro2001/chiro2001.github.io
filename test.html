@@ -1,0 +1,31 @@
+<script src="cos/cos-js-sdk-v5.js"></script>
+<script src="js/cbase.js"></script>
+<script src="js/cdisk.js"></script>
+
+<script>
+//    function hasCallback(data, callback) {
+//        callback(data);
+//    }
+//    
+//    hasCallback('Called function.', function(data) {console.log(data);});
+//    var mycall = new Promise((resolve, reject) => {
+//        hasCallback('New Called funtion.', data => {
+//            resolve(data);
+//        })
+//    });
+//    console.log(mycall.then(value => {
+//        console.log(value);
+//    }));
+//    
+//    var status = true;
+//    var p = new Promise(function(resolve, reject) {
+//        if (status)
+//            resolve('OK');
+//        else
+//            reject('ERR');
+//    })
+//    console.log(p)
+    
+    cdisk = new CDisk();
+    cdisk.indexRead().then(data => {console.log(data)});
+</script>

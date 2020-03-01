@@ -16,48 +16,85 @@ function CBase() {
     });
 }
 
-CBase.prototype.listdirAll = function (prefix, callback) {
-    this.cos.getBucket({
-        Bucket: this.Bucket,
-        Region: this.Region,
-        Prefix: prefix
-    }, callback);
-};
-
-CBase.prototype.listdir = function (prefix, callback) {
-    this.cos.getBucket({
-        Bucket: this.Bucket,
-        Region: this.Region,
-        Prefix: prefix,
-        Delimiter: '/'
-    }, callback);
-};
-
-CBase.prototype.read = function (key, callback) {
-    this.cos.getObject({
-        Bucket: this.Bucket,
-        Region: this.Region,
-        Key: key
-    }, callback);
-};
-
-CBase.prototype.write = function (key, fileObject, callback) {
-    this.cos.putObject({
-        Bucket: this.Bucket,
-        Region: this.Region,
-        Key: key,
-        StorageClass: 'STANDARD',
-        Body: fileObject,
-//        onProgress: function (progressData) {
-//            console.log(JSON.stringify(progressData));
-//        }
-    }, callback);
+CBase.prototype.listdir = function (prefix) {
+    return new Promise((resolve, reject) => {
+        this.cos.getBucket({
+            Bucket: this.Bucket,
+            Region: this.Region,
+            Prefix: prefix,
+            Delimiter: '/'
+        }, function(err, data) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
+    });
 }
 
-CBase.prototype.delete = function (key, callback) {
-    this.cos.deleteObject({
-        Bucket: this.Bucket,
-        Region: this.Region,
-        Key: key
-    }, callback);
+CBase.prototype.listdirAll = function (prefix) {
+    return new Promise((resolve, reject) => {
+        this.cos.getBucket({
+            Bucket: this.Bucket,
+            Region: this.Region,
+            Prefix: prefix
+        }, function(err, data) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
+    });
+};
+
+CBase.prototype.read = function (key) {
+    return new Promise((resolve, reject) => {
+        this.cos.getObject({
+            Bucket: this.Bucket,
+            Region: this.Region,
+            Key: key
+        }, function(err, data) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
+    });
+};
+
+CBase.prototype.write = function (key, fileObject) {
+    return new Promise((resolve, reject) => {
+        this.cos.putObject({
+            Bucket: this.Bucket,
+            Region: this.Region,
+            Key: key,
+            StorageClass: 'STANDARD',
+            Body: fileObject,
+        }, function(err, data) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
+    });
+}
+
+CBase.prototype.delete = function (key) {
+    return new Promise((resolve, reject) => {
+        this.cos.deleteObject({
+            Bucket: this.Bucket,
+            Region: this.Region,
+            Key: key
+        }, function(err, data) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
+    });
 };

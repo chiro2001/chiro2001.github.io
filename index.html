@@ -13,13 +13,36 @@
   <link rel="stylesheet" href="src_files/railscasts.css">
   <link rel="stylesheet" href="src_files/docs.css">
 -->
-  <script type="text/javascript" async="" src="src_files/analytics.js"></script><script async="" src="src_files/js"></script>
+<!--  <script type="text/javascript" async="" src="src_files/analytics.js"></script><script async="" src="src_files/js"></script>-->
+<script src="https://cdn.staticfile.org/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
+<script src="http://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/blog/cos/cos-js-sdk-v5.min.js"></script>
+<!--
+<script src="http://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/blog/js/cbase.js"></script>
+<script src="http://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/blog/js/cdisk.js"></script>
+<script src="http://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/blog/js/render.js"></script>
+-->
+
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'UA-88818678-1');
+    
+    $(window).scroll(function() {
+        //为了保证兼容性，这里取两个值，哪个有值取哪一个
+        //scrollTop就是触发滚轮事件时滚轮的高度
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+//        console.log("滚动距离" + scrollTop);
+        if (scrollTop > 0) {
+            $('#scrolltop').removeClass('mdui-fab-hide');
+        }
+        if (scrollTop == 0 && !$('#scrolltop').hasClass('mdui-fab-hide')) {
+            $('#scrolltop').addClass('mdui-fab-hide');
+        }
+    })
+    $('#scrolltop').addClass('mdui-fab-hide');
 </script>
 
 </head>
@@ -135,20 +158,12 @@
 <script src="http://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/blog/js/mdui.js"></script>
 <script>var $$ = mdui.JQ;</script>
 <!--<script src="src_files/docs.js"></script>-->
-<script src="https://cdn.staticfile.org/jquery/2.0.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
-<script src="http://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/blog/cos/cos-js-sdk-v5.min.js"></script>
-<!--
-<script src="http://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/blog/js/cbase.js"></script>
-<script src="http://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/blog/js/cdisk.js"></script>
-<script src="http://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/blog/js/render.js"></script>
--->
 <script src="js/cbase.js"></script>
 <script src="js/cdisk.js"></script>
 <script src="js/render.js"></script>
 
 <script type="application/javascript">
-    var cdisk = new CDisk();
+    cdisk = new CDisk();
 //    cdisk.indexInit();
 //    cdisk.indexRead(function (data) {
 //        console.log(data);
@@ -159,96 +174,56 @@
         'articles': new Array(),
         'comments': new Array()
     };
-    cdisk.siteCheck(function (result) {
-        if (!result) {
-            mdui.snackbar('尝试初始化网站数据...');
-            cdisk.siteInit(function (result2) {
-                if (!result2) {
-                    mdui.snackbar('数据初始化失败！');
-                    return;
+    
+    // 流程 :>检查是否建设完成->建设网站↓（刷新）
+    //      > 获取内容
+    
+    // 改成全异步吧
+    var index;
+    
+    function refreshArticles() {
+        cdisk.indexRead().then(data => {index = data}).then(() => {
+            var paths = new Array();
+            for (article of index.articles) {
+                if (article.Key.indexOf('content.md') != -1) {
+                    paths.push(article.Key.slice(0, -10));
                 }
-                cdisk.indexInit(function (result2) {
-                    if (!result2) {
-                        mdui.snackbar('数据初始化失败！');
-                        return;
-                    }
-                });
-                cdisk.indexRead(function (data) {
-                    formArticles(data.articles);
-                })
-            })
-        }
-//        cdisk.siteInit(function (result2) {
-//                if (!result2) {
-//                    mdui.snackbar('数据初始化失败！');
-//                    return;
-//                }
-//                cdisk.indexInit(function (result2) {
-//                    if (!result2) {
-//                    mdui.snackbar('数据初始化失败！');
-//                    return;
-//                }
-//                });
-//                cdisk.indexRead(function (data) {
-//                    formArticles(data.articles);
-//                })
-//            })
-        console.log('网站已经初始化');
-        cdisk.indexRead(function (data) {
-            formArticles(data.articles);
-            console.log(data);
-            g_res = data;
-        })
-    });
+            }
+            console.log('paths', paths);
+            cdisk.articlesRead(paths).then(d => {
+                formArticles(d);
+            });
+        });
+    }
+    
+    refreshArticles();
     
     function publishArticle() {
         console.log($('#new-article-title').val(), $('#new-article-content').val())
-        cdisk.articleWrite($('#new-article-title').val(), $('#new-article-content').val(), function (err, data) {
-            if (err) {
-                mdui.snackbar('失败')
-            } else {
-                mdui.snackbar('成功')
-            }
-        }, function(result) {
-            console.log('重新开始刷新')
-            cdisk.indexRead(function (data) {
-                formArticles(data.articles);
-                console.log(data);
-                g_res = data;
-            })
-        })
-    }
-    
-    function removeArticle(aid) {
-        cdisk.articleRemove(aid, function(result) {
+        
+        cdisk.articleWrite($('#new-article-title').val(), $('#new-article-content').val()).then(result => {
             if (result) {
                 mdui.snackbar('成功');
             } else {
                 mdui.snackbar('失败');
             }
-            sleep(3000);
+        }).then(() => {
             console.log('重新开始刷新')
-            cdisk.indexRead(function (data) {
-                formArticles(data.articles);
-                console.log(data);
-                g_res = data;
-            })
+            refreshArticles();
         })
     }
     
-    $(window).scroll(function() {
-        //为了保证兼容性，这里取两个值，哪个有值取哪一个
-        //scrollTop就是触发滚轮事件时滚轮的高度
-        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-//        console.log("滚动距离" + scrollTop);
-        if (scrollTop > 0) {
-            $('#scrolltop').removeClass('mdui-fab-hide');
-        }
-        if (scrollTop == 0 && !$('#scrolltop').hasClass('mdui-fab-hide')) {
-            $('#scrolltop').addClass('mdui-fab-hide');
-        }
-    })
-    $('#scrolltop').addClass('mdui-fab-hide');
+    function removeArticle(aid) {
+        cdisk.articleRemove(aid).then(result => {
+            if (result) {
+                mdui.snackbar('成功');
+            } else {
+                mdui.snackbar('失败');
+            }
+            console.log('重新开始刷新');
+            refreshArticles();
+        })  
+    }
 </script>
 </body>
 </html>
