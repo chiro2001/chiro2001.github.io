@@ -146,6 +146,23 @@
 <button class="mdui-btn mdui-ripple" mdui-dialog-confirm="" onclick="publishArticle()">发布</button>
 </div>
 </div>
+    
+<div class="mdui-dialog" id="dialog-login" >
+<div class="mdui-dialog-title">登录</div>
+<div class="mdui-dialog-content">
+    
+<div class="mdui-textfield mdui-textfield-floating-label">
+  <label class="mdui-textfield-label">输入密码</label>
+  <input class="mdui-textfield-input" id="login-password"/>
+</div>
+
+</div>
+<div class="mdui-divider"></div>
+<div class="mdui-dialog-actions">
+<button class="mdui-btn mdui-ripple mdui-float-left" mdui-dialog-cancel="">取消</button>
+<button class="mdui-btn mdui-ripple" mdui-dialog-confirm="" onclick="clickLogin()">确定</button>
+</div>
+</div>
 
 <!--<script src="https://www.eaimty.com/themes/materiality-typecho-theme/assets/js/smoothscrolltop.min.js"></script>-->
 <button class="mdui-fab mdui-fab-fixed mdui-ripple mdui-color-theme-accent" id="scrolltop" onclick="window.scroll({ top: 0, left: 0, behavior: 'smooth' })"><i class="mdui-icon material-icons">keyboard_arrow_up</i></button>
@@ -161,27 +178,36 @@
 <script src="js/cbase.js"></script>
 <script src="js/cdisk.js"></script>
 <script src="js/render.js"></script>
+<script src="js/mycookie.js"></script>
+
 
 <script type="application/javascript">
-    // 用password是否定义来看是否已经登录
-    password = '1352040930';
-    cdisk = new CDisk();
-//    cdisk.indexInit();
-//    cdisk.indexRead(function (data) {
-//        console.log(data);
-//        formArticles(data.articles);
-//    });
-    // 用来保存已经获取的index数据
-    g_res = {
-        'articles': new Array(),
-        'comments': new Array()
-    };
-    
-    // 流程 :>检查是否建设完成->建设网站↓（刷新）
-    //      > 获取内容
-    
-    // 改成全异步吧
-    var index;
+    function init() {
+        // 用password是否定义来看是否已经登录
+        //password = '1352040930';
+        if (getCookie('password') != '') {
+            password = getCookie('password');
+        }
+        cdisk = new CDisk();
+    //    cdisk.indexInit();
+    //    cdisk.indexRead(function (data) {
+    //        console.log(data);
+    //        formArticles(data.articles);
+    //    });
+        // 用来保存已经获取的index数据
+        g_res = {
+            'articles': new Array(),
+            'comments': new Array()
+        };
+
+        // 流程 :>检查是否建设完成->建设网站↓（刷新）
+        //      > 获取内容
+
+        // 改成全异步吧
+        var index;
+        
+        refreshArticles();
+    }
     
     function refreshArticles() {
         cdisk.indexRead().then(data => {index = data}).then(() => {
@@ -198,8 +224,6 @@
             });
         });
     }
-    
-    refreshArticles();
     
     function publishArticle() {
         console.log($('#new-article-title').val(), $('#new-article-content').val())
@@ -229,9 +253,36 @@
     }
     
     function clickNewArticle() {
-        //mdui-dialog="{target: '#dialog-new-article'}"
-        $('#dialog-new-article').show();
+        if (login) {
+            var inst = new mdui.Dialog($('#dialog-new-article')).open();
+        } else {
+            // 弹出登录对话框
+            var inst2 = new mdui.Dialog($('#dialog-login')).open();
+//            password = '1352040930';
+//            init();
+        }
     }
+    
+    function clickLogin() {
+        var t_password = $('#login-password').val();
+        // 尝试登录
+        $.ajax({'url': formLoginUrl(t_password)}).then(d => {
+            if (d.code == 0) {
+                password = t_password;
+                mdui.snackbar('登陆成功');
+                setCookie('password', password, 365);
+                init();
+                var inst3 = new mdui.Dialog($('#dialog-new-article')).open();
+            } else {
+                mdui.snackbar('密码错误');
+                password = undefined;
+            }
+        }, d => {
+            mdui.snackbar('登陆失败');
+        })
+    }
+    
+    init();
 </script>
 </body>
 </html>

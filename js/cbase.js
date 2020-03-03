@@ -6,6 +6,13 @@ function add_domin (prefix) {
     return host + '/' + prefix;
 }
 
+login = false;
+cbase_login_url = 'https://service-q8rodpb4-1254016670.gz.apigw.tencentcs.com/';
+
+function formLoginUrl(passwd) {
+    return cbase_login_url + passwd;
+}
+
 //基础封装
 function CBase() {
     // 已经输入了全局变量，就请求秘钥
@@ -13,13 +20,19 @@ function CBase() {
     if (typeof password != 'undefined'? true : false) {
         console.log('use password:', password)
         $.ajax({
-            'url': 'https://service-q8rodpb4-1254016670.gz.apigw.tencentcs.com/' + password
+            'url': formLoginUrl(password)
         }).then(d => {
             console.log('got token:', d);
             this.cos = new COS({
                 SecretId: d.id,
                 SecretKey: d.key
             });
+            if (d.code == 0) {
+                login = true;
+            } else {
+                login = false;
+                password = undefined;
+            }
         })
     }
     this.Bucket = 'blog-1254016670';

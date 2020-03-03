@@ -2,6 +2,8 @@
 <script src="js/cbase.js"></script>
 <script src="js/cdisk.js"></script>
 
+<script src="js/mycookie.js"></script>
+
 <script>
 //    function hasCallback(data, callback) {
 //        callback(data);
@@ -26,6 +28,9 @@
 //    })
 //    console.log(p)
     
-    cdisk = new CDisk();
-    cdisk.indexRead().then(data => {console.log(data)});
+//    cdisk = new CDisk();
+//    cdisk.indexRead().then(data => {console.log(data)});
+    password = 'a';
+    mycacheUpdatePassword();
+    mycacheReadPassword();
 </script>
