@@ -53,6 +53,12 @@ CDisk.prototype.siteCheck = async function () {
     });
 }
 
+CDisk.prototype.pageCount = async function(count = 10) {
+    var originList = await this.cbase.listdirAll(add_domin('articles'), 1000);
+    var total = originList.Contents.length;
+    return Math.ceil(total / count);
+}
+
 CDisk.prototype.siteInit = async function() {
 //    return new Promise((resolve, reject) => {
 //        var result = this.cbase.write(add_domin('articles'));
@@ -61,18 +67,27 @@ CDisk.prototype.siteInit = async function() {
     return true;
 }
 
-CDisk.prototype.indexRead = async function () {
+CDisk.prototype.indexRead = async function (page = 1, count = 10) {
     var res = {
         'articles': new Array(),
         'comments': new Array()
     };
-    var allList = await this.cbase.listdirAll(add_domin('articles'));
-    allList = allList.Contents;
-    // 删除第一项
-//    allList.shift();
-    allList = allList.sort().reverse();
-    res.articles = allList;
-//    console.log(allList);
+    var nextMarker = undefined;
+    while (page > 0) {
+        console.log('page:', page);
+        var originList = await this.cbase.listdirAll(add_domin('articles'), count, nextMarker);
+        var allList = originList.Contents;
+        console.log(nextMarker, '->', originList.NextMarker);
+        nextMarker = originList.NextMarker
+        page--;
+        allList = allList.sort().reverse();
+        res.articles = allList;
+        console.log('allList', allList);
+        console.log('originList', originList);
+        if (typeof nextMarker == 'undefined' || nextMarker == add_domin('articles/'))
+            break;
+    }
+    
     return res;
 }
 
@@ -109,6 +124,7 @@ CDisk.prototype.articleWrite = async function (title, fileObject, tags) {
 CDisk.prototype.articleRemove = async function (aid) {
     console.log('Try to remove:', aid);
     console.log(add_domin('articles/' + aid + '/content.md'));
-    var result = await this.cbase.delete(add_domin('articles/' + aid + '/content.md'));
-    return result;
+    var result1 = await this.cbase.delete(add_domin('articles/' + aid + '/content.md'));
+    var result2 = await this.cbase.delete(add_domin('articles/' + aid + '/info.md'));
+    return result1 && result2;
 }

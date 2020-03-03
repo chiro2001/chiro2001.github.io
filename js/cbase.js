@@ -43,13 +43,15 @@ function CBase() {
     });
 }
 
-CBase.prototype.listdir = function (prefix) {
+CBase.prototype.listdir = function (prefix, count = 10, marker = undefined) {
     return new Promise((resolve, reject) => {
         this.cos.getBucket({
             Bucket: this.Bucket,
             Region: this.Region,
             Prefix: prefix,
-            Delimiter: '/'
+            Delimiter: '/',
+            MaxKeys: count,
+            Marker: marker
         }, function(err, data) {
             if (err) {
                 reject(err);
@@ -60,12 +62,14 @@ CBase.prototype.listdir = function (prefix) {
     });
 }
 
-CBase.prototype.listdirAll = function (prefix) {
+CBase.prototype.listdirAll = function (prefix, count = 10, marker = undefined) {
     return new Promise((resolve, reject) => {
         this.cos.getBucket({
             Bucket: this.Bucket,
             Region: this.Region,
-            Prefix: prefix
+            Prefix: prefix,
+            MaxKeys: count,
+            Marker: marker
         }, function(err, data) {
             if (err) {
                 reject(err);
