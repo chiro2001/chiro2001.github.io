@@ -8,6 +8,20 @@ function add_domin (prefix) {
 
 //基础封装
 function CBase() {
+    // 已经输入了全局变量，就请求秘钥
+    // service-q8rodpb4-1254016670.gz.apigw.tencentcs.com
+    if (typeof password != 'undefined'? true : false) {
+        console.log('use password:', password)
+        $.ajax({
+            'url': 'https://service-q8rodpb4-1254016670.gz.apigw.tencentcs.com/' + password
+        }).then(d => {
+            console.log('got token:', d);
+            this.cos = new COS({
+                SecretId: d.id,
+                SecretKey: d.key
+            });
+        })
+    }
     this.Bucket = 'blog-1254016670';
     this.Region = 'ap-chengdu';
     this.cos = new COS({

@@ -56,7 +56,7 @@
 -->
     <a href="" class="mdui-typo-headline mdui-hidden-xs">博客主页</a>
     <div class="mdui-toolbar-spacer"></div>
-    <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-dialog="{target: '#dialog-new-article'}" mdui-tooltip="{content: '发表文章'}"><i class="mdui-icon material-icons">publish</i></span>
+    <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-tooltip="{content: '发表文章'}" onclick="clickNewArticle()"><i class="mdui-icon material-icons">publish</i></span>
     <a href="https://github.com/LanceLiang2018/lanceliang2018.github.io" target="_blank" class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-tooltip="{content: '查看 Github'}">
       <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 36 36" enable-background="new 0 0 36 36" xml:space="preserve" class="mdui-icon" style="width: 24px;height:24px;">
         <path fill-rule="evenodd" clip-rule="evenodd" fill="#ffffff" d="M18,1.4C9,1.4,1.7,8.7,1.7,17.7c0,7.2,4.7,13.3,11.1,15.5
@@ -163,6 +163,8 @@
 <script src="js/render.js"></script>
 
 <script type="application/javascript">
+    // 用password是否定义来看是否已经登录
+    password = '1352040930';
     cdisk = new CDisk();
 //    cdisk.indexInit();
 //    cdisk.indexRead(function (data) {
@@ -191,7 +193,8 @@
             }
             console.log('paths', paths);
             cdisk.articlesRead(paths).then(d => {
-                formArticles(d);
+                g_res.articles = d;
+                formArticles(g_res.articles);
             });
         });
     }
@@ -223,6 +226,11 @@
             console.log('重新开始刷新');
             refreshArticles();
         })  
+    }
+    
+    function clickNewArticle() {
+        //mdui-dialog="{target: '#dialog-new-article'}"
+        $('#dialog-new-article').show();
     }
 </script>
 </body>
