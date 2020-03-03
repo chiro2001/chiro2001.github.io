@@ -25,7 +25,7 @@ function init() {
     currentPage = getQueryVariable('page');
     if (!currentPage || currentPage <= 0)
         currentPage = 1;
-    countPage = 2;
+    countPage = 20;
     totalPage = 0;
 
     refreshArticles();
@@ -46,6 +46,8 @@ function refreshArticles() {
         cdisk.articlesRead(paths).then(d => {
             g_res.articles = d;
             formArticles(g_res.articles);
+            // 文章加载完成，消去进度条
+            $('#blog-progress').hide('slow');
         });
     });
 }
@@ -109,16 +111,20 @@ function clickLogin() {
 
 function pagesInit() {
     $('#blog-page-current').text(currentPage);
-    var targetPage = currentPage - 1;
-    if (targetPage < 1)
+    var targetPage = parseInt(currentPage) - 1;
+    if (targetPage < 1) {
         targetPage = 1;
+        $('#blog-btn-backward').hide();
+    }
     $('#blog-btn-backward').attr('href','//' + document.domain + '/?page=' + targetPage);
     cdisk.pageCount(countPage).then(total => {
         totalPage = total;
         $('#blog-page-total').text(total);
-        var targetPage = currentPage + 1;
-        if (targetPage > totalPage)
+        var targetPage = parseInt(currentPage) + 1;
+        if (targetPage > totalPage) {
             targetPage = totalPage;
+            $('#blog-btn-forward').hide();
+        }
         $('#blog-btn-forward').attr('href','//' + document.domain + '/?page=' + targetPage);
     });
 }
