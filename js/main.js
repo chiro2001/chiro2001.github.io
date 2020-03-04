@@ -20,21 +20,21 @@ function init() {
     //      > 获取内容
 
     // 改成全异步吧
-    var index;
     
     currentPage = getQueryVariable('page');
     if (!currentPage || currentPage <= 0)
         currentPage = 1;
-    countPage = 20;
+    countPage = 10;
     totalPage = 0;
-
-    refreshArticles();
-
-    pagesInit();
+    
+    pagesInit().then(() => {
+        refreshArticles();
+    });
 }
 
 function refreshArticles() {
-    cdisk.indexRead(currentPage, countPage).then(data => {index = data}).then(() => {
+    var index;
+    cdisk.indexRead(totalPage - currentPage + 1, countPage).then(data => {index = data}).then(() => {
         console.log('indexRead', index.articles);
         var paths = new Array();
         for (article of index.articles) {
@@ -109,7 +109,7 @@ function clickLogin() {
     })
 }
 
-function pagesInit() {
+async function pagesInit() {
     $('#blog-page-current').text(currentPage);
     var targetPage = parseInt(currentPage) - 1;
     if (targetPage < 1) {
@@ -117,16 +117,15 @@ function pagesInit() {
         $('#blog-btn-backward').hide();
     }
     $('#blog-btn-backward').attr('href','//' + document.domain + '/?page=' + targetPage);
-    cdisk.pageCount(countPage).then(total => {
-        totalPage = total;
-        $('#blog-page-total').text(total);
-        var targetPage = parseInt(currentPage) + 1;
-        if (targetPage > totalPage) {
-            targetPage = totalPage;
-            $('#blog-btn-forward').hide();
-        }
-        $('#blog-btn-forward').attr('href','//' + document.domain + '/?page=' + targetPage);
-    });
+    var total = await cdisk.pageCount(countPage);
+    totalPage = total;
+    $('#blog-page-total').text(total);
+    var targetPage = parseInt(currentPage) + 1;
+    if (targetPage > totalPage) {
+        targetPage = totalPage;
+        $('#blog-btn-forward').hide();
+    }
+    $('#blog-btn-forward').attr('href','//' + document.domain + '/?page=' + targetPage);
 }
 
 function pagesBackward() {
