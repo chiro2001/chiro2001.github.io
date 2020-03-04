@@ -116,7 +116,7 @@ function formArticles (articles) {
     for (i in articles) {
         var article = articles[i];
         var tmp = $('#tmp_card').clone(true);
-//        tmp.show();
+        tmp.show();
         $(tmp).addClass('blog-card-id-' + article.time);
         
         var mdContent = $('.mdui-card-content', tmp);
