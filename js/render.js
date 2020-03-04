@@ -185,6 +185,8 @@ function formArticles (articles) {
         $('#contain-dist').append($('<br>'));
         $('#contain-dist').append(tmp);
         
-        $('.blog-card-id-' + article.time).fadeIn('slow');
+        // $('.blog-card-id-' + article.time).fadeIn('slow');
     }
+    $('#contain-dist').hide();
+    $('#contain-dist').fadeIn('slow');
 }
