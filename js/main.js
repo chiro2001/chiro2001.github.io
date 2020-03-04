@@ -71,6 +71,8 @@ function removeArticle(aid) {
     cdisk.articleRemove(aid).then(result => {
         if (result) {
             mdui.snackbar('成功');
+            // 不知道会不会成功
+            $(location).attr('href', '/')
         } else {
             mdui.snackbar('失败');
         }

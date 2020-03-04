@@ -6,7 +6,7 @@ var map_table = {
     'mdui-text-color-theme-accent': new Array('strong', 'em'),
     'mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent': new Array('button'),
     'mdui-textfield-input': new Array('input', 'textarea')
-}
+};
 
 function render() {
     var dist = $('#contain-dist');
@@ -109,6 +109,8 @@ function closeCard (aid) {
     });
 }
 
+maxFoldHeight = 120;
+
 function formArticles (articles) {
     // 刷新
 //    console.log('articles:', articles);
@@ -128,7 +130,9 @@ function formArticles (articles) {
         $('.blog-a', tmp).attr('onclick', 'removeArticle(' + article.time + ')');
         
         //在这里修改相关属性
+        //console.log('before', tmp.height());
         renderHtml(article.content, mdContent);
+        //console.log('after', tmp.height());
         $('.mdui-card-primary-title', tmp).text(article.title);
 //        console.log('mtine:', article.mtime);
         $('.mdui-card-primary-subtitle', tmp).text(article.mtime);
@@ -172,13 +176,28 @@ function formArticles (articles) {
             }
         });
         $(mdContent).empty();
+        //console.log('before', mdContent.height());
         for (i in selected) {
             $(mdContent).append(selected[i]);
         }
+        //console.log('arfer', mdContent.height());
         
         if (isNeedExpand) {
             $('.blog-continue', tmp).show();
         }
+        /*
+        var isNeedExpand = false;
+//        console.log(mdContent.height());
+        if (mdContent.height() < maxFoldHeight) {
+            // 不需要折叠
+            isNeedExpand = false;
+        } else {
+            isNeedExpand = true;
+            $('.blog-continue', tmp).show();
+            $(mdContent).height(maxFoldHeight);
+        }
+//        $(mdContent).height(maxFoldHeight);
+        */
         
         $$(tmp).mutation();
         
