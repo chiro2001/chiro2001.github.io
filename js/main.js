@@ -58,6 +58,9 @@ function publishArticle() {
     cdisk.articleWrite($('#new-article-title').val(), $('#new-article-content').val()).then(result => {
         if (result) {
             mdui.snackbar('成功');
+            // 不知道会不会成功
+            console.log(window.location.href.slice(0, window.location.href.indexOf('?') + 1));
+            $(location).attr('href', window.location.href.slice(0, window.location.href.indexOf('?') + 1));
         } else {
             mdui.snackbar('失败');
         }
@@ -71,8 +74,6 @@ function removeArticle(aid) {
     cdisk.articleRemove(aid).then(result => {
         if (result) {
             mdui.snackbar('成功');
-            // 不知道会不会成功
-            $(location).attr('href', '/')
         } else {
             mdui.snackbar('失败');
         }
