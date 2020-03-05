@@ -1,15 +1,9 @@
 function init() {
     // 用password是否定义来看是否已经登录
-    //password = '1352040930';
     if (getCookie('password') != '') {
         password = getCookie('password');
     }
     cdisk = new CDisk();
-//    cdisk.indexInit();
-//    cdisk.indexRead(function (data) {
-//        console.log(data);
-//        formArticles(data.articles);
-//    });
     // 用来保存已经获取的index数据
     g_res = {
         'articles': new Array(),
@@ -24,7 +18,7 @@ function init() {
     currentPage = getQueryVariable('page');
     if (!currentPage || currentPage <= 0)
         currentPage = 1;
-    countPage = 10;
+    countPage = 10 * 2;
     totalPage = 0;
     
     pagesInit().then(() => {
@@ -88,8 +82,6 @@ function clickNewArticle() {
     } else {
         // 弹出登录对话框
         var inst2 = new mdui.Dialog($('#dialog-login')).open();
-//            password = '1352040930';
-//            init();
     }
 }
 
