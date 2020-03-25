@@ -147,7 +147,7 @@
 <!--          <input id="joined-left" type="checkbox" checked="checked">-->
 <!--          <label for="joined-left">用户加入和退出提醒</label>-->
           <label class="mdui-checkbox" id="joined-left">
-            <input type="checkbox"/>
+            <input type="checkbox" checked=""/>
               <i class="mdui-checkbox-icon"></i>
               用户加入和退出提醒
           </label>
@@ -185,15 +185,15 @@
         <p></p>
         <p>
           </p><h4>代码高光样式</h4>
-          <select id="highlight-selector"><option value="agate">agate</option><option value="androidstudio">androidstudio</option><option value="atom-one-dark">atom-one-dark</option><option value="darcula" selected="selected">darcula</option><option value="github">github</option><option value="rainbow">rainbow</option><option value="tomorrow">tomorrow</option><option value="xcode">xcode</option><option value="zenburn">zenburn</option></select>
+          <select id="highlight-selector" class="mdui-select" mdui-select><option value="agate">agate</option><option value="androidstudio">androidstudio</option><option value="atom-one-dark">atom-one-dark</option><option value="darcula" selected="selected">darcula</option><option value="github">github</option><option value="rainbow">rainbow</option><option value="tomorrow">tomorrow</option><option value="xcode">xcode</option><option value="zenburn">zenburn</option></select>
         <p></p>
         <p>
-          <button id="clear-messages">清空本页聊天记录</button>
+          <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" id="clear-messages">清空本页聊天记录</button>
         </p>
         <hr>
         <h4>在线的用户</h4>
         <p>（你可以点击下面的用户名邀请该用户到一个随机生成聊天室）</p>
-        <ul id="users"></ul>
+        <ul id="users" class="mdui-list"></ul>
       </div>
     </div>
 </div>

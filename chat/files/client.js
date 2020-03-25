@@ -853,6 +853,7 @@ function userAdd(nick) {
 	userLi.appendChild(user);
 	$('#users').appendChild(userLi);
 	onlineUsers.push(nick);
+    mdui.mutation();
 }
 
 function userRemove(nick) {
