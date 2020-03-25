@@ -95,9 +95,11 @@
       <li class="mdui-menu-item">
         <a href="" class="mdui-ripple">登出/刷新</a>
       </li>
+<!--
       <li class="mdui-menu-item">
         <a href="javascript:;" onclick="window.location.href = window.location.href.slice(0, window.location.href.indexOf('?'))" class="mdui-ripple">回到首页</a>
       </li>
+-->
     </ul>
   </div>
   <div class="mdui-progress" id="wenku8-progress" style="display: none;">
@@ -114,7 +116,7 @@
         <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
       </div>
       <div class="mdui-collapse-item-body mdui-list">
-        <a href="https://github.com/LanceLiang2018"
+        <a href="https://github.com/LanceLiang2018/lanceliang2018.github.io/tree/master/chat"
            class="mdui-list-item mdui-ripple">关于:前端界面·改</a>
       </div>
     </div>
@@ -156,7 +158,7 @@
     <hr/>
     <ul class="mdui-list">
       <li class="mdui-list-item mdui-ripple"><a href="http://chat.henrize.kim:3000/copyright.html" style="height: 100%; width: 100%">STAFF</a></li>
-      <li class="mdui-list-item mdui-ripple" mdui-dialog="{target: '#chat-dialog-agreement'}" onclick="history.go(-1);">服务协议</li>
+      <li class="mdui-list-item mdui-ripple" mdui-dialog="{target: '#chat-dialog-agreement'}" onclick="new mdui.Dialog('#chat-dialog-about').close();">服务协议</li>
       <li class="mdui-list-item mdui-ripple"><a href="mailto://mail@to.henrize.kim/" style="height: 100%; width: 100%">联系站长</a></li>
     </ul>
   </div>
@@ -171,7 +173,7 @@
     </div>
   </div>
   <div class="mdui-dialog-actions">
-    <button class="mdui-btn mdui-ripple" onclick="history.go(-1);">cancel</button>
+    <button class="mdui-btn mdui-ripple" onclick="history.go(-1)">cancel</button>
     <button class="mdui-btn mdui-ripple" onclick="openNewRoom()">ok</button>
   </div>
 </div>
@@ -180,6 +182,7 @@
     <div class="mdui-dialog-title">功能设置</div>
     <div class="mdui-dialog-content mdui-typo">
       <div id="chat-sidebar-content">
+        <p>这些设置只对新打开的窗口有效。</p>
         <p>
 <!--          <input id="sound-switch" type="checkbox">-->
 <!--          <label for="sound-switch">有人@我时播放提示音</label>-->
@@ -555,17 +558,23 @@
   $$(document).ready(resize);
   frameCount = 0;
   tabNow = 0;
+  var gtabs = new Array();
   
   function tabShow(target) {
-    tabNow = target.slice(target.lastIndexOf('-')+1);
+//    console.log('tabshow', target);
+    tabNow = ('' + target).slice(('' + target).lastIndexOf('-')+1);
     $$('.chat-frame').hide();
     $$('#' + target).show();
   }
   
   function openNewRoom() {
-    history.go(-1);
+    if (!gtabs) {
+      gtabs = new Array();
+    }
+    gtabs.push('' + frameCount);
+    new mdui.Dialog('#chat-new-room').close();
     var room = $$('#chat-new-room-text').val();
-    console.log('going to', room);
+//    console.log('going to', room);
     var inst = new mdui.Tab('#chat-tabs');
     var frames = $$('#chat-frames');
     var tabs = $$('#chat-tabs');
@@ -591,10 +600,39 @@
     $$('#' + target).remove();
     $$('#' + target_tab).remove();
     
-    if (tid > 0) {
-      var target2 = 'chat-frame-' + (tid - 1);
-      tabShow(target2);
+//    console.log('tid', tid);
+    var index = gtabs.indexOf(tid);
+//    delete gtabs[index];
+    gtabs[index] = undefined;
+    var found = false;
+    for (i=index; i<gtabs.length; i++) {
+      if (gtabs[i] != undefined) {
+        var target2 = 'chat-frame-' + gtabs[i];
+        tabShow(target2);
+        found = true;
+        break;
+      }
     }
+    if (!found) {
+      for (i=index; i>=0; i--) {
+        if (gtabs[i] != undefined) {
+          var target2 = 'chat-frame-' + gtabs[i];
+          tabShow(target2);
+          found = true;
+          break;
+        }
+      }
+    }
+    if (!found) {
+      new mdui.Dialog($$('#chat-new-room')).open();
+    }
+    
+//    if (tid > 0) {
+//      var target2 = 'chat-frame-' + (tid - 1);
+//      tabShow(target2);
+//    } else {
+//      
+//    }
   }
   
   new mdui.Dialog($$('#chat-new-room')).open();
