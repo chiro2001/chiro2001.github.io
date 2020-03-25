@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" style="height: 100%">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+  
+    <link rel="manifest" href="http://chat.henrize.kim:3000/manifest.json">
+<!--
+    <link rel="stylesheet" href="files/style.css">
+    <link id="scheme-link" rel="stylesheet" href="files/a.css">
+-->
+
+    <link rel="stylesheet" href="files/katex.css">
+<!--    <script src="files/hm.js"></script><script src="files/katex.js"></script>-->
+    <script src="files/remarkableKatex.js"></script>
+
+    <script src="files/highlight.js"></script>
+    <link id="highlight-link" rel="stylesheet" href="files/hybrid.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/2.0.0/remarkable.min.js"></script>
+    <script src="http://chat.henrize.kim:3000/vendor/remarkable/remarkable.min.js"></script>
+  
+    <title>Henrize 聊天室</title>
+<!--    <link rel="stylesheet" href="mdui/css/mdui.css">-->
+    <link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css">
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-88818678-1');
+    </script>
+
+<!--
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?a9259cf9514395ebcad803f195ef0997";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+-->
+    <style type="text/css">
+    .round_icon{
+      width: 34px;
+      height: 34px;
+      display: flex;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    </style>
+</head>
+<body class="mdui-loaded mdui-theme-primary-indigo mdui-theme-accent-pink">
+
+<!--    这里是承载的内容-->
+<div class="mdui-container doc-container doc-no-cover">
+    <div id="contain-dist mdui-typo">
+      <audio style="display: none" id="notify-sound" preload="auto" src="http://chat.henrize.kim:3000/audio/notify.mp3">
+        <source src="http://chat.henrize.kim:3000/audio/notify.mp3" type="audio/ogg">
+      </audio>
+      <article class="container mdui-typo">
+        <div id="messages" class="messages">
+        </div>
+      </article>
+    </div>
+</div>
+
+<div class="mdui-dialog" id="chat-dialog-sidebar">
+    <div class="mdui-dialog-title">功能设置</div>
+    <div class="mdui-dialog-content mdui-typo">
+      <div id="chat-sidebar-content">
+        <h3><a href="/">Henrize的聊天室</a></h3>
+        <p>使用hack.chat的源代码搭建</p>
+        <p>由HCDT提供服务和翻译</p>
+        <p>邮箱：<a href="mailto://mail@to.henrize.kim/">mail@to.henrize.kim</a></p>
+        <hr>
+        <h4>设置</h4>
+        <p>
+<!--          <input id="pin-sidebar" type="checkbox">-->
+<!--          <label for="pin-sidebar">固定侧边栏</label>-->
+<!--
+          <label class="mdui-checkbox" id="pin-sidebar">
+            <input type="checkbox"/>
+              <i class="mdui-checkbox-icon"></i>
+              固定侧边栏
+          </label>
+-->
+        </p>
+        <p>
+<!--          <input id="sound-switch" type="checkbox">-->
+<!--          <label for="sound-switch">有人@我时播放提示音</label>-->
+          <label class="mdui-checkbox">
+            <input type="checkbox" id="sound-switch"/>
+              <i class="mdui-checkbox-icon"></i>
+              有人@我时播放提示音
+          </label>
+        </p>
+        <p>
+<!--          <input id="notify-switch" type="checkbox">-->
+<!--          <label for="notify-switch">有人@我时浏览器提示</label>-->
+          <label class="mdui-checkbox">
+            <input type="checkbox" id="notify-switch"/>
+              <i class="mdui-checkbox-icon"></i>
+              有人@我时浏览器提示
+          </label>
+        </p>
+        <p>
+<!--          <input id="joined-left" type="checkbox" checked="checked">-->
+<!--          <label for="joined-left">用户加入和退出提醒</label>-->
+          <label class="mdui-checkbox">
+            <input type="checkbox" checked="" id="joined-left"/>
+              <i class="mdui-checkbox-icon"></i>
+              用户加入和退出提醒
+          </label>
+        </p>
+        <p>
+<!--          <input id="parse-latex" type="checkbox" checked="checked">-->
+<!--          <label for="parse-latex">启用LaTeX</label>-->
+          <label class="mdui-checkbox">
+            <input type="checkbox" checked="" id="parse-latex"/>
+              <i class="mdui-checkbox-icon"></i>
+              启用LaTeX
+          </label>
+        </p>
+        <p>
+<!--          <input id="syntax-highlight" type="checkbox" checked="checked">-->
+<!--          <label for="syntax-highlight">启用高光</label>-->
+          <label class="mdui-checkbox">
+            <input type="checkbox" checked="" id="syntax-highlight"/>
+              <i class="mdui-checkbox-icon"></i>
+              启用高光
+          </label>
+        </p>
+        <p>
+<!--          <input id="allow-imgur" type="checkbox" checked="checked">-->
+<!--          <label for="allow-imgur" title="">查看图片消息</label>-->
+          <label class="mdui-checkbox">
+            <input type="checkbox" checked="" id="allow-imgur"/>
+              <i class="mdui-checkbox-icon"></i>
+              查看图片消息
+          </label>
+        </p>
+        <p>
+<!--        </p><h4>选择站点配色</h4>-->
+          <select id="scheme-selector" style="display: none"><option value="安卓黑">安卓黑</option><option value="默认黑">默认黑</option><option value="夜空黑">夜空黑</option><option value="终端黑">终端黑</option><option value="初恋粉">初恋粉</option><option value="安卓白">安卓白</option><option value="粉笔白">粉笔白</option><option value="石灰白">石灰白</option><option value="寒夜蓝">寒夜蓝</option><option value="口罩蓝">口罩蓝</option><option value="流行蓝">流行蓝</option><option value="天依蓝">天依蓝</option><option value="油漆蓝">油漆蓝</option><option value="荒漠黄">荒漠黄</option><option value="代码灰">代码灰</option><option value="球场绿">球场绿</option><option value="荧光绿">荧光绿</option><option value="芬达橙">芬达橙</option><option value="匿名版">匿名版</option></select>
+        <p></p>
+        <p>
+          </p><h4>代码高光样式</h4>
+          <select id="highlight-selector" class="mdui-select" mdui-select><option value="agate">agate</option><option value="androidstudio">androidstudio</option><option value="atom-one-dark">atom-one-dark</option><option value="darcula" selected="selected">darcula</option><option value="github">github</option><option value="rainbow">rainbow</option><option value="tomorrow">tomorrow</option><option value="xcode">xcode</option><option value="zenburn">zenburn</option></select>
+        <p></p>
+        <p>
+          <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" id="clear-messages">清空本页聊天记录</button>
+        </p>
+        <hr>
+        <h4>在线的用户</h4>
+        <p>（你可以点击下面的用户名邀请该用户到一个随机生成聊天室）</p>
+        <ul id="users" class="mdui-list"></ul>
+      </div>
+    </div>
+</div>
+  
+<footer id="footer" style="position: fixed; bottom: 0; width: 100%">
+  <div class="container">
+    <form id="chatform" class="message">
+      <div class="mdui-textfield">
+        <textarea id="chatinput" class="mdui-textfield-input" type="text" placeholder="Message" autocomplete="off" autofocus=""></textarea>
+      </div>
+    </form>
+  </div>
+</footer>
+
+<!--<script src="files/jquery.min.js"></script>-->
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<!--    <script src="https://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/using/showdown.min.js"></script>-->
+<!--    <script src="https://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/using/cos-js-sdk-v5.js"></script>-->
+<!--<script src="mdui/js/mdui.min.js"></script>-->
+<script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js"></script>
+<script>var $$ = mdui.JQ;</script>
+<script>var $_ = $</script>
+<script src="files/client_core.js"></script>
+<script type="application/javascript">
+  
+</script>
+</body>
+</html>

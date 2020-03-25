@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cmn-Hans" style="height: 100%">
+<html lang="zh-cmn-Hans">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
@@ -63,8 +63,8 @@
     <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white"
       mdui-drawer="{target: '#main-drawer', swipe: true}"><i class="mdui-icon material-icons">menu</i></span>
 <!--    <a href="/" class="mdui-typo-headline mdui-hidden-xs">Henrize 聊天室</a>-->
-    <div class="mdui-tab mdui-tab-full-width" mdui-tab id="chat-tabs">
-      
+    <div class="mdui-tab mdui-tab-full-width" mdui-tab id="chat-windows">
+      <a href="#example2-tab1" class="mdui-ripple">web</a>
     </div>
     <div class="mdui-toolbar-spacer"></div>
     <button class="mdui-btn mdui-btn-icon" mdui-dialog="{target: '#chat-new-room'}"><i class="mdui-icon material-icons">import_export</i></button>
@@ -74,7 +74,7 @@
         <a href="javascript:;" mdui-dialog="{target: '#chat-new-room'}" class="mdui-ripple">新窗口</a>
       </li>
       <li class="mdui-menu-item">
-        <a href="javascript:;" onclick="closeRoom(tabNow);" class="mdui-ripple">关闭当前窗口</a>
+        <a href="javascript:;" class="mdui-ripple">关闭当前窗口</a>
       </li>
       <li class="mdui-divider"></li>
       <li class="mdui-menu-item">
@@ -106,22 +106,33 @@
 </header>
 
 <div class="mdui-drawer" id="main-drawer">
-  <div class="mdui-list" mdui-collapse="{accordion: true}" style="margin-bottom: 76px;">
-    <div class="mdui-collapse-item">
-      <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
-        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color">near_me</i>
-        <div class="mdui-list-item-content">关于</div>
-        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-      </div>
-      <div class="mdui-collapse-item-body mdui-list">
-        <a href="https://github.com/LanceLiang2018"
-           class="mdui-list-item mdui-ripple">关于:前端界面·改</a>
-      </div>
+    <div class="mdui-list" mdui-collapse="{accordion: true}" style="margin-bottom: 76px;">
+        <div class="mdui-collapse-item">
+            <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color">near_me</i>
+                <div class="mdui-list-item-content">关于</div>
+                <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+            </div>
+            <div class="mdui-collapse-item-body mdui-list">
+                <a href="https://github.com/LanceLiang2018"
+                   class="mdui-list-item mdui-ripple">关于:前端界面·改</a>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
-<div id="chat-frames">
+
+<!--    这里是承载的内容-->
+<div class="mdui-container doc-container doc-no-cover">
+    <div id="contain-dist mdui-typo">
+      <audio style="display: none" id="notify-sound" preload="auto" src="http://chat.henrize.kim:3000/audio/notify.mp3">
+        <source src="http://chat.henrize.kim:3000/audio/notify.mp3" type="audio/ogg">
+      </audio>
+      <article class="container mdui-typo">
+        <div id="messages" class="messages">
+        </div>
+      </article>
+    </div>
 </div>
 
 <div class="mdui-dialog" id="chat-dialog-agreement">
@@ -147,18 +158,11 @@
 <div class="mdui-dialog" id="chat-dialog-about">
   <div class="mdui-dialog-title">关于</div>
   <div class="mdui-dialog-content">
-    <div class="mdui-typo">
-      <h3><a href="/">Henrize的聊天室</a></h3>
-      <p>使用hack.chat的源代码搭建</p>
-      <p>由HCDT提供服务和翻译</p>
-      <p>邮箱：<a href="mailto://mail@to.henrize.kim/">mail@to.henrize.kim</a></p>
-    </div>
-    <hr/>
-    <ul class="mdui-list">
-      <li class="mdui-list-item mdui-ripple"><a href="http://chat.henrize.kim:3000/copyright.html" style="height: 100%; width: 100%">STAFF</a></li>
-      <li class="mdui-list-item mdui-ripple" mdui-dialog="{target: '#chat-dialog-agreement'}" onclick="history.go(-1);">服务协议</li>
-      <li class="mdui-list-item mdui-ripple"><a href="mailto://mail@to.henrize.kim/" style="height: 100%; width: 100%">联系站长</a></li>
-    </ul>
+      <ul class="mdui-list">
+        <li class="mdui-list-item mdui-ripple"><a href="http://chat.henrize.kim:3000/copyright.html">STAFF</a></li>
+        <li class="mdui-list-item mdui-ripple" mdui-dialog="{target: '#chat-dialog-agreement'}" onclick="history.go(-1);">服务协议</li>
+        <li class="mdui-list-item mdui-ripple"><a href="mailto://mail@to.henrize.kim/">联系站长</a></li>
+      </ul>
   </div>
 </div>
 
@@ -167,7 +171,7 @@
   <div class="mdui-dialog-content">
     <div class="mdui-textfield mdui-textfield-floating-label">
       <label class="mdui-textfield-label">房间叫什么呢</label>
-      <input class="mdui-textfield-input" type="text" value="lounge" id="chat-new-room-text">
+      <input class="mdui-textfield-input" type="email" value="lounge" id="chat-new-room">
     </div>
   </div>
   <div class="mdui-dialog-actions">
@@ -180,6 +184,23 @@
     <div class="mdui-dialog-title">功能设置</div>
     <div class="mdui-dialog-content mdui-typo">
       <div id="chat-sidebar-content">
+        <h3><a href="/">Henrize的聊天室</a></h3>
+        <p>使用hack.chat的源代码搭建</p>
+        <p>由HCDT提供服务和翻译</p>
+        <p>邮箱：<a href="mailto://mail@to.henrize.kim/">mail@to.henrize.kim</a></p>
+        <hr>
+        <h4>设置</h4>
+        <p>
+<!--          <input id="pin-sidebar" type="checkbox">-->
+<!--          <label for="pin-sidebar">固定侧边栏</label>-->
+<!--
+          <label class="mdui-checkbox" id="pin-sidebar">
+            <input type="checkbox"/>
+              <i class="mdui-checkbox-icon"></i>
+              固定侧边栏
+          </label>
+-->
+        </p>
         <p>
 <!--          <input id="sound-switch" type="checkbox">-->
 <!--          <label for="sound-switch">有人@我时播放提示音</label>-->
@@ -235,12 +256,20 @@
           </label>
         </p>
         <p>
+<!--        </p><h4>选择站点配色</h4>-->
+          <select id="scheme-selector" style="display: none"><option value="安卓黑">安卓黑</option><option value="默认黑">默认黑</option><option value="夜空黑">夜空黑</option><option value="终端黑">终端黑</option><option value="初恋粉">初恋粉</option><option value="安卓白">安卓白</option><option value="粉笔白">粉笔白</option><option value="石灰白">石灰白</option><option value="寒夜蓝">寒夜蓝</option><option value="口罩蓝">口罩蓝</option><option value="流行蓝">流行蓝</option><option value="天依蓝">天依蓝</option><option value="油漆蓝">油漆蓝</option><option value="荒漠黄">荒漠黄</option><option value="代码灰">代码灰</option><option value="球场绿">球场绿</option><option value="荧光绿">荧光绿</option><option value="芬达橙">芬达橙</option><option value="匿名版">匿名版</option></select>
+        <p></p>
+        <p>
           </p><h4>代码高光样式</h4>
           <select id="highlight-selector" class="mdui-select" mdui-select><option value="agate">agate</option><option value="androidstudio">androidstudio</option><option value="atom-one-dark">atom-one-dark</option><option value="darcula" selected="selected">darcula</option><option value="github">github</option><option value="rainbow">rainbow</option><option value="tomorrow">tomorrow</option><option value="xcode">xcode</option><option value="zenburn">zenburn</option></select>
         <p></p>
         <p>
           <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" id="clear-messages">清空本页聊天记录</button>
         </p>
+        <hr>
+        <h4>在线的用户</h4>
+        <p>（你可以点击下面的用户名邀请该用户到一个随机生成聊天室）</p>
+        <ul id="users" class="mdui-list"></ul>
       </div>
     </div>
 </div>
@@ -528,7 +557,7 @@
   </div>
 </div>
   
-<footer id="footer" style="position: fixed; bottom: 0; width: 100%; display:none">
+<footer id="footer" style="position: fixed; bottom: 0; width: 100%">
   <div class="container">
     <form id="chatform" class="message">
       <div class="mdui-textfield">
@@ -548,56 +577,9 @@
 <script>var $_ = $</script>
 <script src="files/client.js"></script>
 <script type="application/javascript">
-  resize = function() {
-    $$('.chat-frame').height($$('html').height() - $$('header').height() - 5);
-  };
-  window.onresize = resize;
-  $$(document).ready(resize);
-  frameCount = 0;
-  tabNow = 0;
-  
-  function tabShow(target) {
-    tabNow = target.slice(target.lastIndexOf('-')+1);
-    $$('.chat-frame').hide();
-    $$('#' + target).show();
-  }
-  
   function openNewRoom() {
-    history.go(-1);
-    var room = $$('#chat-new-room-text').val();
-    console.log('going to', room);
-    var inst = new mdui.Tab('#chat-tabs');
-    var frames = $$('#chat-frames');
-    var tabs = $$('#chat-tabs');
-    var target = 'chat-frame-' + frameCount;
-    var target_tab = 'chat-tab-' + frameCount;
-    var mtab = $$('<a href="#' + target + '" class="mdui-ripple" onclick="tabShow(\'' + target + '\');" id="' + target_tab + '">' + room + '</a>');
-    var mframe = $$('<iframe src="core.html?' + room + '" frameborder="0" width="100%" seamless class="chat-frame" id="' + target + '"></iframe>');
-    $$(tabs).append(mtab);
-    $$(frames).append(mframe);
-    frameCount = frameCount + 1;
     
-    resize();
-    mdui.mutation();
-    tabShow(target);
   }
-  
-  function closeRoom(tid) {
-    if (!tid) {
-      tid = tabNow;
-    }
-    var target = 'chat-frame-' + tid;
-    var target_tab = 'chat-tab-' + tid;
-    $$('#' + target).remove();
-    $$('#' + target_tab).remove();
-    
-    if (tid > 0) {
-      var target2 = 'chat-frame-' + (tid - 1);
-      tabShow(target2);
-    }
-  }
-  
-  new mdui.Dialog($$('#chat-new-room')).open();
 </script>
 </body>
 </html>
