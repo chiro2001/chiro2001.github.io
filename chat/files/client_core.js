@@ -135,7 +135,7 @@ var markdownOptions = {
 	breaks: true,
 	langPrefix: '',
 	linkify: true,
-	linkTarget: '_blank" rel="noreferrer',
+	linkTarget: '_parent" rel="noreferrer',
 	typographer:  true,
 	quotes: `""''`,
 
