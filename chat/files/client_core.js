@@ -117,7 +117,9 @@ function getTheme() {
   setDocsTheme(theme);
 }
 
-getTheme()
+getTheme();
+
+xiaoice = 'XiaoIce';
 
 /*
  *
@@ -642,6 +644,32 @@ function updateTitle() {
 //	$('#chatinput').focus();
 //}
 
+function foo(data) {
+//    data = JSON.parse(d);
+    if (data['code'] != 0) {
+        msg = '@' + xiaoice + '出现故障:' + data['other'];
+//        console.log('tosend:', msg);
+        send({ cmd: 'chat', text: msg });
+    }
+    msg = '@' + xiaoice + '说:' + data['data'];
+//    console.log('tosend:', msg);
+    send({ cmd: 'chat', text: msg });
+}
+
+function callXiaoice(text) {
+    text.replace(new RegExp('@' + xiaoice,'g'),"b");
+    $_.ajax({
+        url: 'http://wenku8.herokuapp.com/chat/' + text + '?callback=foo',
+        dataType :'JSONP',
+        jsonp: "foo",
+        jsonpCallback:"foo",
+        contentType: "application/json;charset=utf-8",
+        success: function (d) {
+            //console.info(d);
+        }
+    })
+}
+
 $('#chatinput').onkeydown = function (e) {
 	if (e.keyCode == 13 /* ENTER */ && !e.shiftKey) {
 		e.preventDefault();
@@ -651,7 +679,11 @@ $('#chatinput').onkeydown = function (e) {
 			var text = e.target.value;
 			e.target.value = '';
 
+            //这里加上一点处理
 			send({ cmd: 'chat', text: text });
+            if (text.indexOf('@' + xiaoice) != -1) {
+                callXiaoice(text);
+            }
 
 			lastSent[0] = text;
 			lastSent.unshift("");

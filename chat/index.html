@@ -20,8 +20,8 @@
 
     <script src="files/highlight.js"></script>
     <link id="highlight-link" rel="stylesheet" href="files/hybrid.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/2.0.0/remarkable.min.js"></script>
-<!--    <script src="http://chat.henrize.kim:3000/vendor/remarkable/remarkable.min.js"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/2.0.0/remarkable.min.js"></script>-->
+    <script src="http://chat.henrize.kim:3000/vendor/remarkable/remarkable.min.js"></script>
   
     <title>Henrize 聊天室</title>
 <!--    <link rel="stylesheet" href="mdui/css/mdui.css">-->
@@ -530,7 +530,7 @@
   </div>
 </div>
   
-<footer id="footer" style="position: fixed; bottom: 0; width: 100%; display:none">
+<footer id="footer" style="position: absolute; bottom: 0; width: 100%; display:none">
   <div class="container">
     <form id="chatform" class="message">
       <div class="mdui-textfield">
@@ -539,6 +539,19 @@
     </form>
   </div>
 </footer>
+
+<script type="application/javascript">
+  // Android 手机下, input 或 textarea 元素聚焦时, 主动滚一把
+  if (/Android/gi.test(navigator.userAgent)) {
+    window.addEventListener('resize', function () {
+      if (document.activeElement.tagName == 'INPUT' || document.activeElement.tagName == 'TEXTAREA') {
+          window.setTimeout(function () {
+          document.activeElement.scrollIntoViewIfNeeded();
+        }, 0);
+      }
+    })
+  }
+</script>
 
 <!--<script src="files/jquery.min.js"></script>-->
 <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
