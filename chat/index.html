@@ -85,7 +85,8 @@
       </li>
       <li class="mdui-divider"></li>
       <li class="mdui-menu-item">
-        <a href="https://sm.ms/" target="_blank" class="mdui-ripple">图床</a>
+<!--        <a href="javascript:;" mdui-dialog="{target: '#dialog-imgbed'}" class="mdui-ripple">图床</a>-->
+        <a href="https://sm.ms"  target="_blank" class="mdui-ripple">图床</a>
       </li>
       <li class="mdui-divider"></li>
       <li class="mdui-menu-item">
@@ -145,6 +146,22 @@
     <p>2020/03/03</p>
   </div>
 </div>
+  
+<!--
+<div class="mdui-dialog" id="dialog-imgbed">
+  <div class="mdui-dialog-content">
+    <form enctype="multipart/form-data">
+      <input name="file" type="file" id="file"/>
+    </form>
+    <button onclick="imgbedUpload()" class="mdui-btn mdui-ripple">上传</button>
+    <div class="mdui-typo" id="imgbed-result"></div>
+  </div>
+  <div class="mdui-dialog-actions">
+    <button class="mdui-btn mdui-ripple" onclick="openNewRoom()">ok</button>
+  </div>
+    <iframe src="https://sm.ms/"></iframe>
+</div>
+-->
 
 <div class="mdui-dialog" id="chat-dialog-about">
   <div class="mdui-dialog-title">关于</div>
@@ -164,7 +181,7 @@
   </div>
 </div>
 
-  <div class="mdui-dialog" id="chat-new-room">
+<div class="mdui-dialog" id="chat-new-room">
   <div class="mdui-dialog-title">进入新的房间</div>
   <div class="mdui-dialog-content">
     <div class="mdui-textfield mdui-textfield-floating-label">
@@ -540,6 +557,7 @@
   </div>
 </footer>
 
+<!--
 <script type="application/javascript">
   // Android 手机下, input 或 textarea 元素聚焦时, 主动滚一把
   if (/Android/gi.test(navigator.userAgent)) {
@@ -552,6 +570,7 @@
     })
   }
 </script>
+-->
 
 <!--<script src="files/jquery.min.js"></script>-->
 <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -584,7 +603,9 @@
       gtabs = new Array();
     }
     gtabs.push('' + frameCount);
-    new mdui.Dialog('#chat-new-room').close();
+    try {
+      new mdui.Dialog('#chat-new-room').close();
+    } catch(e) {}
     var room = $$('#chat-new-room-text').val();
 //    console.log('going to', room);
     var inst = new mdui.Tab('#chat-tabs');
@@ -645,6 +666,22 @@
 //    } else {
 //      
 //    }
+  }
+  
+  function imgbedUpload() {
+//    getToken('LanceLiang2018', '1352040930lxr').then(token => {
+//      uploadImage($('#file').get(0).files[0], token).then(url => {
+//        console.log(url);
+//        $('#imgbed-result').append($('<a href="' + url + '" target="_blank">图像链接</a>'));
+//        $('#imgbed-result').append($('<div class="mdui-textfield"><textarea class="mdui-textfield-input" type="text" autocomplete="off" autofocus="" value="![img](' + url + ')"></textarea></div>'));
+//      }).fail(function() {console.log('upload Failed');});
+//    }).fail(function() {console.log('getToken Failed')});
+//  }
+    uploadImage($_('#file').get(0).files[0], imgToken).then(url => {
+      console.log(url);
+      $('#imgbed-result').append($('<a href="' + url + '" target="_blank">图像链接</a>'));
+      $('#imgbed-result').append($('<div class="mdui-textfield"><textarea class="mdui-textfield-input" type="text" autocomplete="off" autofocus="" value="![img](' + url + ')"></textarea></div>'));
+    }).fail(function() {console.log('upload Failed');});
   }
   
   new mdui.Dialog($$('#chat-new-room')).open();

@@ -117,7 +117,7 @@ function getTheme() {
   setDocsTheme(theme);
 }
 
-getTheme()
+getTheme();
 
 /*
  *
@@ -908,3 +908,56 @@ $('#highlight-selector').value = currentHighlight;
 //} else {
 //	join(myChannel);
 //}
+
+function getToken(username, password) {
+    return $_.ajax({
+        url:'https://sm.ms/api/v2/token', 
+        data: {
+          username:username, 
+          password:password
+        },
+        type: "POST"
+      }).then(d => {
+        data = JSON.parse(d);
+        console.log(data.message);
+        if (data.code == 'success') {
+            return data.data.token;
+        }
+      });
+}
+imgToken = 'PP8y8OFkPv17aBTnsy1KAuQqqvAP48VW';
+function uploadImage(f, token) {
+    var form = new FormData();
+    form.append('smfile', f);
+    form.append('Authorization', token)
+
+    return $_.ajax({
+        type: 'POST',
+        url: 'https://sm.ms/api/v2/upload',
+        data: form,
+        cache: false,
+        contentType: false,
+        processData: false
+    }).then(d => {
+        var data = JSON.parse(d);
+        console.log(data.message);
+        if (data.success == true) {
+            return data.data.url;
+        } else {
+            if (data.code == 'image_repeated') {
+                return data.images;
+            }
+        }
+        console.log(data);
+        return;
+    });
+}
+
+//$('#send').click(function() {
+//    getToken('LanceLiang2018', '1352040930lxr').then(token => {
+//        uploadImage($('#file').get(0).files[0], token).then(url => {
+//            console.log(url);
+//            $('#res').append($('<img src="' + url + '">'));
+//        }).fail(function() {console.log('upload Failed');});
+//    }).fail(function() {console.log('getToken Failed')});
+//})
