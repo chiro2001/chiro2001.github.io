@@ -18,7 +18,7 @@
         https://github.com/Halyul/hexo-theme-mdui
         Version: 1.5.4 -->
   <meta charset="UTF-8">
-  <title>Tag: 前端 - Lance的博客</title>
+  <title>[[Title]] - Lance的博客</title>
 
   <!-- Favicons -->
   <link rel="icon shortcut" type="image/ico" href="/blog/img/favicon.png">
@@ -42,7 +42,7 @@
   
       <meta name="description" content="是鸽子吗？是吗？">
   
-  <meta name="keywords" content="blog, hexo, mdui">
+  <meta name="keywords" content="blog, hexo, mdui,tag">
 
   <!--iOS -->
   <meta name="apple-mobile-web-app-title" content="Lance的博客">
@@ -57,13 +57,13 @@
   <!-- The Open Graph protocol -->
   <meta property="og:url" content="https://blog.lanceliang2001.top/blog">
   <meta property="og:type" content="blog">
-  <meta property="og:title" content="Tag: 前端 - Lance的博客 | Lance的博客">
+  <meta property="og:title" content="[[Title]] - Lance的博客 | Lance的博客">
   <meta property="og:image" content="/img/favicon.png" />
   
         <meta property="og:description" content="是鸽子吗？是吗？">
     
 
-    
+    <meta property="og:article:tag" content="tag"> 
 
   
 
@@ -106,9 +106,7 @@
   
     mdui-appbar-with-toolbar
   
-  
-    side-content style-fix
-  " onresize="styleChanging()">
+  " >
 
 
   
@@ -119,38 +117,28 @@
 
   
 
-    <div class="mdui-appbar animate-appbar mdui-shadow-0 mdui-appbar-fixed" id="blog-appbar">
-      <div class="mdui-toolbar mdui-color-theme mdui-shadow-2">
-        <button class="mdui-btn mdui-ripple mdui-btn-icon drawer-button" mdui-drawer="{target: '#drawer'}">
-          <i class="mdui-icon">
-            <span></span>
-          </i>
-        </button>
-        
-          <a href="/blog/" class="mdui-typo-headline">
-            Title
-          </a>
-          <span class="appbar-border-line mdui-hidden-xs"></span>
-        
-        
-          <span class="mdui-typo-title mdui-hidden-xs"
-            
-              onclick="smoothScroll.animateScroll( 0 );"
-            
-          >
-            前端
-          </span>
-        
-        
-        
-          <div class="flex-spacer"></div>
-        
-        
-        
+  <div class="mdui-appbar mdui-shadow-0 mdui-appbar-fixed animate-appbar" id="blog-appbar">
+    <div class="mdui-toolbar mdui-color-theme">
+      <button class="mdui-btn mdui-ripple mdui-btn-icon drawer-button" mdui-drawer="{target: '#drawer'}">
+        <i class="mdui-icon">
+          <span></span>
+        </i>
+      </button>
+      
+        <a href="/blog/" class="mdui-typo-headline">
+          Title
+        </a>
+      
+      
+      
+        <div class="flex-spacer"></div>
+      
+      
+      
 
-      </div>
     </div>
-  
+  </div>
+
 
   <div id="search-cover" searchResult onclick="closeSearch()"></div>
 
@@ -161,8 +149,6 @@
 
   
   <div class="mdui-drawer mdui-drawer-full-height mdui-drawer-close
-  
-    drawer-fix
   " id="drawer" style="z-index: 2001;">
   <div class="userview" style="background-image: url(/blog/img/bg.png)">
   <div class="overlay">
@@ -248,7 +234,7 @@
           </div>
         
         
-          <div class="mdui-collapse-item mdui-collapse-item-open">
+          <div class="mdui-collapse-item ">
             <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
               <i class="mdui-list-item-icon mdui-icon fa fa-tags mdui-text-center"></i>
               <div class="mdui-list-item-content">Tags</div>
@@ -347,146 +333,166 @@
 
 
 
-  
-
-  <style id="side_content_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("side_content_css","/blog/css/src/now/side_content.min.css?6QUsjVbcFbaNw1GxvnmHrA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
-
-<div id="side-content" class="mdui-color-deep-orange animate-drawer">
-  <div class="mdui-grid-tile" style="overflow: visible;">
-    <div class="bg">
-      <img src="/blog/img/random/picHD_21.png" />
-    </div>
-    <div class="mdui-grid-tile-actions mdui-grid-tile-actions-top mdui-grid-tile-actions-gradient">
-      <div class="flex-spacer"></div>
-      <div class="mdui-grid-tile-buttons">
-        
-
-      </div>
-    </div>
-  </div>
-  <div class="content">
-    <img class="mdui-img-circle avatar" src="/img/avatar.png"/>
-    <div class="author mdui-text-center">
-      Lance Liang
-    </div>
-    <div class="name">
-      前端
-    </div>
-    <div class="length">
-      
-      1Post
-    </div>
-  </div>
-</div>
-<div id="contentLocation"></div>
-
-
 
 <main>
-  <div class="posts-container column-3">
+  
 
-</div>
-<div id="content-list" class="animate-post">
-  
-    <div class="content-item">
+
+  <style id="post_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("post_css","/blog/css/src/now/post.min.css?EKoTbS50/qRdsnGpvz/clA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+<style id="lightgallery_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("lightgallery_css","/blog/css/src/lightgallery.min.css?+c5+nzUi2JvkvxweHDf/nA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+<style>
+  .lg-outer .lg-item {
+    background-image: url("/blog/img/loading.gif");
+  }
+</style>
+<div class="post-warpper animate-post">
+  <div class="post-bg-color
+    
       
-  
-<div class="mdui-card card-bottom-fix mdui-hoverable">
-  <div class="mdui-card-header posts-header">
-    <img class="mdui-card-header-avatar" src="/blog/img/avatar.png"/>
-    <div class="content mdui-valign">
-      <div class="mdui-typo-body-1-opacity mdui-typo">
-        <span>Lance Liang</span>
-        <span> · </span>
-        <span>Mar 28, 2020</span>
-      </div>
-    </div>
-  <div class="flex-spacer"></div>
-    <a href="/blog/2020/03/28/Henrize%E7%9A%84%E8%81%8A%E5%A4%A9%E5%AE%A4/" target="_self" class="mdui-btn mdui-btn-icon mdui-ripple btn-dense"><i class="mdui-icon material-icons">&#xe89e;</i></a>
-  </div>
-  <div class="mdui-card-content posts-content">
-    <div class="posts-excerpt">
-      <a href="/blog/2020/03/28/Henrize%E7%9A%84%E8%81%8A%E5%A4%A9%E5%AE%A4/" target="_self" class="posts-title mdui-typo-title no-text-decoration">
+        mdui-color-theme
+      
+    
+  "></div>
+  <div class="post-header
+    
+      
+        mdui-color-theme
+      
+    
+  ">
+    <div class="post-header-container">
+      <div class="post-title mdui-text-truncate">[[Title]]</div>
+      <div class="post-actions mdui-valign">
+        <div>
+          <span>Posted: </span>
+          <span style="float: right">Mar 28, 2020</span>
+          
+        </div>
         
-        Henrize的聊天室
-      </a>
-      <div class="posts-strip mdui-typo-body-1">
-        缘起
+
+        
+
       </div>
     </div>
-    <div class="flex-spacer"></div>
-    
-      <div class="posts-thumbnail" style="background-image: url(/blog/img/random/picHD_41.png)"></div>
-    
   </div>
+  <div class="post-container flex-spacer
   
-    <div class="mdui-divider" style="margin: 0 16px;"></div>
-    <div class="posts-bottom">
-      
-        <div class="mdui-chip">
-          <span class="mdui-chip-icon"><i class="mdui-icon
-          
-            mdui-text-color-black-icon
-          
-           material-icons mdui-text-center">&#xe149;</i></span>
+  ">
+    <div class="post-adjust">
+      <div class="mdui-card card-bottom-fix menu-fix mdui-hoverable" id="blog-post">
+        <div class="warning">
+          This article was last modified
+          <span id="content-warning"></span>
+          days ago.
+          The content of this post may be outdated!
         </div>
-        <div class="content mdui-typo">
-          
-            <a href="/blog/categories/搞事/">
-              <span>搞事</span>
-            </a>
-          
-            <a href="/blog/categories/网站/">
-              <span>网站</span>
-            </a>
-          
+        
+        
+          <div class="mdui-card-media">
+            <img src="/blog/img/random/picHD_1.png"/>
+          </div>
+        
+        <div class="post-content mdui-typo no-margin" id="post-content">
+          <h1 id="H1"><a href="#H1" class="headerlink" title="[[H1]]"></a>[[H1]]</h1><h2 id="H2"><a href="#H2" class="headerlink" title="[[H2]]"></a>[[H2]]</h2><h3 id="H3"><a href="#H3" class="headerlink" title="[[H3]]"></a>[[H3]]</h3><h4 id="H4"><a href="#H4" class="headerlink" title="[[H4]]"></a>[[H4]]</h4><h5 id="H5"><a href="#H5" class="headerlink" title="[[H5]]"></a>[[H5]]</h5><h6 id="H6"><a href="#H6" class="headerlink" title="[[H6]]"></a>[[H6]]</h6>
         </div>
+
+        
+          <div class="license mdui-typo">
+            <span>
+              Article License: 
+              
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">CC BY-NC-SA 4.0</a>
+              
+            </span>
+            <br />
+            <span>Article Permalink: <a href="https://blog.lanceliang2001.top/blog/2020/03/28/Title/">https://blog.lanceliang2001.top/blog/2020/03/28/Title/</a></span>
+            
+              <br />
+              <span>Article Markdown: <a href="https://blog.lanceliang2001.top/blog/2020/03/28/Title/Title.md">https://blog.lanceliang2001.top/blog/2020/03/28/Title/Title.md</a></span>
+            
+          </div>
+        
+
+        
+          <div class="posts-info">
+            
+            <div class="flex-spacer"></div>
+            
+              <div class="mdui-chip">
+                <span class="mdui-chip-icon"><i class="mdui-icon mdui-text-color-black-icon material-icons">&#xe149;</i></span>
+              </div>
+              <div class="content mdui-typo">
+                
+                  <a href="/blog/categories/categorie/">
+                    <span>categorie</span>
+                  </a>
+                
+              </div>
+            
+            
+              <div class="mdui-chip">
+                <span class="mdui-chip-icon"><i class="mdui-icon mdui-text-color-black-icon fa fa-tags"></i></span>
+              </div>
+              <div class="content mdui-typo">
+                
+                  <a href="/blog/tags/tag/">
+                    <span>tag</span>
+                  </a>
+                
+              </div>
+            
+          </div>
+        
+        
+          
+        
+      </div>
       
-      
-        <div class="mdui-chip">
-          <span class="mdui-chip-icon"><i class="mdui-icon
-           
-             mdui-text-color-black-icon
-           
-           fa fa-tags mdui-text-center"></i></span>
-        </div>
-        <div class="content mdui-typo">
-          
-            <a href="/blog/tags/前端/">
-              <span>前端</span>
-            </a>
-          
-            <a href="/blog/tags/JavaScript/">
-              <span>JavaScript</span>
-            </a>
-          
-            <a href="/blog/tags/WebSocket/">
-              <span>WebSocket</span>
-            </a>
-          
-            <a href="/blog/tags/交友/">
-              <span>交友</span>
-            </a>
-          
+        <div id="card-toc" class="
+        
+          mdui-color-theme
+        
+        ">
+          <ul class="mdui-list post-toc"><a class="mdui-list-item mdui-ripple post-toc-link" href="#H1"><span class="post-toc-number">1.<span class="post-toc-text">[[H1]]</span></span></a><ul class="mdui-list-dense post-toc-child"><a class="mdui-list-item mdui-ripple post-toc-link" href="#H2"><span class="post-toc-number">1.1.<span class="post-toc-text">[[H2]]</span></span></a><ul class="mdui-list-dense post-toc-child"><a class="mdui-list-item mdui-ripple post-toc-link" href="#H3"><span class="post-toc-number">1.1.1.<span class="post-toc-text">[[H3]]</span></span></a><ul class="mdui-list-dense post-toc-child"><a class="mdui-list-item mdui-ripple post-toc-link" href="#H4"><span class="post-toc-number">1.1.1.1.<span class="post-toc-text">[[H4]]</span></span></a><ul class="mdui-list-dense post-toc-child"><a class="mdui-list-item mdui-ripple post-toc-link" href="#H5"><span class="post-toc-number">1.1.1.1.1.<span class="post-toc-text">[[H5]]</span></span></a><ul class="mdui-list-dense post-toc-child"><a class="mdui-list-item mdui-ripple post-toc-link" href="#H6"><span class="post-toc-number">1.1.1.1.1.1.<span class="post-toc-text">[[H6]]</span></span></a></a></ul></a></ul></a></ul></a></ul></a></ul></a></ul>
         </div>
       
     </div>
+  </div>
+  <div class="post-pagination mdui-color-theme">
   
-</div>
+    <div class="flex-spacer mdui-hidden-xs"></div>
+  
 
-
-
+  
+    <div class="next mdui-ripple mdui-color-theme mdui-valign">
+      <a href="/blog/2020/03/28/Title2/" class="content no-text-decoration mdui-text-right">
+        <div>
+          <span class="mdui-typo-body-2-opacity mdui-text-center">Older Post</span>
+          <i class="mdui-icon material-icons mdui-text-center">&#xe5cc;</i>
+        </div>
+        <div class="mdui-typo-title mdui-text-truncate">
+          [[Title]]
+        </div>
+      </a>
     </div>
-  
+    
 </div>
 
-
-
-
-<button id="toTop" class="mdui-fab mdui-color-theme-accent mdui-ripple mdui-fab-fixed mdui-fab-hide" style="z-index: 9;" onclick="smoothScroll.animateScroll( 0 );">
-  <i class="mdui-icon material-icons">&#xe5d8;</i>
+  
+    <button id="button-toc" class="mdui-fab mdui-color-theme-accent mdui-ripple mdui-fab-fixed mdui-hidden-md-up" style="z-index: 9;" mdui-menu="{target: '#menu-toc', fixed: true}">
+  <i class="mdui-icon material-icons">&#xe242;</i>
 </button>
+<ul class="mdui-menu mdui-typo no-margin-bottom auto-width" id="menu-toc" style="padding: 8px;max-height: 80%">
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#H1"><span class="toc-number">1.</span> <span class="toc-text">[[H1]]</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#H2"><span class="toc-number">1.1.</span> <span class="toc-text">[[H2]]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#H3"><span class="toc-number">1.1.1.</span> <span class="toc-text">[[H3]]</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#H4"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">[[H4]]</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#H5"><span class="toc-number">1.1.1.1.1.</span> <span class="toc-text">[[H5]]</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#H6"><span class="toc-number">1.1.1.1.1.1.</span> <span class="toc-text">[[H6]]</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol>
+</ul>
 
+
+  
+
+</div>
 
 </main>
 
@@ -530,73 +536,140 @@
 </script>
 
 
-
-
-
-
-
-
-
-
-  <script type="text/ls-javascript" id="style-changing-script">
-  var content_flag = false;
-  var appbar = document.querySelector('div#blog-appbar')
-  var body = document.querySelector('body')
-
-  window.addEventListener('scroll', function() {
-    var scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-    var divTop = document.querySelector('div#contentLocation').offsetTop
-    var contentLocation = divTop - scrollTop - 56;
-
-    if (!content_flag && contentLocation < 0 && window.innerWidth < 860) {
-      appbar.classList.add('style-fix');
-      body.classList.remove('style-fix');
-      content_flag = true;
-    } else if (content_flag && contentLocation >= 0 && window.innerWidth < 860) {
-      appbar.classList.remove('style-fix');
-      body.classList.add('style-fix');
-      content_flag = false;
-    };
-  })
-
-  function styleChanging() {
-    var hide = new mdui.Headroom('div#blog-appbar');
-    var windowWidth = window.innerWidth,
-      toLeftWidth = 860;
-    if (windowWidth < toLeftWidth) {
-      hide.enable();
-    } else {
-      hide.disable();
-    }
-  };
-  styleChanging();
-</script>
-
-
-
-
-
-
-  <script type="text/ls-javascript" id="to-top-script">
-  /* fab */
+  <script type="text/ls-javascript" id="appbar-script">
+  /* post appbar */
   (function() {
     var pageFlag = false;
-    var fab = new mdui.Fab('#toTop');
-    fab.hide();
+    var appbar = new mdui.Headroom('#blog-appbar');
+    appbar.disable();
+    var toolbar = document.querySelector('#blog-appbar .mdui-toolbar')
+
     window.addEventListener('scroll', function() {
       var bodyTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
       var divTop = document.querySelector('div#top').offsetTop
+
       var pageLocation = divTop - bodyTop;
       if (!pageFlag && pageLocation < 0) {
-        fab.show();
+        toolbar.classList.add('mdui-shadow-2')
+        appbar.enable();
         pageFlag = true;
       } else if (pageFlag && pageLocation >= 0) {
-        fab.hide();
+        toolbar.classList.remove('mdui-shadow-2')
+        appbar.disable();
         pageFlag = false;
       }
-    });
+    })
   })();
 </script>
+
+  <script type="text/ls-javascript" id="toc-active-script">
+  if (document.querySelector('ul#menu-toc > ol') !== null && document.querySelector('div#card-toc > ul') !== null) {
+    window.addEventListener("load", function() {
+      var timer;
+      function doWork() {
+        listens.forEach(function(value, index) {
+          value[1]();
+          value[0].classList.remove("mdui-list-item-active");
+        })
+        let actionToc = (listens[listens.reduce(function(r, v, index) {
+          if (v[2] == true) {
+            return index;
+          } else return r;
+        }, undefined)] || [])[0] || listens[0][0];
+        actionToc.classList.add("mdui-list-item-active");
+        if(actionToc.getClientRects().length == 0)return;
+        showToc(actionToc);
+      }
+
+      function showToc(toc) {
+        let offsetTop = toc.getClientRects()[0].top - cardToc.getClientRects()[0].top - 40;
+        let offsetBottom = toc.getClientRects()[0].bottom - cardToc.getClientRects()[0].bottom + 40;
+        let offset = 0;
+        if (offsetTop < 0) offset = offsetTop;
+        if (offsetBottom > 0) offset = offsetBottom;
+        var targetTop = Math.max(0, Math.min(cardToc.scrollTop + offset, toclist.offsetHeight - cardToc.offsetHeight));
+        clearInterval(timer);
+        timer = setInterval(function() {
+          var now = cardToc.scrollTop;
+          var speed = (targetTop - now) / 10;
+          speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+          if (Math.abs(now - targetTop) < 1) {
+            clearInterval(timer);
+          }
+          cardToc.scrollTop = now + speed;
+        }, 30);
+      }
+      var listens = [];
+      var cardToc = document.querySelector('#card-toc');
+      var links = document.querySelectorAll("a.post-toc-link");
+      var toclist = document.querySelector("#card-toc > ul");
+      Array.prototype.forEach.call(links, function(value, index) {
+        var id = (value.getAttribute("href") || "#").slice(1);
+        var element = document.getElementById(id);
+        listens.push([value, function() {
+          var readed = false;
+          var scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+          if (element.offsetTop <= scrollTop + element.clientHeight + 64) {
+            readed = true;
+          } else {
+            readed = false;
+          }
+          listens[index][2] = readed;
+        }, false])
+      })
+      doWork();
+      window.addEventListener("scroll", doWork)
+    });
+  }
+</script>
+
+  <script type="text/ls-javascript" id="post-lg-script">
+  var images = document.querySelectorAll('#post-content img')
+  for (i = 0; i < images.length; i++) {
+    images[i].addEventListener("click", openLG);
+  }
+  function openLG() {
+    var img_src = this.getAttribute('src');
+    var img_alt = this.getAttribute('alt');
+    lightGallery(this, {
+      dynamic: true,
+      counter: false,
+      dynamicEl: [{
+        "src": img_src,
+        'subHtml': "<span author>Lance Liang</span> • Public<div descr>" + img_alt + "</div>"
+      }],
+    });
+  }
+</script>
+
+  <!-- content warning -->
+<script type="text/ls-javascript" id="content-warning-script">
+  (function() {
+    var postLastModifiedDate = 1585369083114
+    var today = (new Date()).getTime()
+    var difference = Math.floor((today - postLastModifiedDate)/(24*60*60*1000))
+    if (difference >= 100) {
+      document.querySelector('div.warning').style.display = 'block'
+      document.querySelector('#content-warning').textContent = difference
+    }
+  })();
+</script>
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -605,6 +678,8 @@
   
 
 
+
+  <script>lsloader.load("lightgallery_js","/blog/js/lightgallery.min.js?tQptxVaCRzQ3zx70gMUYig==", true)</script>
 
 
 
