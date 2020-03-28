@@ -1,1 +1,1 @@
-{"name":"Blog name","short_name":"HEXO Blog","description":"A HEXO blog with PWA supported","start_url":"/","display":"standalone","orientation":"any","background_color":"#3F51B5","theme_color":"#3F51B5","icons":[{"src":"/img/favicon.png","sizes":"600x600","type":"image/png"}]}
+{"name":"Lance's Blog","short_name":"Lance's Blog","description":"A HEXO blog with PWA supported","start_url":"/blog/","display":"standalone","orientation":"any","background_color":"#3F51B5","theme_color":"#3F51B5","icons":[{"src":"/img/favicon.png","sizes":"460x460","type":"image/png"}]}
