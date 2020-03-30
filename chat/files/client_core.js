@@ -417,6 +417,28 @@ function nicked(nick) {
     wasConnected = true;
 }
 
+var browser = {
+    versions: function () {
+        var u = navigator.userAgent, app = navigator.appVersion;
+        return {         //移动终端浏览器版本信息
+            trident: u.indexOf('Trident') > -1, //IE内核
+            presto: u.indexOf('Presto') > -1, //opera内核
+            webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+            gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+            mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+            ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+            android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
+            iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+            iPad: u.indexOf('iPad') > -1, //是否iPad
+            webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+        };
+    }(),
+    language: (navigator.browserLanguage || navigator.language).toLowerCase()
+}
+//————————————————
+//版权声明：本文为CSDN博主「niesiyuan000」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+//原文链接：https://blog.csdn.net/niesiyuan000/java/article/details/80010414
+
 function joined(channel, port) {
     ws = new WebSocket('ws://chat.henrize.kim:6060');
 
@@ -428,9 +450,15 @@ function joined(channel, port) {
             if (location.hash) {
                 myNick = location.hash.substr(1);
             } else {
-        //              myNick = prompt('请输入您的昵称：', myNick);
-              dialogNick = new mdui.Dialog('#chat-dialog-nick');
-              dialogNick.open();
+                if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
+                    dialogNick = new mdui.Dialog('#chat-dialog-nick');
+                    dialogNick.open();
+                }else{
+                    //否则就是PC浏览器打开
+                    myNick = prompt('请输入您的昵称：', myNick);
+                    nicked(myNick);
+                }
+
           }
         }
     }
@@ -545,13 +573,6 @@ function pushMessage(args) {
 	nickSpanEl.classList.add('nick');
 	messageEl.appendChild(nickSpanEl);
 
-	if (args.trip) {
-		var tripEl = document.createElement('span');
-		tripEl.textContent = args.trip + " ";
-		tripEl.classList.add('trip');
-		nickSpanEl.appendChild(tripEl);
-	}
-
 	if (args.nick) {
 		var nickLinkEl = document.createElement('a');
 		nickLinkEl.textContent = args.nick;
@@ -564,6 +585,13 @@ function pushMessage(args) {
 		var date = new Date(args.time || Date.now());
 		nickLinkEl.title = date.toLocaleString();
 		nickSpanEl.appendChild(nickLinkEl);
+	}
+    
+    if (args.trip) {
+		var tripEl = document.createElement('span');
+		tripEl.textContent = args.trip + " ";
+		tripEl.classList.add('trip');
+		nickSpanEl.appendChild(tripEl);
 	}
 
 	// Text
@@ -585,7 +613,7 @@ function pushMessage(args) {
 	updateTitle();
   
     // 修改一下主题
-    $$('.trip').attr('class', 'mdui-text-color-theme');
+    $$('.trip').attr('class', 'mdui-color-grey');
 }
 
 function insertAtCursor(text) {
