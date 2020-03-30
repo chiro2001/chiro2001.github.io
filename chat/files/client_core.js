@@ -1,6 +1,6 @@
 $ = jQuery;
 $$ = jQuery;
-$_ = jQuery;
+//$_ = document.querySelector;
 
 function getCookieByArray(name){
  var cookies = document.cookie.split(';');
@@ -252,9 +252,9 @@ var frontpage = [
 	"Have a nice chat!"
 ].join("\n");
 
-//function $(query) {
-//	return document.querySelector(query);
-//}
+function $_(query) {
+	return document.querySelector(query);
+}
 
 function localStorageGet(key) {
 	try {
@@ -353,7 +353,7 @@ if (notifySetting === "true" || notifySetting === true) {
 }
 
 /** Sound switch and local storage behavior **/
-var soundSwitch = document.getElementById("sound-switch")
+//var soundSwitch = document.getElementById("sound-switch")
 var notifySetting = localStorageGet("notify-sound")
 
 // Update localStorage with value of checkbox
@@ -419,7 +419,7 @@ function notify(args) {
 
 function nicked(nick) {
     if (!nick)
-        myNick = $_('#chat-nick').val();
+        myNick = $('#chat-nick').val();
     else
         myNick = nick;
     if (dialogNick)
@@ -468,6 +468,9 @@ function joined(channel, port) {
                 myNick = location.hash.substr(1);
             } else {
                 if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
+                    if (localStorageGet('my-nick')) {
+                      $('#chat-nick').val(localStorageGet('my-nick'));
+                    }
                     dialogNick.open();
                 }else{
                     //否则就是PC浏览器打开
@@ -545,7 +548,7 @@ var COMMANDS = {
 
 		userAdd(nick);
 
-		if ($('#joined-left').checked) {
+		if ($('#joined-left').is(":checked")) {
 			pushMessage({ nick: '*', text: nick + " 加入聊天室" });
 		}
 	},
@@ -629,7 +632,7 @@ function pushMessage(args) {
 		window.scrollTo(0, document.body.scrollHeight);
 	}
 
-    if (args.nick != myNick)
+    if (args.nick != myNick && !$('#chatinput').is(":focus"))
 	   unread += 1;
 	updateTitle();
   
@@ -638,7 +641,7 @@ function pushMessage(args) {
 }
 
 function insertAtCursor(text) {
-	var input = $('#chatinput');
+	var input = document.querySelector('#chatinput');
 	var start = input.selectionStart || 0;
 	var before = input.value.substr(0, start);
 	var after = input.value.substr(start);
@@ -686,9 +689,9 @@ function isAtBottom() {
 }
 
 function updateTitle() {
-//	if (windowActive && isAtBottom()) {
-//		unread = 0;
-//	}
+	if (windowActive && isAtBottom()) {
+		unread = 0;
+	}
 
 	var title;
 	if (myChannel) {
@@ -717,14 +720,14 @@ function foo(data) {
 //        console.log('tosend:', msg);
         send({ cmd: 'chat', text: msg });
     }
-    msg = '@' + xiaoice + '说:' + data['data'];
+    msg = '@' + xiaoice + '说:' + $(data['data']).text();
 //    console.log('tosend:', msg);
     send({ cmd: 'chat', text: msg });
 }
 
 function callXiaoice(text) {
     text.replace(new RegExp('@' + xiaoice,'g'),"b");
-    $_.ajax({
+    $.ajax({
         url: 'http://wenku8.herokuapp.com/chat/' + text + '?callback=foo',
         dataType :'JSONP',
         jsonp: "foo",
@@ -736,27 +739,28 @@ function callXiaoice(text) {
     })
 }
 
+function submitMessage(text) {
+  // Submit message
+  if (text != '') {
+      $('#chatinput').val('');
+      //这里加上一点处理
+      send({ cmd: 'chat', text: text });
+      if (text.indexOf('@' + xiaoice) != -1) {
+          callXiaoice(text);
+      }
+      lastSent[0] = text;
+      lastSent.unshift("");
+      lastSentPos = 0;
+      updateInputSize();
+  }
+}
+
 $('#chatinput').keydown(function (e) {
-	if (e.keyCode == 13 /* ENTER */ && !e.shiftKey) {
+	if ((e.keyCode == 13 /* ENTER */ && !e.shiftKey && !enterSend) || 
+        (enterSend && (e.keyCode == 13 && e.ctrlKey))) {
 		e.preventDefault();
-
-		// Submit message
-		if (e.target.value != '') {
-			var text = e.target.value;
-			e.target.value = '';
-
-            //这里加上一点处理
-			send({ cmd: 'chat', text: text });
-            if (text.indexOf('@' + xiaoice) != -1) {
-                callXiaoice(text);
-            }
-
-			lastSent[0] = text;
-			lastSent.unshift("");
-			lastSentPos = 0;
-
-			updateInputSize();
-		}
+        submitMessage(e.target.value);
+		
 	} else if (e.keyCode == 38 /* UP */) {
 		// Restore previous sent messages
 		if (e.target.selectionStart === 0 && lastSentPos < lastSent.length - 1) {
@@ -855,47 +859,20 @@ document.querySelector('#chatinput').oninput = function () {
 
 updateInputSize();
 
-/* sidebar */
-
-//$('#sidebar').onmouseenter = $('#sidebar').ontouchstart = function (e) {
-//	$('#sidebar-content').classList.remove('hidden');
-//	$('#sidebar').classList.add('expand');
-//	e.stopPropagation();
-//}
-//
-//$('#sidebar').onmouseleave = document.ontouchstart = function (event) {
-//	var e = event.toElement || event.relatedTarget;
-//	try {
-//		if (e.parentNode == this || e == this) {
-//	     return;
-//	  }
-//	} catch (e) { return; }
-//
-//	if (!$('#pin-sidebar').checked) {
-//		$('#sidebar-content').classList.add('hidden');
-//		$('#sidebar').classList.remove('expand');
-//	}
-//}
-
-$('#clear-messages').onclick = function () {
-	// Delete children elements
-	var messages = $('#messages');
-	messages.innerHTML = '';
-}
-
-// Restore settings from localStorage
-
-//if (localStorageGet('pin-sidebar') == 'true') {
-//	$('#pin-sidebar').checked = true;
-//	//$('#sidebar-content').classList.remove('hidden');
-//}
-
 if (localStorageGet('joined-left') == 'false') {
-	$('#joined-left').checked = false;
+	$_('#joined-left').checked = false;
 }
 
+//if (localStorageGet('enter-send') == 'false') {
+//	$('#enter-send').hide();
+//}
+//
+//if (localStorageGet('emote') == 'false') {
+//	$('#emote').hide();
+//}
+//
 if (localStorageGet('parse-latex') == 'false') {
-	$('#parse-latex').checked = false;
+	$_('#parse-latex').checked = false;
 	md.inline.ruler.disable([ 'katex' ]);
 	md.block.ruler.disable([ 'katex' ]);
 }
@@ -904,11 +881,19 @@ if (localStorageGet('parse-latex') == 'false') {
 //	localStorageSet('pin-sidebar', !!e.target.checked);
 //}
 //
-$('#joined-left').onchange = function (e) {
+document.querySelector('#joined-left').onchange = function (e) {
 	localStorageSet('joined-left', !!e.target.checked);
 }
 
-$('#parse-latex').onchange = function (e) {
+document.querySelector('#enter-send').onchange = function (e) {
+	localStorageSet('enter-send', !!e.target.checked);
+}
+
+document.querySelector('#emote').onchange = function (e) {
+	localStorageSet('emote', !!e.target.checked);
+}
+
+document.querySelector('#parse-latex').onchange = function (e) {
 	var enabled = !!e.target.checked;
 	localStorageSet('parse-latex', enabled);
 	if (enabled) {
@@ -921,22 +906,22 @@ $('#parse-latex').onchange = function (e) {
 }
 
 if (localStorageGet('syntax-highlight') == 'false') {
-	$('#syntax-highlight').checked = false;
+	$('#syntax-highlight').attr('checked', false);
 	markdownOptions.doHighlight = false;
 }
 
-$('#syntax-highlight').onchange = function (e) {
+$_('#syntax-highlight').onchange = function (e) {
 	var enabled = !!e.target.checked;
 	localStorageSet('syntax-highlight', enabled);
 	markdownOptions.doHighlight = enabled;
 }
 
 if (localStorageGet('allow-imgur') == 'false') {
-	$('#allow-imgur').checked = false;
+	$('#allow-imgur').attr('checked', false);
 	allowImages = false;
 }
 
-$('#allow-imgur').onchange = function (e) {
+$_('#allow-imgur').onchange = function (e) {
 	var enabled = !!e.target.checked;
 	localStorageSet('allow-imgur', enabled);
 	allowImages = enabled;
@@ -1082,13 +1067,26 @@ if (localStorageGet('highlight')) {
 document.querySelector('#scheme-selector').value = currentScheme;
 document.querySelector('#highlight-selector').value = currentHighlight;
 
+enterSend = false;
+if (localStorageGet('enter-send') == 'false') {
+  $('#enter-send').hide();
+} else {
+  $('#enter-send').show();
+  enterSend = true;
+}
+
+if (localStorageGet('emote') == 'false') {
+  $('#emote').hide();
+  $('#emote').remove();
+} else {
+  $('#emote').show();
+}
+
 /* main */
 
 if (myChannel == '') {
 	pushMessage({ text: frontpage });
-//	$('#footer').classList.add('hidden');
-//	$('#sidebar').classList.add('hidden');
-    $$('#footer').hide();
+    $('#footer').hide();
 } else {
 	join(myChannel);
 }

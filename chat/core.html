@@ -169,11 +169,11 @@
 </div>
 
 <div class="mdui-dialog" id="chat-dialog-nick">
-  <div class="mdui-dialog-title">请输入您的昵称(末尾可以加上#[密码])</div>
+  <div class="mdui-dialog-title">请输入您的用户名</div>
   <div class="mdui-dialog-content">
     <div class="mdui-textfield mdui-textfield-floating-label">
-      <label class="mdui-textfield-label">昵称#[密码]</label>
-      <input class="mdui-textfield-input" type="text" value="" id="chat-nick">
+      <label class="mdui-textfield-label">用户名#密码(可选)</label>
+      <input class="mdui-textfield-input" type="text" value="" id="chat-nick" autofocus="">
     </div>
   </div>
   <div class="mdui-dialog-actions">
@@ -182,12 +182,17 @@
 </div>
   
 <footer id="footer" style="position: fixed; bottom: 0; width: 100%">
-  <div class="container">
-    <form id="chatform" class="message">
-      <div class="mdui-textfield">
-        <textarea id="chatinput" class="mdui-textfield-input" type="text" placeholder="Message" autocomplete="off" autofocus=""></textarea>
+  <div class="container mdui-container doc-container doc-no-cover">
+    <div id="chatform" class="message mdui-row" align="center">
+      <div class="mdui-textfield mdui-col-xs-12" style="float:left">
+        <textarea id="chatinput" class="mdui-textfield-input" type="text" placeholder="Message" autocomplete="off"></textarea>
       </div>
-    </form>
+      <div style="float:right">
+      <select id="emote" class="mdui-select mdui-col-xs-2" mdui-select="options" style="float:left">
+        <option value="">无</option><option value="|∀ﾟ">|∀ﾟ</option><option value="(´ﾟДﾟ`)">(´ﾟДﾟ`)</option><option value="(;´Д`)">(;´Д`)</option><option value="(｀･ω･)">(｀･ω･)</option><option value="(=ﾟωﾟ)=">(=ﾟωﾟ)=</option><option value="| ω・´)">| ω・´)</option><option value="|-` )">|-` )</option><option value="|д` )">|д` )</option><option value="|ー` )">|ー` )</option><option value="|∀` )">|∀` )</option><option value="(つд⊂)">(つд⊂)</option><option value="(ﾟДﾟ≡ﾟДﾟ)">(ﾟДﾟ≡ﾟДﾟ)</option><option value="(＾o＾)ﾉ">(＾o＾)ﾉ</option><option value="(|||ﾟДﾟ)">(|||ﾟДﾟ)</option><option value="( ﾟ∀ﾟ)">( ﾟ∀ﾟ)</option><option value="( ´∀`)">( ´∀`)</option><option value="(*´∀`)">(*´∀`)</option><option value="(*ﾟ∇ﾟ)">(*ﾟ∇ﾟ)</option><option value="(*ﾟーﾟ)">(*ﾟーﾟ)</option><option value="(　ﾟ 3ﾟ)">(　ﾟ 3ﾟ)</option><option value="( ´ー`)">( ´ー`)</option><option value="( ・_ゝ・)">( ・_ゝ・)</option><option value="( ´_ゝ`)">( ´_ゝ`)</option><option value="(*´д`)">(*´д`)</option><option value="(・ー・)">(・ー・)</option><option value="(・∀・)">(・∀・)</option><option value="(ゝ∀･)">(ゝ∀･)</option><option value="(〃∀〃)">(〃∀〃)</option><option value="(*ﾟ∀ﾟ*)">(*ﾟ∀ﾟ*)</option><option value="( ﾟ∀。)">( ﾟ∀。)</option><option value="( `д´)">( `д´)</option><option value="(`ε´ )">(`ε´ )</option><option value="(`ヮ´ )">(`ヮ´ )</option><option value="σ`∀´)">σ`∀´)</option><option value=" ﾟ∀ﾟ)σ"> ﾟ∀ﾟ)σ</option><option value="ﾟ ∀ﾟ)ノ">ﾟ ∀ﾟ)ノ</option><option value="(╬ﾟдﾟ)">(╬ﾟдﾟ)</option><option value="(|||ﾟдﾟ)">(|||ﾟдﾟ)</option><option value="( ﾟдﾟ)">( ﾟдﾟ)</option><option value="Σ( ﾟдﾟ)">Σ( ﾟдﾟ)</option><option value="( ;ﾟдﾟ)">( ;ﾟдﾟ)</option><option value="( ;´д`)">( ;´д`)</option><option value="(　д ) ﾟ ﾟ">(　д ) ﾟ ﾟ</option><option value="( ☉д⊙)">( ☉д⊙)</option><option value="(((　ﾟдﾟ)))">(((　ﾟдﾟ)))</option><option value="( ` ・´)">( ` ・´)</option><option value="( ´д`)">( ´д`)</option><option value="( -д-)">( -д-)</option><option value="(>д<)">(&gt;д&lt;)</option><option value="･ﾟ( ﾉд`ﾟ)">･ﾟ( ﾉд`ﾟ)</option><option value="( TдT)">( TдT)</option><option value="(￣∇￣)">(￣∇￣)</option><option value="(￣3￣)">(￣3￣)</option><option value="(￣ｰ￣)">(￣ｰ￣)</option><option value="(￣ . ￣)">(￣ . ￣)</option><option value="(￣皿￣)">(￣皿￣)</option><option value="(￣艸￣)">(￣艸￣)</option><option value="(￣︿￣)">(￣︿￣)</option><option value="(￣︶￣)">(￣︶￣)</option><option value="ヾ(´ωﾟ｀)">ヾ(´ωﾟ｀)</option><option value="(*´ω`*)">(*´ω`*)</option><option value="(・ω・)">(・ω・)</option><option value="( ´・ω)">( ´・ω)</option><option value="(｀・ω)">(｀・ω)</option><option value="(´・ω・`)">(´・ω・`)</option><option value="(`・ω・´)">(`・ω・´)</option><option value="( `_っ´)">( `_っ´)</option><option value="( `ー´)">( `ー´)</option><option value="( ´_っ`)">( ´_っ`)</option><option value="( ´ρ`)">( ´ρ`)</option><option value="( ﾟωﾟ)">( ﾟωﾟ)</option><option value="(oﾟωﾟo)">(oﾟωﾟo)</option><option value="(　^ω^)">(　^ω^)</option><option value="(｡◕∀◕｡)">(｡◕∀◕｡)</option><option value="/( ◕‿‿◕ )\">/( ◕‿‿◕ )\</option><option value="ヾ(´ε`ヾ)">ヾ(´ε`ヾ)</option><option value="(ノﾟ∀ﾟ)ノ">(ノﾟ∀ﾟ)ノ</option><option value="(σﾟдﾟ)σ">(σﾟдﾟ)σ</option><option value="(σﾟ∀ﾟ)σ">(σﾟ∀ﾟ)σ</option><option value="|дﾟ )">|дﾟ )</option><option value="┃電柱┃">┃電柱┃</option><option value="ﾟ(つд`ﾟ)">ﾟ(つд`ﾟ)</option><option value="ﾟÅﾟ )　">ﾟÅﾟ )　</option><option value="⊂彡☆))д`)">⊂彡☆))д`)</option><option value="⊂彡☆))д´)">⊂彡☆))д´)</option><option value="⊂彡☆))∀`)">⊂彡☆))∀`)</option><option value="(´∀((☆ミつ">(´∀((☆ミつ</option></select>
+        <button class="mdui-btn mdui-ripple mdui-col-xs-2" style="float:right" onclick="sendClick()" id="enter-send">send</button>
+      </div>
+    </div>
   </div>
 </footer>
 
@@ -201,7 +206,42 @@
 <script>var $_ = $</script>
 <script src="files/client_core.js"></script>
 <script type="application/javascript">
+  (function($){
+    $.fn.extend({
+        insertAtCaret: function(myValue){
+            var $t=$(this)[0];
+            if (document.selection) {
+                this.focus();
+                sel = document.selection.createRange();
+                sel.text = myValue;
+                this.focus();
+            }
+            else
+                if ($t.selectionStart || $t.selectionStart == '0') {
+                    var startPos = $t.selectionStart;
+                    var endPos = $t.selectionEnd;
+                    var scrollTop = $t.scrollTop;
+                    $t.value = $t.value.substring(0, startPos) + myValue + $t.value.substring(endPos, $t.value.length);
+                    this.focus();
+                    $t.selectionStart = startPos + myValue.length;
+                    $t.selectionEnd = startPos + myValue.length;
+                    $t.scrollTop = scrollTop;
+                }
+                else {
+                    this.value += myValue;
+                    this.focus();
+                }
+        }
+    })
+  })(jQuery);
+  $('#emote').change(function() {
+    $('#chatinput').insertAtCaret(' ' + '``` ' + $('#emote').val() + ' ```' + ' ');
+  });
   
+  function sendClick() {
+    var text = $('#chatinput').val();
+    submitMessage(text);
+  }
 </script>
 </body>
 </html>
