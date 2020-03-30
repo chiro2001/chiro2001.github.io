@@ -962,7 +962,7 @@ function userAdd(nick) {
 }
 
 function userRemove(nick) {
-	var users = $('#users');
+	var users = document.querySelector('#users');
 	var children = users.children;
 
 	for (var i = 0; i < children.length; i++) {
@@ -979,7 +979,7 @@ function userRemove(nick) {
 }
 
 function usersClear() {
-	var users = $('#users');
+	var users = document.querySelector('#users');
 
 	while (users.firstChild) {
 		users.removeChild(users.firstChild);
@@ -1037,13 +1037,13 @@ var currentHighlight = 'darcula';
 
 function setScheme(scheme) {
 	currentScheme = scheme;
-	$('#scheme-link').href = "schemes/" + scheme + ".css";
+	document.querySelector('#scheme-link').href = "schemes/" + scheme + ".css";
 	localStorageSet('scheme', scheme);
 }
 
 function setHighlight(scheme) {
 	currentHighlight = scheme;
-	$('#highlight-link').href = "vendor/hljs/styles/" + scheme + ".min.css";
+	document.querySelector('#highlight-link').href = "vendor/hljs/styles/" + scheme + ".min.css";
 	localStorageSet('highlight', scheme);
 }
 
@@ -1052,7 +1052,7 @@ schemes.forEach(function (scheme) {
 	var option = document.createElement('option');
 	option.textContent = scheme;
 	option.value = scheme;
-	$('#scheme-selector').append(option);
+	document.querySelector('#scheme-selector').append(option);
 });
 
 highlights.forEach(function (scheme) {
@@ -1062,11 +1062,11 @@ highlights.forEach(function (scheme) {
 	$('#highlight-selector').append(option);
 });
 
-$('#scheme-selector').onchange = function (e) {
+document.querySelector('#scheme-selector').onchange = function (e) {
 	setScheme(e.target.value);
 }
 
-$('#highlight-selector').onchange = function (e) {
+document.querySelector('#highlight-selector').onchange = function (e) {
 	setHighlight(e.target.value);
 }
 
@@ -1079,8 +1079,8 @@ if (localStorageGet('highlight')) {
 	setHighlight(localStorageGet('highlight'));
 }
 
-$('#scheme-selector').value = currentScheme;
-$('#highlight-selector').value = currentHighlight;
+document.querySelector('#scheme-selector').value = currentScheme;
+document.querySelector('#highlight-selector').value = currentHighlight;
 
 /* main */
 
