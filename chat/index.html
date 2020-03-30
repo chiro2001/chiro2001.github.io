@@ -194,7 +194,7 @@
     </div>
   </div>
   <div class="mdui-dialog-actions">
-    <button class="mdui-btn mdui-ripple" onclick="openNewRoom()">ok</button>
+    <button class="mdui-btn mdui-ripple" onclick="openNewRoom()" mdui-dialog-confirm>ok</button>
   </div>
 </div>
 
@@ -608,8 +608,11 @@
     }
     gtabs.push('' + frameCount);
     try {
-      new mdui.Dialog('#chat-new-room').close();
-    } catch(e) {}
+//      new mdui.Dialog('#chat-new-room').close();
+      dialogNewRoom.close();
+    } catch(e) {
+        console.log('chat-new-room close err', e);
+    }
     var room = $$('#chat-new-room-text').val();
 //    console.log('going to', room);
     var inst = new mdui.Tab('#chat-tabs');
@@ -661,7 +664,8 @@
       }
     }
     if (!found) {
-      new mdui.Dialog($$('#chat-new-room')).open();
+//      new mdui.Dialog($$('#chat-new-room')).open();
+      dialogNewRoom.open();
     }
     
 //    if (tid > 0) {
@@ -688,7 +692,13 @@
     }).fail(function() {console.log('upload Failed');});
   }
   
-  new mdui.Dialog($$('#chat-new-room')).open();
+  dialogNewRoom = new mdui.Dialog('#chat-new-room');
+//  setTimeout(function() {
+//    dialogNewRoom.open();
+//    console.log('Tryed');
+//  }, 2000);
+  dialogNewRoom.open();
+//  openNewRoom();
 </script>
 </body>
 </html>

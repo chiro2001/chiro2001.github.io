@@ -404,29 +404,38 @@ function notify(args) {
 	}
 }
 
+function nicked(nick) {
+    if (!nick)
+        myNick = $_('#chat-nick').val();
+    else
+        myNick = nick;
+    dialogNick.close();
+    if (myNick) {
+        localStorageSet('my-nick', myNick);
+        send({ cmd: 'join', channel: _channel, nick: myNick });
+    }
+    wasConnected = true;
+}
+
 function joined(channel, port) {
-  ws = new WebSocket('ws://chat.henrize.kim:6060');
-  
-  var wasConnected = false;
+    ws = new WebSocket('ws://chat.henrize.kim:6060');
 
-  ws.onopen = function () {
-      if (!wasConnected) {
-          if (location.hash) {
-              myNick = location.hash.substr(1);
-          } else {
-              myNick = prompt('请输入您的昵称：', myNick);
+    var wasConnected = false;
+
+    ws.onopen = function () {
+        _channel = channel;
+        if (!wasConnected) {
+            if (location.hash) {
+                myNick = location.hash.substr(1);
+            } else {
+        //              myNick = prompt('请输入您的昵称：', myNick);
+              dialogNick = new mdui.Dialog('#chat-dialog-nick');
+              dialogNick.open();
           }
-      }
+        }
+    }
 
-      if (myNick) {
-          localStorageSet('my-nick', myNick);
-          send({ cmd: 'join', channel: channel, nick: myNick });
-      }
-
-      wasConnected = true;
-  }
-
-  ws.onclose = function () {
+    ws.onclose = function () {
       if (wasConnected) {
           pushMessage({ nick: '!', text: "与服务器的连接已经断开，正在尝试重新连接……" });
       }
@@ -434,14 +443,14 @@ function joined(channel, port) {
       window.setTimeout(function () {
           join(channel);
       }, 2000);
-  }
+    }
 
-  ws.onmessage = function (message) {
+    ws.onmessage = function (message) {
       var args = JSON.parse(message.data);
       var cmd = args.cmd;
       var command = COMMANDS[cmd];
       command.call(null, args);
-  }
+    }
 }
 
 function join(channel) {
