@@ -409,7 +409,8 @@ function nicked(nick) {
         myNick = $_('#chat-nick').val();
     else
         myNick = nick;
-    dialogNick.close();
+    if (dialogNick)
+        dialogNick.close();
     if (myNick) {
         localStorageSet('my-nick', myNick);
         send({ cmd: 'join', channel: _channel, nick: myNick });
