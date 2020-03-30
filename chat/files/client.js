@@ -1,3 +1,7 @@
+$ = jQuery;
+$$ = jQuery;
+$_ = jQuery;
+
 function getCookieByArray(name){
  var cookies = document.cookie.split(';');
  var c;
@@ -35,7 +39,7 @@ var setDocsTheme = function (theme) {
   }
 
   var i, len;
-  var $body = $$('body');
+  var $body = jQuery('body');
 
   var classStr = $body.attr('class');
   var classs = classStr.split(' ');
@@ -246,9 +250,9 @@ var frontpage = [
 	"Have a nice chat!"
 ].join("\n");
 
-function $(query) {
-	return document.querySelector(query);
-}
+//function $(query) {
+//	return document.querySelector(query);
+//}
 
 function localStorageGet(key) {
 	try {
@@ -875,7 +879,7 @@ highlights.forEach(function (scheme) {
 	var option = document.createElement('option');
 	option.textContent = scheme;
 	option.value = scheme;
-	$('#highlight-selector').appendChild(option);
+	$('#highlight-selector').append(option);
 });
 
 //$('#scheme-selector').onchange = function (e) {
@@ -964,7 +968,7 @@ function uploadImage(f, token) {
 
 window.addEventListener('message', (event) => {
     const op = event.data
-    console.log(op, event)
+//    console.log(op, event)
     if (op.title) {
         var target_tab = 'chat-tab-' + op.tabId;
         var target_frame = 'chat-frame-' + op.tabId;
@@ -972,7 +976,7 @@ window.addEventListener('message', (event) => {
         m_target_frame = jQuery('#' + target_frame);
         if (m_target_tab) {
             m_target_tab.text(op.title);
-            if (!m_target_frame.is(':visible'))
+            if (!m_target_frame.is(':visible') && op.title.startsWith('['))
                 m_target_tab.addClass('mdui-color-theme-accent')
             else
                 m_target_tab.removeClass('mdui-color-theme-accent');

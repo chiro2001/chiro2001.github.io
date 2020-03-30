@@ -1,3 +1,7 @@
+$ = jQuery;
+$$ = jQuery;
+$_ = jQuery;
+
 function getCookieByArray(name){
  var cookies = document.cookie.split(';');
  var c;
@@ -248,9 +252,9 @@ var frontpage = [
 	"Have a nice chat!"
 ].join("\n");
 
-function $(query) {
-	return document.querySelector(query);
-}
+//function $(query) {
+//	return document.querySelector(query);
+//}
 
 function localStorageGet(key) {
 	try {
@@ -587,7 +591,7 @@ function pushMessage(args) {
 	// Nickname
 	var nickSpanEl = document.createElement('span');
 	nickSpanEl.classList.add('nick');
-	messageEl.appendChild(nickSpanEl);
+	messageEl.append(nickSpanEl);
 
 	if (args.nick) {
 		var nickLinkEl = document.createElement('a');
@@ -600,14 +604,14 @@ function pushMessage(args) {
 
 		var date = new Date(args.time || Date.now());
 		nickLinkEl.title = date.toLocaleString();
-		nickSpanEl.appendChild(nickLinkEl);
+		nickSpanEl.append(nickLinkEl);
 	}
     
     if (args.trip) {
 		var tripEl = document.createElement('span');
 		tripEl.textContent = args.trip + " ";
 		tripEl.classList.add('trip');
-		nickSpanEl.appendChild(tripEl);
+		nickSpanEl.append(tripEl);
 	}
 
 	// Text
@@ -615,11 +619,11 @@ function pushMessage(args) {
 	textEl.classList.add('text');
 	textEl.innerHTML = md.render(args.text);
 
-	messageEl.appendChild(textEl);
+	messageEl.append(textEl);
 
 	// Scroll to bottom
 	var atBottom = isAtBottom();
-	$('#messages').appendChild(messageEl);
+	$('#messages').append(messageEl);
     //mdui.mutation($('#messages'))
 	if (atBottom) {
 		window.scrollTo(0, document.body.scrollHeight);
@@ -732,7 +736,7 @@ function callXiaoice(text) {
     })
 }
 
-$('#chatinput').onkeydown = function (e) {
+$('#chatinput').keydown(function (e) {
 	if (e.keyCode == 13 /* ENTER */ && !e.shiftKey) {
 		e.preventDefault();
 
@@ -823,27 +827,27 @@ $('#chatinput').onkeydown = function (e) {
 			insertAtCursor('\t');
 		}
 	}
-}
+});
 
 function updateInputSize() {
 	var atBottom = isAtBottom();
 
-	var input = $('#chatinput');
-	input.style.height = 0;
+	var input = document.querySelector('#chatinput');
+    input.style.height = 0;
 	input.style.height = input.scrollHeight + 'px';
-	document.body.style.marginBottom = $('#footer').offsetHeight + 'px';
+	document.body.style.marginBottom = document.querySelector('#footer').offsetHeight + 'px';
 
 	if (atBottom) {
 		window.scrollTo(0, document.body.scrollHeight);
 	}
 }
 
-$('#chatinput').onfocus = function () {
+document.querySelector('#chatinput').onfocus = function () {
     unread = 0;
     updateTitle();
 }
 
-$('#chatinput').oninput = function () {
+document.querySelector('#chatinput').oninput = function () {
     unread = 0;
     updateTitle();
 	updateInputSize();
@@ -951,8 +955,8 @@ function userAdd(nick) {
 	}
 
 	var userLi = document.createElement('li');
-	userLi.appendChild(user);
-	$('#users').appendChild(userLi);
+	userLi.append(user);
+	$('#users').append(userLi);
 	onlineUsers.push(nick);
     mdui.mutation();
 }
@@ -1048,14 +1052,14 @@ schemes.forEach(function (scheme) {
 	var option = document.createElement('option');
 	option.textContent = scheme;
 	option.value = scheme;
-	$('#scheme-selector').appendChild(option);
+	$('#scheme-selector').append(option);
 });
 
 highlights.forEach(function (scheme) {
 	var option = document.createElement('option');
 	option.textContent = scheme;
 	option.value = scheme;
-	$('#highlight-selector').appendChild(option);
+	$('#highlight-selector').append(option);
 });
 
 $('#scheme-selector').onchange = function (e) {
