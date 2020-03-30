@@ -961,3 +961,26 @@ function uploadImage(f, token) {
 //        }).fail(function() {console.log('upload Failed');});
 //    }).fail(function() {console.log('getToken Failed')});
 //})
+
+window.addEventListener('message', (event) => {
+    const op = event.data
+    console.log(op, event)
+    if (op.title) {
+        var target_tab = 'chat-tab-' + op.tabId;
+        var target_frame = 'chat-frame-' + op.tabId;
+        m_target_tab = jQuery('#' + target_tab);
+        m_target_frame = jQuery('#' + target_frame);
+        if (m_target_tab) {
+            m_target_tab.text(op.title);
+            if (!m_target_frame.is(':visible'))
+                m_target_tab.addClass('mdui-color-theme-accent')
+            else
+                m_target_tab.removeClass('mdui-color-theme-accent');
+        }
+        else
+            console.log('update title err', target_tab);
+    }
+});
+//————————————————
+//版权声明：本文为CSDN博主「故事佛小妞」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+//原文链接：https://blog.csdn.net/guishifoxin/java/article/details/90236085

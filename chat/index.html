@@ -597,9 +597,14 @@
   
   function tabShow(target) {
 //    console.log('tabshow', target);
-    tabNow = ('' + target).slice(('' + target).lastIndexOf('-')+1);
-    $$('.chat-frame').hide();
-    $$('#' + target).show();
+//    tabNow = ('' + target).slice(('' + target).lastIndexOf('-')+1);
+    tabNow = '' + target;
+    jQuery('.chat-frame').hide();
+    jQuery('.chat-tab').css('font-weight', '');
+    jQuery('#chat-frame-' + target).show();
+//    debugger;
+    jQuery('#chat-tab-' + target).removeClass('mdui-color-theme-accent');
+    jQuery('#chat-tab-' + target).css('font-weight', '600');
   }
   
   function openNewRoom() {
@@ -620,15 +625,15 @@
     var tabs = $$('#chat-tabs');
     var target = 'chat-frame-' + frameCount;
     var target_tab = 'chat-tab-' + frameCount;
-    var mtab = $$('<a href="#' + target + '" class="mdui-ripple" onclick="tabShow(\'' + target + '\');" id="' + target_tab + '">' + room + '</a>');
-    var mframe = $$('<iframe src="core.html?' + room + '" frameborder="0" width="100%" seamless class="chat-frame" id="' + target + '"></iframe>');
+    var mtab = $$('<a href="#' + target + '" class="mdui-ripple chat-tab" onclick="tabShow(\'' + frameCount + '\');" id="' + target_tab + '">' + room + '</a>');
+    var mframe = $$('<iframe src="core.html?' + room + '&tabId=' + frameCount + '" frameborder="0" width="100%" seamless class="chat-frame" id="' + target + '"></iframe>');
     $$(tabs).append(mtab);
     $$(frames).append(mframe);
+    tabShow(frameCount);
     frameCount = frameCount + 1;
     
     resize();
     mdui.mutation();
-    tabShow(target);
   }
   
   function closeRoom(tid) {
@@ -647,8 +652,8 @@
     var found = false;
     for (i=index; i<gtabs.length; i++) {
       if (gtabs[i] != undefined) {
-        var target2 = 'chat-frame-' + gtabs[i];
-        tabShow(target2);
+//        var target2 = 'chat-frame-' + gtabs[i];
+        tabShow(gtabs[i]);
         found = true;
         break;
       }
@@ -656,8 +661,8 @@
     if (!found) {
       for (i=index; i>=0; i--) {
         if (gtabs[i] != undefined) {
-          var target2 = 'chat-frame-' + gtabs[i];
-          tabShow(target2);
+//          var target2 = 'chat-frame-' + gtabs[i];
+          tabShow(gtabs[i]);
           found = true;
           break;
         }
@@ -692,7 +697,9 @@
     }).fail(function() {console.log('upload Failed');});
   }
   
-  dialogNewRoom = new mdui.Dialog('#chat-new-room');
+  dialogNewRoom = new mdui.Dialog('#chat-new-room', {
+      history: false
+  });
 //  setTimeout(function() {
 //    dialogNewRoom.open();
 //    console.log('Tryed');

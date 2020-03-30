@@ -267,6 +267,15 @@ function localStorageSet(key, val) {
 var ws;
 var myNick = localStorageGet('my-nick') || '';
 var myChannel = window.location.search.replace(/^\?/, '');
+tabId = 0;
+if (myChannel.indexOf('&') != -1) {
+    var tail = myChannel.slice(myChannel.indexOf('&')+1, myChannel.length);
+    //debugger;
+    if (tail.startsWith('tabId=')) {
+        tabId = tail.slice(6, tail.length);
+    }
+    myChannel = myChannel.slice(0, myChannel.indexOf('&'));
+}
 var lastSent = [""];
 var lastSentPos = 0;
 
@@ -447,7 +456,9 @@ function joined(channel, port) {
 
     ws.onopen = function () {
         _channel = channel;
-        dialogNick = new mdui.Dialog('#chat-dialog-nick');
+        dialogNick = new mdui.Dialog('#chat-dialog-nick', {
+            history: false
+        });
         if (!wasConnected) {
             if (location.hash) {
                 myNick = location.hash.substr(1);
@@ -496,6 +507,10 @@ var COMMANDS = {
 		if (ignoredUsers.indexOf(args.nick) >= 0) {
 			return;
 		}
+        if (args.nick == myNick) {
+            unread = 0;
+            updateTitle();
+        }
 		pushMessage(args);
 	},
 
@@ -610,7 +625,8 @@ function pushMessage(args) {
 		window.scrollTo(0, document.body.scrollHeight);
 	}
 
-	unread += 1;
+    if (args.nick != myNick)
+	   unread += 1;
 	updateTitle();
   
     // 修改一下主题
@@ -636,18 +652,24 @@ function send(data) {
 	}
 }
 
-var windowActive = true;
+var windowActive = false;
 var unread = 0;
 
-window.onfocus = function () {
-	windowActive = true;
-
+function myOnFocus() {
+//    windowActive = true;
 	updateTitle();
 }
 
-window.onblur = function () {
-	windowActive = false;
+function myOnBlur() {
+//    windowActive = false;
+	updateTitle();
 }
+
+window.onfocus = myOnFocus;
+window.onblur = myOnBlur;
+
+//document.contentWindow.addEventListener("focus",myOnFocus,false);
+//document.contentWindow.addEventListener("blur",myOnBlur,false);
 
 window.onscroll = function () {
 	if (isAtBottom()) {
@@ -660,15 +682,15 @@ function isAtBottom() {
 }
 
 function updateTitle() {
-	if (windowActive && isAtBottom()) {
-		unread = 0;
-	}
+//	if (windowActive && isAtBottom()) {
+//		unread = 0;
+//	}
 
 	var title;
 	if (myChannel) {
-		title = myChannel + " - Henrize聊天室";
+		title = myChannel;
 	} else {
-		title = "Henrize聊天网站";
+		title = "main";
 	}
 
 	if (unread > 0) {
@@ -676,6 +698,8 @@ function updateTitle() {
 	}
 
 	document.title = title;
+    // 通知父窗口改变
+    window.parent.postMessage({ title: title, tabId: tabId }, '*');
 }
 
 //$('#footer').onclick = function () {
@@ -814,7 +838,14 @@ function updateInputSize() {
 	}
 }
 
+$('#chatinput').onfocus = function () {
+    unread = 0;
+    updateTitle();
+}
+
 $('#chatinput').oninput = function () {
+    unread = 0;
+    updateTitle();
 	updateInputSize();
 }
 
