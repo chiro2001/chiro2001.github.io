@@ -353,7 +353,7 @@ if (notifySetting === "true" || notifySetting === true) {
 }
 
 /** Sound switch and local storage behavior **/
-//var soundSwitch = document.getElementById("sound-switch")
+var soundSwitch = document.getElementById("sound-switch")
 var notifySetting = localStorageGet("notify-sound")
 
 // Update localStorage with value of checkbox
