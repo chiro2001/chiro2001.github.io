@@ -614,7 +614,7 @@ function pushMessage(args) {
 	updateTitle();
   
     // 修改一下主题
-    $$('.trip').attr('class', 'mdui-color-grey');
+    $$('.trip').attr('class', 'mdui-text-color-grey');
 }
 
 function insertAtCursor(text) {
