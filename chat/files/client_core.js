@@ -446,12 +446,12 @@ function joined(channel, port) {
 
     ws.onopen = function () {
         _channel = channel;
+        dialogNick = new mdui.Dialog('#chat-dialog-nick');
         if (!wasConnected) {
             if (location.hash) {
                 myNick = location.hash.substr(1);
             } else {
                 if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
-                    dialogNick = new mdui.Dialog('#chat-dialog-nick');
                     dialogNick.open();
                 }else{
                     //否则就是PC浏览器打开
