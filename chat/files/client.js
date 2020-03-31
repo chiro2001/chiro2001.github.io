@@ -88,6 +88,7 @@ $$(document).on('change', 'input[name="doc-theme-primary"]', function () {
   setDocsTheme({
     primary: $$(this).val()
   });
+    updateConfig();
 });
 
 // 切换强调色
@@ -95,6 +96,7 @@ $$(document).on('change', 'input[name="doc-theme-accent"]', function () {
   setDocsTheme({
     accent: $$(this).val()
   });
+    updateConfig();
 });
 
 // 切换主题色
@@ -102,6 +104,7 @@ $$(document).on('change', 'input[name="doc-theme-layout"]', function () {
   setDocsTheme({
     layout: $$(this).val()
   });
+    updateConfig();
 });
 
 // 恢复默认主题
@@ -111,6 +114,7 @@ $$(document).on('cancel.mdui.dialog', '#dialog-docs-theme', function () {
     accent: DEFAULT_ACCENT,
     layout: DEFAULT_LAYOUT
   });
+    updateConfig();
 });
 
 function getTheme() {
@@ -121,7 +125,7 @@ function getTheme() {
   setDocsTheme(theme);
 }
 
-getTheme();
+//getTheme();
 
 /*
  *
@@ -266,203 +270,221 @@ function localStorageSet(key, val) {
 	} catch (e) { }
 }
 
-var soundSwitch = document.getElementById("sound-switch")
-var notifySetting = localStorageGet("notify-sound")
-//
-// Update localStorage with value of checkbox
-soundSwitch.addEventListener('change', (event) => {
-	localStorageSet("notify-sound", soundSwitch.checked)
-})
-// Check if localStorage value is set, defaults to OFF
-if (notifySetting === null) {
-	localStorageSet("notify-sound", "false")
-	soundSwitch.checked = false
+function updateConfig() {
+
+    var soundSwitch = document.getElementById("sound-switch")
+    var notifySetting = localStorageGet("notify-sound")
+    //
+    // Update localStorage with value of checkbox
+    soundSwitch.addEventListener('change', (event) => {
+        localStorageSet("notify-sound", soundSwitch.checked)
+    })
+    // Check if localStorage value is set, defaults to OFF
+    if (notifySetting === null) {
+        localStorageSet("notify-sound", "false")
+        soundSwitch.checked = false
+    }
+    // Configure soundSwitch checkbox element
+    if (notifySetting === "true" || notifySetting === true) {
+        soundSwitch.checked = true
+    } else if (notifySetting === "false" || notifySetting === false) {
+        soundSwitch.checked = false
+    }
+
+    // Create a new notification after checking if permission has been granted
+    function spawnNotification(title, body) {
+        // Let's check if the browser supports notifications
+        if (!("Notification" in window)) {
+            console.error("您的浏览器不支持浏览器通知。");
+        } else if (Notification.permission === "granted") { // Check if notification permissions are already given
+            // If it's okay let's create a notification
+            var options = {
+                body: body,
+                icon: "/favicon-96x96.png"
+            };
+            var n = new Notification(title, options);
+        }
+        // Otherwise, we need to ask the user for permission
+        else if (Notification.permission !== "denied") {
+            if (RequestNotifyPermission()) {
+                var options = {
+                    body: body,
+                    icon: "/favicon-96x96.png"
+                };
+                var n = new Notification(title, options);
+            }
+        } else if (Notification.permission == "denied") {
+            // At last, if the user has denied notifications, and you
+            // want to be respectful, there is no need to bother them any more.
+        }
+    }
+
+    function notify(args) {
+        // Spawn notification if enabled
+        if (notifySwitch.checked) {
+            spawnNotification("?" + myChannel + "  —  " + args.nick, args.text)
+        }
+
+        // Play sound if enabled
+        if (soundSwitch.checked) {
+            var soundPromise = document.getElementById("notify-sound").play();
+            if (soundPromise) {
+                soundPromise.catch(function (error) {
+                    console.error("播放声音时出现故障：\n" + error);
+                });
+            }
+        }
+    }
+
+    $('#clear-messages').click(function () {
+      $('#chat-frame-' + tabNow).contents().find('#messages').html('');
+    })
+
+    // Restore settings from localStorage
+
+    if (localStorageGet('enter-send') == 'false') {
+      $_('#enter-send').checked = false;
+    } else {
+      $_('#enter-send').checked = true;
+    }
+
+    if (localStorageGet('emote') == 'false') {
+      $_('#emote').checked = false;
+    } else {
+      $_('#emote').checked = true;
+    }
+
+    if (localStorageGet('joined-left') == 'false') {
+      $_('#joined-left').checked = false;
+    } else {
+      $_('#joined-left').checked = true;
+    }
+
+    if (localStorageGet('parse-latex') == 'false') {
+        $_('#parse-latex').checked = false;
+        md.inline.ruler.disable([ 'katex' ]);
+        md.block.ruler.disable([ 'katex' ]);
+    }
+
+    document.querySelector('#joined-left').onchange = function (e) {
+        localStorageSet('joined-left', !!e.target.checked);
+        updateConfig();
+    }
+
+    document.querySelector('#enter-send').onchange = function (e) {
+        localStorageSet('enter-send', !!e.target.checked);
+        updateConfig();
+    }
+
+    document.querySelector('#emote').onchange = function (e) {
+        localStorageSet('emote', !!e.target.checked);
+        updateConfig();
+    }
+
+    $_('#parse-latex').onchange = function (e) {
+        var enabled = !!e.target.checked;
+        localStorageSet('parse-latex', enabled);
+        if (enabled) {
+            md.inline.ruler.enable([ 'katex' ]);
+            md.block.ruler.enable([ 'katex' ]);
+        } else {
+            md.inline.ruler.disable([ 'katex' ]);
+            md.block.ruler.disable([ 'katex' ]);
+        }
+        updateConfig();
+    }
+
+    if (localStorageGet('syntax-highlight') == 'false') {
+        $_('#syntax-highlight').checked = false;
+        markdownOptions.doHighlight = false;
+    }
+
+    $_('#syntax-highlight').onchange = function (e) {
+        var enabled = !!e.target.checked;
+        localStorageSet('syntax-highlight', enabled);
+        markdownOptions.doHighlight = enabled;
+        updateConfig();
+    }
+
+    if (localStorageGet('allow-imgur') == 'false') {
+        $_('#allow-imgur').checked = false;
+        allowImages = false;
+    }
+
+    $_('#allow-imgur').onchange = function (e) {
+        var enabled = !!e.target.checked;
+        localStorageSet('allow-imgur', enabled);
+        allowImages = enabled;
+        updateConfig();
+    }
+
+    var highlights = [
+        'agate',
+        'androidstudio',
+        'atom-one-dark',
+        'darcula',
+        'github',
+        'rainbow',
+        'tomorrow',
+        'xcode',
+        'zenburn'
+    ]
+
+    //var currentScheme = 'atelier-dune';
+    var currentHighlight = 'darcula';
+
+    function setHighlight(scheme) {
+        currentHighlight = scheme;
+        $_('#highlight-link').href = "http://chat.henrize.kim:3000/vendor/hljs/styles/" + scheme + ".min.css";
+        localStorageSet('highlight', scheme);
+    }
+
+    highlights.forEach(function (scheme) {
+        var option = document.createElement('option');
+        option.textContent = scheme;
+        option.value = scheme;
+        $_('#highlight-selector').append(option);
+    });
+
+    //$('#scheme-selector').onchange = function (e) {
+    //	setScheme(e.target.value);
+    //}
+    //
+    $_('#highlight-selector').onchange = function (e) {
+        setHighlight(e.target.value);
+        updateConfig();
+    }
+
+    if (localStorageGet('highlight')) {
+        setHighlight(localStorageGet('highlight'));
+    }
+
+    $_('#highlight-selector').value = currentHighlight;
+    
+    getTheme();
+    
+    updateTabsConfig();
 }
-// Configure soundSwitch checkbox element
-if (notifySetting === "true" || notifySetting === true) {
-	soundSwitch.checked = true
-} else if (notifySetting === "false" || notifySetting === false) {
-	soundSwitch.checked = false
+
+function updateTabsConfig() {
+    frames = $('.chat-frame');
+//    frames.find('chatinput').focus(false);
+    if (frames) {
+      for (i=0; i<frames.length; i++) {
+        frames[i].contentWindow.updateConfig();
+      }
+    }
 }
 
-// Create a new notification after checking if permission has been granted
-function spawnNotification(title, body) {
-	// Let's check if the browser supports notifications
-	if (!("Notification" in window)) {
-		console.error("您的浏览器不支持浏览器通知。");
-	} else if (Notification.permission === "granted") { // Check if notification permissions are already given
-		// If it's okay let's create a notification
-		var options = {
-			body: body,
-			icon: "/favicon-96x96.png"
-		};
-		var n = new Notification(title, options);
-	}
-	// Otherwise, we need to ask the user for permission
-	else if (Notification.permission !== "denied") {
-		if (RequestNotifyPermission()) {
-			var options = {
-				body: body,
-				icon: "/favicon-96x96.png"
-			};
-			var n = new Notification(title, options);
-		}
-	} else if (Notification.permission == "denied") {
-		// At last, if the user has denied notifications, and you
-		// want to be respectful, there is no need to bother them any more.
-	}
+updateConfig();
+
+function downloadTabMessage() {
+    var subWindow = $('#chat-frame-' + tabNow)[0];
+    if (subWindow) {
+        if (subWindow.contentWindow.downloadMessages)
+            subWindow.contentWindow.downloadMessages();
+    }
 }
-
-function notify(args) {
-	// Spawn notification if enabled
-	if (notifySwitch.checked) {
-		spawnNotification("?" + myChannel + "  —  " + args.nick, args.text)
-	}
-
-	// Play sound if enabled
-	if (soundSwitch.checked) {
-		var soundPromise = document.getElementById("notify-sound").play();
-		if (soundPromise) {
-			soundPromise.catch(function (error) {
-				console.error("播放声音时出现故障：\n" + error);
-			});
-		}
-	}
-}
-
-$('#clear-messages').click(function () {
-  $('#chat-frame-' + tabNow).contents().find('#messages').html('');
-})
-
-// Restore settings from localStorage
-
-if (localStorageGet('enter-send') == 'false') {
-//  $('#enter-send').hide();
-  $_('#enter-send').checked = false;
-} else {
-//  $('#enter-send').show();
-  $_('#enter-send').checked = true;
-}
-
-if (localStorageGet('emote') == 'false') {
-//  $('#emote').hide();
-  $_('#emote').checked = false;
-} else {
-//  $('#emote').show();
-  $_('#emote').checked = true;
-}
-
-if (localStorageGet('joined-left') == 'false') {
-  $_('#joined-left').checked = false;
-} else {
-  $_('#joined-left').checked = true;
-}
-
-if (localStorageGet('parse-latex') == 'false') {
-	$_('#parse-latex').checked = false;
-	md.inline.ruler.disable([ 'katex' ]);
-	md.block.ruler.disable([ 'katex' ]);
-}
-
-document.querySelector('#joined-left').onchange = function (e) {
-	localStorageSet('joined-left', !!e.target.checked);
-}
-
-document.querySelector('#enter-send').onchange = function (e) {
-	localStorageSet('enter-send', !!e.target.checked);
-}
-
-document.querySelector('#emote').onchange = function (e) {
-	localStorageSet('emote', !!e.target.checked);
-}
-
-$_('#parse-latex').onchange = function (e) {
-	var enabled = !!e.target.checked;
-	localStorageSet('parse-latex', enabled);
-	if (enabled) {
-		md.inline.ruler.enable([ 'katex' ]);
-		md.block.ruler.enable([ 'katex' ]);
-	} else {
-		md.inline.ruler.disable([ 'katex' ]);
-		md.block.ruler.disable([ 'katex' ]);
-	}
-}
-
-if (localStorageGet('syntax-highlight') == 'false') {
-	$_('#syntax-highlight').checked = false;
-	markdownOptions.doHighlight = false;
-}
-
-$_('#syntax-highlight').onchange = function (e) {
-	var enabled = !!e.target.checked;
-	localStorageSet('syntax-highlight', enabled);
-	markdownOptions.doHighlight = enabled;
-}
-
-if (localStorageGet('allow-imgur') == 'false') {
-	$_('#allow-imgur').checked = false;
-	allowImages = false;
-}
-
-$_('#allow-imgur').onchange = function (e) {
-	var enabled = !!e.target.checked;
-	localStorageSet('allow-imgur', enabled);
-	allowImages = enabled;
-}
-
-var highlights = [
-	'agate',
-	'androidstudio',
-	'atom-one-dark',
-	'darcula',
-	'github',
-	'rainbow',
-	'tomorrow',
-	'xcode',
-	'zenburn'
-]
-
-//var currentScheme = 'atelier-dune';
-var currentHighlight = 'darcula';
-
-function setHighlight(scheme) {
-	currentHighlight = scheme;
-	$_('#highlight-link').href = "http://chat.henrize.kim:3000/vendor/hljs/styles/" + scheme + ".min.css";
-	localStorageSet('highlight', scheme);
-}
-
-highlights.forEach(function (scheme) {
-	var option = document.createElement('option');
-	option.textContent = scheme;
-	option.value = scheme;
-	$_('#highlight-selector').append(option);
-});
-
-//$('#scheme-selector').onchange = function (e) {
-//	setScheme(e.target.value);
-//}
-//
-$_('#highlight-selector').onchange = function (e) {
-	setHighlight(e.target.value);
-}
-
-if (localStorageGet('highlight')) {
-	setHighlight(localStorageGet('highlight'));
-}
-
-
-$_('#highlight-selector').value = currentHighlight;
-//
-///* main */
-//
-//if (myChannel == '') {
-//	pushMessage({ text: frontpage });
-////	$('#footer').classList.add('hidden');
-////	$('#sidebar').classList.add('hidden');
-//    $$('#footer').hide();
-//} else {
-//	join(myChannel);
-//}
 
 function getToken(username, password) {
     return $.ajax({
@@ -536,6 +558,3 @@ window.addEventListener('message', (event) => {
             console.log('update title err', target_tab);
     }
 });
-//————————————————
-//版权声明：本文为CSDN博主「故事佛小妞」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
-//原文链接：https://blog.csdn.net/guishifoxin/java/article/details/90236085

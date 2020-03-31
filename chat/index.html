@@ -71,7 +71,7 @@
     <button class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#chat-more_vert'}"><i class="mdui-icon material-icons">more_vert</i></button>
     <ul class="mdui-menu" id="chat-more_vert">
       <li class="mdui-menu-item">
-        <a href="javascript:;" class="mdui-ripple">取消</a>
+        <a href="javascript:;" class="mdui-ripple">收起</a>
       </li>
       <li class="mdui-divider"></li>
       <li class="mdui-menu-item">
@@ -194,7 +194,7 @@
   <div class="mdui-dialog-content">
     <div class="mdui-textfield mdui-textfield-floating-label">
       <label class="mdui-textfield-label">房间叫什么呢</label>
-      <input class="mdui-textfield-input" type="text" value="lounge" id="chat-new-room-text">
+      <input class="mdui-textfield-input" type="text" value="lounge" id="chat-new-room-text" autofocus="">
     </div>
   </div>
   <div class="mdui-dialog-actions">
@@ -206,7 +206,6 @@
     <div class="mdui-dialog-title">功能设置</div>
     <div class="mdui-dialog-content mdui-typo">
       <div id="chat-sidebar-content">
-        <p>这些设置只对新打开的窗口有效。</p>
         <p>
           <label class="mdui-checkbox">
             <input type="checkbox" id="enter-send" checked=""/>
@@ -279,6 +278,9 @@
           </p><h4>代码高光样式</h4>
           <select id="highlight-selector" class="mdui-select" mdui-select><option value="agate">agate</option><option value="androidstudio">androidstudio</option><option value="atom-one-dark">atom-one-dark</option><option value="darcula" selected="selected">darcula</option><option value="github">github</option><option value="rainbow">rainbow</option><option value="tomorrow">tomorrow</option><option value="xcode">xcode</option><option value="zenburn">zenburn</option></select>
         <p></p>
+        <p>
+          <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" onclick="downloadTabMessage()">保存本页聊天记录</button>
+        </p>
         <p>
           <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" id="clear-messages">清空本页聊天记录</button>
         </p>

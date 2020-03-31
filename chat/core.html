@@ -196,6 +196,8 @@
   </div>
 </footer>
 
+<a id="file-download" style="display: none"></a>
+
 <!--<script src="files/jquery.min.js"></script>-->
 <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <!--    <script src="https://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/using/showdown.min.js"></script>-->
@@ -234,8 +236,13 @@
         }
     })
   })(jQuery);
-  $('#emote').change(function() {
-    $('#chatinput').insertAtCaret(' ' + '``` ' + $('#emote').val() + ' ```' + ' ');
+  memote = $('#emote');
+  memote.change(function() {
+//    $('#chatinput').insertAtCaret(' ' + '``` ' + $('#emote').val() + ' ```' + ' ');
+      if (memote.val().includes('`') || memote.val().includes('^') || memote.val().includes('*'))
+          $('#chatinput').insertAtCaret(' ' + '``` ' + memote.val() + ' ```' + ' ');
+      else
+          $('#chatinput').insertAtCaret(' ' + memote.val() + ' ');
   });
   
   function sendClick() {

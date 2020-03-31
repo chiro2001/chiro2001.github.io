@@ -121,7 +121,7 @@ function getTheme() {
   setDocsTheme(theme);
 }
 
-getTheme();
+//getTheme();
 
 xiaoice = 'XiaoIce';
 
@@ -612,7 +612,7 @@ function pushMessage(args) {
     
     if (args.trip) {
 		var tripEl = document.createElement('span');
-		tripEl.textContent = args.trip + " ";
+		tripEl.textContent = ' ' + args.trip;
 		tripEl.classList.add('trip');
 		nickSpanEl.append(tripEl);
 	}
@@ -859,74 +859,6 @@ document.querySelector('#chatinput').oninput = function () {
 
 updateInputSize();
 
-if (localStorageGet('joined-left') == 'false') {
-	$_('#joined-left').checked = false;
-}
-
-//if (localStorageGet('enter-send') == 'false') {
-//	$('#enter-send').hide();
-//}
-//
-//if (localStorageGet('emote') == 'false') {
-//	$('#emote').hide();
-//}
-//
-if (localStorageGet('parse-latex') == 'false') {
-	$_('#parse-latex').checked = false;
-	md.inline.ruler.disable([ 'katex' ]);
-	md.block.ruler.disable([ 'katex' ]);
-}
-
-//$('#pin-sidebar').onchange = function (e) {
-//	localStorageSet('pin-sidebar', !!e.target.checked);
-//}
-//
-document.querySelector('#joined-left').onchange = function (e) {
-	localStorageSet('joined-left', !!e.target.checked);
-}
-
-document.querySelector('#enter-send').onchange = function (e) {
-	localStorageSet('enter-send', !!e.target.checked);
-}
-
-document.querySelector('#emote').onchange = function (e) {
-	localStorageSet('emote', !!e.target.checked);
-}
-
-document.querySelector('#parse-latex').onchange = function (e) {
-	var enabled = !!e.target.checked;
-	localStorageSet('parse-latex', enabled);
-	if (enabled) {
-		md.inline.ruler.enable([ 'katex' ]);
-		md.block.ruler.enable([ 'katex' ]);
-	} else {
-		md.inline.ruler.disable([ 'katex' ]);
-		md.block.ruler.disable([ 'katex' ]);
-	}
-}
-
-if (localStorageGet('syntax-highlight') == 'false') {
-	$('#syntax-highlight').attr('checked', false);
-	markdownOptions.doHighlight = false;
-}
-
-$_('#syntax-highlight').onchange = function (e) {
-	var enabled = !!e.target.checked;
-	localStorageSet('syntax-highlight', enabled);
-	markdownOptions.doHighlight = enabled;
-}
-
-if (localStorageGet('allow-imgur') == 'false') {
-	$('#allow-imgur').attr('checked', false);
-	allowImages = false;
-}
-
-$_('#allow-imgur').onchange = function (e) {
-	var enabled = !!e.target.checked;
-	localStorageSet('allow-imgur', enabled);
-	allowImages = enabled;
-}
-
 // User list
 var onlineUsers = [];
 var ignoredUsers = [];
@@ -981,108 +913,157 @@ function userIgnore(nick) {
 	ignoredUsers.push(nick);
 }
 
-/* color scheme switcher */
+function updateConfig() {
+    if (localStorageGet('joined-left') == 'false') {
+        $_('#joined-left').checked = false;
+    }
 
-var schemes = [
-	'安卓黑',
-	'默认黑',
-	'夜空黑',
-	'终端黑',
-	'初恋粉',
-	'安卓白',
-	'粉笔白',
-	'石灰白',
-	'寒夜蓝',
-	'口罩蓝',
-	'流行蓝',
-	'天依蓝',
-	'油漆蓝',
-	'荒漠黄',
-	'代码灰',
-	'球场绿',
-	'荧光绿',
-	'芬达橙',
-	'匿名版'
-];
+    if (localStorageGet('parse-latex') == 'false') {
+        $_('#parse-latex').checked = false;
+        md.inline.ruler.disable([ 'katex' ]);
+        md.block.ruler.disable([ 'katex' ]);
+    }
 
-var highlights = [
-	'agate',
-	'androidstudio',
-	'atom-one-dark',
-	'darcula',
-	'github',
-	'rainbow',
-	'tomorrow',
-	'xcode',
-	'zenburn'
-]
+    if (localStorageGet('syntax-highlight') == 'false') {
+        $('#syntax-highlight').attr('checked', false);
+        markdownOptions.doHighlight = false;
+    }
 
-var currentScheme = 'atelier-dune';
-var currentHighlight = 'darcula';
+    $_('#syntax-highlight').onchange = function (e) {
+        var enabled = !!e.target.checked;
+        localStorageSet('syntax-highlight', enabled);
+        markdownOptions.doHighlight = enabled;
+    }
 
-function setScheme(scheme) {
-	currentScheme = scheme;
-	document.querySelector('#scheme-link').href = "schemes/" + scheme + ".css";
-	localStorageSet('scheme', scheme);
-}
+    if (localStorageGet('allow-imgur') == 'false') {
+        $('#allow-imgur').attr('checked', false);
+        allowImages = false;
+    }
 
-function setHighlight(scheme) {
-	currentHighlight = scheme;
-	document.querySelector('#highlight-link').href = "vendor/hljs/styles/" + scheme + ".min.css";
-	localStorageSet('highlight', scheme);
-}
+    $_('#allow-imgur').onchange = function (e) {
+        var enabled = !!e.target.checked;
+        localStorageSet('allow-imgur', enabled);
+        allowImages = enabled;
+    }
 
-// Add scheme options to dropdown selector
-schemes.forEach(function (scheme) {
-	var option = document.createElement('option');
-	option.textContent = scheme;
-	option.value = scheme;
-	document.querySelector('#scheme-selector').append(option);
-});
 
-highlights.forEach(function (scheme) {
-	var option = document.createElement('option');
-	option.textContent = scheme;
-	option.value = scheme;
-	$('#highlight-selector').append(option);
-});
+    /* color scheme switcher */
 
-document.querySelector('#scheme-selector').onchange = function (e) {
-	setScheme(e.target.value);
-}
+    var schemes = [
+        '安卓黑',
+        '默认黑',
+        '夜空黑',
+        '终端黑',
+        '初恋粉',
+        '安卓白',
+        '粉笔白',
+        '石灰白',
+        '寒夜蓝',
+        '口罩蓝',
+        '流行蓝',
+        '天依蓝',
+        '油漆蓝',
+        '荒漠黄',
+        '代码灰',
+        '球场绿',
+        '荧光绿',
+        '芬达橙',
+        '匿名版'
+    ];
 
-document.querySelector('#highlight-selector').onchange = function (e) {
-	setHighlight(e.target.value);
-}
+    var highlights = [
+        'agate',
+        'androidstudio',
+        'atom-one-dark',
+        'darcula',
+        'github',
+        'rainbow',
+        'tomorrow',
+        'xcode',
+        'zenburn'
+    ]
 
-// Load sidebar configaration values from local storage if available
-if (localStorageGet('scheme')) {
-	setScheme(localStorageGet('scheme'));
-}
+    var currentScheme = 'atelier-dune';
+    var currentHighlight = 'darcula';
 
-if (localStorageGet('highlight')) {
-	setHighlight(localStorageGet('highlight'));
-}
+    function setScheme(scheme) {
+        currentScheme = scheme;
+        document.querySelector('#scheme-link').href = "schemes/" + scheme + ".css";
+        localStorageSet('scheme', scheme);
+    }
 
-document.querySelector('#scheme-selector').value = currentScheme;
-document.querySelector('#highlight-selector').value = currentHighlight;
+    function setHighlight(scheme) {
+        currentHighlight = scheme;
+        document.querySelector('#highlight-link').href = "vendor/hljs/styles/" + scheme + ".min.css";
+        localStorageSet('highlight', scheme);
+    }
 
-enterSend = false;
-if (localStorageGet('enter-send') == 'false') {
-  $('#enter-send').hide();
-} else {
-  $('#enter-send').show();
-  enterSend = true;
-}
+    // Add scheme options to dropdown selector
+    schemes.forEach(function (scheme) {
+        var option = document.createElement('option');
+        option.textContent = scheme;
+        option.value = scheme;
+        document.querySelector('#scheme-selector').append(option);
+    });
 
-if (localStorageGet('emote') == 'false') {
-  $('#emote').hide();
-  $('#emote').remove();
-} else {
-  $('#emote').show();
+    highlights.forEach(function (scheme) {
+        var option = document.createElement('option');
+        option.textContent = scheme;
+        option.value = scheme;
+        $('#highlight-selector').append(option);
+    });
+
+    document.querySelector('#scheme-selector').onchange = function (e) {
+        setScheme(e.target.value);
+    }
+
+    document.querySelector('#highlight-selector').onchange = function (e) {
+        setHighlight(e.target.value);
+    }
+
+    // Load sidebar configaration values from local storage if available
+    if (localStorageGet('scheme')) {
+        setScheme(localStorageGet('scheme'));
+    }
+
+    if (localStorageGet('highlight')) {
+        setHighlight(localStorageGet('highlight'));
+    }
+
+    document.querySelector('#scheme-selector').value = currentScheme;
+    document.querySelector('#highlight-selector').value = currentHighlight;
+
+    if (!localStorageGet('enter-send')) {
+      // 默认打钩
+      localStorageSet('enter-send', true);
+    }
+    if (!localStorageGet('emote')) {
+      // 默认打钩
+      localStorageSet('emote', true);
+    }
+
+    enterSend = false;
+    if (localStorageGet('enter-send') == 'false') {
+      $('#enter-send').hide();
+    } else {
+      $('#enter-send').show();
+      enterSend = true;
+    }
+
+    if (localStorageGet('emote') == 'false') {
+      $('#emote').hide();
+      $('.mdui-select').hide();
+//      $('#emote').remove();
+    } else {
+//      $('#emote').show();
+      $('.mdui-select').show();
+      $('#emote').hide();
+    }
+    getTheme();
 }
 
 /* main */
+updateConfig();
 
 if (myChannel == '') {
 	pushMessage({ text: frontpage });
@@ -1091,4 +1072,27 @@ if (myChannel == '') {
 	join(myChannel);
 }
 
+function downloadFile(filename, text) {
+    var pom = document.createElement('a');
+    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    pom.setAttribute('download', filename);
+    if (document.createEvent) {
+        var event = document.createEvent('MouseEvents');
+        event.initEvent('click', true, true);
+        pom.dispatchEvent(event);
+    } else {
+        pom.click();
+    }
+}
 
+function downloadMessages() {
+    var messages = $('#messages');
+    var text = '';
+    for (var i=0; i<messages.children().length; i++) {
+        var child = $(messages.children()[i]);
+        text = text + $('.nick', child).text() + '\r\n' + $('.text', child).text() + '' + '\r\n\r\n';
+    }
+//    var text = messages.text();
+    downloadFile('' + myNick + ' in ' + myChannel + ' - ' + new Date() + '.txt', text);
+//    console.log(text);
+}
