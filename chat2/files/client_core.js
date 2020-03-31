@@ -227,7 +227,7 @@ md.use(remarkableKatex);
 function verifyLink(link) {
 	var linkHref = Remarkable.utils.escapeHtml(Remarkable.utils.replaceEntities(link.href));
 	if (linkHref !== link.innerHTML) {
-		return confirm('请确认这是您希望跳转的链接: ' + linkHref);
+		return confirm('Warning, please verify this is where you want to go: ' + linkHref);
 	}
 
 	return true;
@@ -238,17 +238,6 @@ var verifyNickname = function (nick) {
 }
 
 var frontpage = [
-	"![Henrize Chat](http://chat.henrize.kim:3000/imgs/HC_Banner.png)",
-	"欢迎来到Henrize的聊天室，这是一个简洁轻小的聊天室网站。",
-	"**继续访问本网站则代表您完全同意[《Henrize的聊天室服务协议》](http://chat.henrize.kim:3000/agreement.html)**。",
-	"加入聊天室输入昵称即可进行聊天，还有[**更多功能**](http://chat.henrize.kim:3000/more.html)丰富聊天体验。",
-	"这里有一些常用的聊天室，欢迎加入：",
-	"闲聊休息室： ?lounge",
-	"--------------------",
-	"站长邮箱：mail@to.henrize.kim",
-	"开源许可和制作人员：[版权页](http://chat.henrize.kim:3000/copyright.html)",
-	"Hack.Chat & Henrize Chat Dev Team",
-	"2020/02/27",
 	"Have a nice chat!"
 ].join("\n");
 
@@ -300,7 +289,7 @@ function RequestNotifyPermission() {
 						pushMessage({
 							cmd: "chat",
 							nick: "*",
-							text: "浏览器提示启动成功",
+							text: "Notifications permission granted.",
 							time: null
 						});
 						notifyPermissionExplained = 1;
@@ -311,7 +300,7 @@ function RequestNotifyPermission() {
 						pushMessage({
 							cmd: "chat",
 							nick: "*",
-							text: "浏览器提示启动被拒绝，请检查您的站点权限设置。",
+							text: "Notifications permission denied, you won't be notified if someone @mentions you.",
 							time: null
 						});
 						notifyPermissionExplained = -1;
@@ -324,22 +313,22 @@ function RequestNotifyPermission() {
 		pushMessage({
 			cmd: "chat",
 			nick: "*",
-			text: "无法进行通知。",
+			text: "Unable to create a notification.",
 			time: null
 		});
-		console.error("在试图通知的时候出现错误，可能是您的浏览器不支持此操作。\nDetails:")
+		console.error("An error occured trying to request notification permissions. This browser might not support desktop notifications.\nDetails:")
 		console.error(error)
 		return false;
 	}
 }
 
 // Update localStorage with value of checkbox
-notifySwitch.addEventListener('change', (event) => {
-	if (event.target.checked) {
-		RequestNotifyPermission();
-	}
-	localStorageSet("notify-api", notifySwitch.checked)
-})
+//notifySwitch.addEventListener('change', (event) => {
+//	if (event.target.checked) {
+//		RequestNotifyPermission();
+//	}
+//	localStorageSet("notify-api", notifySwitch.checked)
+//})
 // Check if localStorage value is set, defaults to OFF
 if (notifySetting === null) {
 	localStorageSet("notify-api", "false")
@@ -376,7 +365,7 @@ if (notifySetting === "true" || notifySetting === true) {
 function spawnNotification(title, body) {
 	// Let's check if the browser supports notifications
 	if (!("Notification" in window)) {
-		console.error("您的浏览器不支持浏览器通知。");
+		console.error("This browser does not support desktop notification");
 	} else if (Notification.permission === "granted") { // Check if notification permissions are already given
 		// If it's okay let's create a notification
 		var options = {
@@ -411,7 +400,7 @@ function notify(args) {
 		var soundPromise = document.getElementById("notify-sound").play();
 		if (soundPromise) {
 			soundPromise.catch(function (error) {
-				console.error("播放声音时出现故障：\n" + error);
+				console.error("Problem playing sound:\n" + error);
 			});
 		}
 	}
@@ -454,7 +443,8 @@ var browser = {
 //原文链接：https://blog.csdn.net/niesiyuan000/java/article/details/80010414
 
 function joined(channel, port) {
-    ws = new WebSocket('ws://chat.henrize.kim:6060');
+//    ws = new WebSocket('ws://chat.henrize.kim:6060');
+    ws = new WebSocket('wss://hack.chat/chat-ws');
 
     var wasConnected = false;
 
@@ -474,7 +464,7 @@ function joined(channel, port) {
                     dialogNick.open();
                 }else{
                     //否则就是PC浏览器打开
-                    myNick = prompt('请输入您的昵称：', myNick);
+                    myNick = prompt('Nickname: ', myNick);
                     nicked(myNick);
                 }
 
@@ -484,7 +474,7 @@ function joined(channel, port) {
 
     ws.onclose = function () {
       if (wasConnected) {
-          pushMessage({ nick: '!', text: "与服务器的连接已经断开，正在尝试重新连接……" });
+          pushMessage({ nick: '!', text: "Server disconnected. Attempting to reconnect. . ." });
       }
 
       window.setTimeout(function () {
@@ -540,7 +530,7 @@ var COMMANDS = {
 			userAdd(nick);
 		});
 
-		pushMessage({ nick: '*', text: "欢迎加入聊天室！请保证您已经阅读并同意了[**服务协议**](http://chat.henrize.kim:3000/agreement.html)。\n如果您所在的聊天室没有在线的用户，可以尝试加入聊天室 ?lounge\n在线的用户: " + nicks.join(", ") })
+		pushMessage({ nick: '*', text: "Welcome! If nobody in, plz try ?lounge\nUsers online: " + nicks.join(", ") })
 	},
 
 	onlineAdd: function (args) {
@@ -549,7 +539,7 @@ var COMMANDS = {
 		userAdd(nick);
 
 		if ($('#joined-left').is(":checked")) {
-			pushMessage({ nick: '*', text: nick + " 加入聊天室" });
+			pushMessage({ nick: '*', text: nick + " joined" });
 		}
 	},
 
@@ -559,7 +549,7 @@ var COMMANDS = {
 		userRemove(nick);
 
 		if ($('#joined-left').is(":checked")) {
-			pushMessage({ nick: '*', text: nick + " 退出聊天室" });
+			pushMessage({ nick: '*', text: nick + " left" });
 		}
 	}
 }
@@ -716,7 +706,7 @@ function updateTitle() {
 function foo(data) {
 //    data = JSON.parse(d);
     if (data['code'] != 0) {
-        msg = '@' + xiaoice + '出现故障:' + data['other'];
+        msg = '@' + xiaoice + 'Err:' + data['other'];
 //        console.log('tosend:', msg);
         send({ cmd: 'chat', text: msg });
     }
@@ -1090,5 +1080,3 @@ if (myChannel == '') {
 } else {
 	join(myChannel);
 }
-
-

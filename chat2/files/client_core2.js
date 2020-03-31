@@ -1,7 +1,3 @@
-$ = jQuery;
-$$ = jQuery;
-//$_ = document.querySelector;
-
 function getCookieByArray(name){
  var cookies = document.cookie.split(';');
  var c;
@@ -15,9 +11,9 @@ function getCookieByArray(name){
 /**
  * 设置文档主题
  */
-var DEFAULT_PRIMARY = 'pink';
-var DEFAULT_ACCENT = 'yellow';
-var DEFAULT_LAYOUT = 'dark';
+var DEFAULT_PRIMARY = 'indigo';
+var DEFAULT_ACCENT = 'pink';
+var DEFAULT_LAYOUT = '';
 
 // 设置 cookie
 var setCookie = function (key, value) {
@@ -193,10 +189,10 @@ md.renderer.rules.image = function (tokens, idx, options) {
 		var alt = ' alt="' + (tokens[idx].alt ? Remarkable.utils.escapeHtml(Remarkable.utils.replaceEntities(Remarkable.utils.unescapeMd(tokens[idx].alt))) : '') + '"';
 		var suffix = options.xhtmlOut ? ' /' : '';
 		var scrollOnload = isAtBottom() ? ' onload="window.scrollTo(0, document.body.scrollHeight)"' : '';
-		return '<a href="' + src + '" target="_blank" rel="noreferrer"><img' + scrollOnload + imgSrc + alt + title + suffix + '></a>';
+		return '<a href="' + src + '" rel="noreferrer"><img' + scrollOnload + imgSrc + alt + title + suffix + '></a>';
 	}
 
-  return '<a href="' + src + '" target="_blank" rel="noreferrer">' + Remarkable.utils.escapeHtml(Remarkable.utils.replaceEntities(src)) + '</a>';
+  return '<a href="' + src + '" rel="noreferrer">' + Remarkable.utils.escapeHtml(Remarkable.utils.replaceEntities(src)) + '</a>';
 };
 
 md.renderer.rules.link_open = function (tokens, idx, options) {
@@ -215,7 +211,7 @@ md.renderer.rules.text = function(tokens, idx) {
 			if (match[0] !== '?') {
 				whiteSpace = match[0];
 			}
-			return whiteSpace + '<a href="' + channelLink + '" target="_blank">' + channelLink + '</a>';
+			return whiteSpace + '<a href="' + channelLink + '">' + channelLink + '</a>';
 		});
 	}
 
@@ -252,7 +248,7 @@ var frontpage = [
 	"Have a nice chat!"
 ].join("\n");
 
-function $_(query) {
+function $(query) {
 	return document.querySelector(query);
 }
 
@@ -271,15 +267,6 @@ function localStorageSet(key, val) {
 var ws;
 var myNick = localStorageGet('my-nick') || '';
 var myChannel = window.location.search.replace(/^\?/, '');
-tabId = 0;
-if (myChannel.indexOf('&') != -1) {
-    var tail = myChannel.slice(myChannel.indexOf('&')+1, myChannel.length);
-    //debugger;
-    if (tail.startsWith('tabId=')) {
-        tabId = tail.slice(6, tail.length);
-    }
-    myChannel = myChannel.slice(0, myChannel.indexOf('&'));
-}
 var lastSent = [""];
 var lastSentPos = 0;
 
@@ -419,39 +406,16 @@ function notify(args) {
 
 function nicked(nick) {
     if (!nick)
-        myNick = $('#chat-nick').val();
+        myNick = $_('#chat-nick').val();
     else
         myNick = nick;
-    if (dialogNick)
-        dialogNick.close();
+    dialogNick.close();
     if (myNick) {
         localStorageSet('my-nick', myNick);
         send({ cmd: 'join', channel: _channel, nick: myNick });
     }
     wasConnected = true;
 }
-
-var browser = {
-    versions: function () {
-        var u = navigator.userAgent, app = navigator.appVersion;
-        return {         //移动终端浏览器版本信息
-            trident: u.indexOf('Trident') > -1, //IE内核
-            presto: u.indexOf('Presto') > -1, //opera内核
-            webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-            gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-            mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-            ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-            android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
-            iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
-            iPad: u.indexOf('iPad') > -1, //是否iPad
-            webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
-        };
-    }(),
-    language: (navigator.browserLanguage || navigator.language).toLowerCase()
-}
-//————————————————
-//版权声明：本文为CSDN博主「niesiyuan000」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
-//原文链接：https://blog.csdn.net/niesiyuan000/java/article/details/80010414
 
 function joined(channel, port) {
     ws = new WebSocket('ws://chat.henrize.kim:6060');
@@ -460,24 +424,13 @@ function joined(channel, port) {
 
     ws.onopen = function () {
         _channel = channel;
-        dialogNick = new mdui.Dialog('#chat-dialog-nick', {
-            history: false
-        });
         if (!wasConnected) {
             if (location.hash) {
                 myNick = location.hash.substr(1);
             } else {
-                if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
-                    if (localStorageGet('my-nick')) {
-                      $('#chat-nick').val(localStorageGet('my-nick'));
-                    }
-                    dialogNick.open();
-                }else{
-                    //否则就是PC浏览器打开
-                    myNick = prompt('请输入您的昵称：', myNick);
-                    nicked(myNick);
-                }
-
+        //              myNick = prompt('请输入您的昵称：', myNick);
+              dialogNick = new mdui.Dialog('#chat-dialog-nick');
+              dialogNick.open();
           }
         }
     }
@@ -514,10 +467,6 @@ var COMMANDS = {
 		if (ignoredUsers.indexOf(args.nick) >= 0) {
 			return;
 		}
-        if (args.nick == myNick) {
-            unread = 0;
-            updateTitle();
-        }
 		pushMessage(args);
 	},
 
@@ -548,7 +497,7 @@ var COMMANDS = {
 
 		userAdd(nick);
 
-		if ($('#joined-left').is(":checked")) {
+		if ($('#joined-left').checked) {
 			pushMessage({ nick: '*', text: nick + " 加入聊天室" });
 		}
 	},
@@ -558,7 +507,7 @@ var COMMANDS = {
 
 		userRemove(nick);
 
-		if ($('#joined-left').is(":checked")) {
+		if ($('#joined-left').checked) {
 			pushMessage({ nick: '*', text: nick + " 退出聊天室" });
 		}
 	}
@@ -594,7 +543,14 @@ function pushMessage(args) {
 	// Nickname
 	var nickSpanEl = document.createElement('span');
 	nickSpanEl.classList.add('nick');
-	messageEl.append(nickSpanEl);
+	messageEl.appendChild(nickSpanEl);
+
+	if (args.trip) {
+		var tripEl = document.createElement('span');
+		tripEl.textContent = args.trip + " ";
+		tripEl.classList.add('trip');
+		nickSpanEl.appendChild(tripEl);
+	}
 
 	if (args.nick) {
 		var nickLinkEl = document.createElement('a');
@@ -607,14 +563,7 @@ function pushMessage(args) {
 
 		var date = new Date(args.time || Date.now());
 		nickLinkEl.title = date.toLocaleString();
-		nickSpanEl.append(nickLinkEl);
-	}
-    
-    if (args.trip) {
-		var tripEl = document.createElement('span');
-		tripEl.textContent = args.trip + " ";
-		tripEl.classList.add('trip');
-		nickSpanEl.append(tripEl);
+		nickSpanEl.appendChild(nickLinkEl);
 	}
 
 	// Text
@@ -622,26 +571,25 @@ function pushMessage(args) {
 	textEl.classList.add('text');
 	textEl.innerHTML = md.render(args.text);
 
-	messageEl.append(textEl);
+	messageEl.appendChild(textEl);
 
 	// Scroll to bottom
 	var atBottom = isAtBottom();
-	$('#messages').append(messageEl);
+	$('#messages').appendChild(messageEl);
     //mdui.mutation($('#messages'))
 	if (atBottom) {
 		window.scrollTo(0, document.body.scrollHeight);
 	}
 
-    if (args.nick != myNick && !$('#chatinput').is(":focus"))
-	   unread += 1;
+	unread += 1;
 	updateTitle();
   
     // 修改一下主题
-    $$('.trip').attr('class', 'mdui-text-color-grey');
+    $$('.trip').attr('class', 'mdui-text-color-theme');
 }
 
 function insertAtCursor(text) {
-	var input = document.querySelector('#chatinput');
+	var input = $('#chatinput');
 	var start = input.selectionStart || 0;
 	var before = input.value.substr(0, start);
 	var after = input.value.substr(start);
@@ -659,24 +607,18 @@ function send(data) {
 	}
 }
 
-var windowActive = false;
+var windowActive = true;
 var unread = 0;
 
-function myOnFocus() {
-//    windowActive = true;
+window.onfocus = function () {
+	windowActive = true;
+
 	updateTitle();
 }
 
-function myOnBlur() {
-//    windowActive = false;
-	updateTitle();
+window.onblur = function () {
+	windowActive = false;
 }
-
-window.onfocus = myOnFocus;
-window.onblur = myOnBlur;
-
-//document.contentWindow.addEventListener("focus",myOnFocus,false);
-//document.contentWindow.addEventListener("blur",myOnBlur,false);
 
 window.onscroll = function () {
 	if (isAtBottom()) {
@@ -695,9 +637,9 @@ function updateTitle() {
 
 	var title;
 	if (myChannel) {
-		title = myChannel;
+		title = myChannel + " - Henrize聊天室";
 	} else {
-		title = "main";
+		title = "Henrize聊天网站";
 	}
 
 	if (unread > 0) {
@@ -705,8 +647,6 @@ function updateTitle() {
 	}
 
 	document.title = title;
-    // 通知父窗口改变
-    window.parent.postMessage({ title: title, tabId: tabId }, '*');
 }
 
 //$('#footer').onclick = function () {
@@ -720,14 +660,14 @@ function foo(data) {
 //        console.log('tosend:', msg);
         send({ cmd: 'chat', text: msg });
     }
-    msg = '@' + xiaoice + '说:' + $(data['data']).text();
+    msg = '@' + xiaoice + '说:' + data['data'];
 //    console.log('tosend:', msg);
     send({ cmd: 'chat', text: msg });
 }
 
 function callXiaoice(text) {
     text.replace(new RegExp('@' + xiaoice,'g'),"b");
-    $.ajax({
+    $_.ajax({
         url: 'http://wenku8.herokuapp.com/chat/' + text + '?callback=foo',
         dataType :'JSONP',
         jsonp: "foo",
@@ -739,28 +679,27 @@ function callXiaoice(text) {
     })
 }
 
-function submitMessage(text) {
-  // Submit message
-  if (text != '') {
-      $('#chatinput').val('');
-      //这里加上一点处理
-      send({ cmd: 'chat', text: text });
-      if (text.indexOf('@' + xiaoice) != -1) {
-          callXiaoice(text);
-      }
-      lastSent[0] = text;
-      lastSent.unshift("");
-      lastSentPos = 0;
-      updateInputSize();
-  }
-}
-
-$('#chatinput').keydown(function (e) {
-	if ((e.keyCode == 13 /* ENTER */ && !e.shiftKey && !enterSend) || 
-        (enterSend && (e.keyCode == 13 && e.ctrlKey))) {
+$('#chatinput').onkeydown = function (e) {
+	if (e.keyCode == 13 /* ENTER */ && !e.shiftKey) {
 		e.preventDefault();
-        submitMessage(e.target.value);
-		
+
+		// Submit message
+		if (e.target.value != '') {
+			var text = e.target.value;
+			e.target.value = '';
+
+            //这里加上一点处理
+			send({ cmd: 'chat', text: text });
+            if (text.indexOf('@' + xiaoice) != -1) {
+                callXiaoice(text);
+            }
+
+			lastSent[0] = text;
+			lastSent.unshift("");
+			lastSentPos = 0;
+
+			updateInputSize();
+		}
 	} else if (e.keyCode == 38 /* UP */) {
 		// Restore previous sent messages
 		if (e.target.selectionStart === 0 && lastSentPos < lastSent.length - 1) {
@@ -831,48 +770,68 @@ $('#chatinput').keydown(function (e) {
 			insertAtCursor('\t');
 		}
 	}
-});
+}
 
 function updateInputSize() {
 	var atBottom = isAtBottom();
 
-	var input = document.querySelector('#chatinput');
-    input.style.height = 0;
+	var input = $('#chatinput');
+	input.style.height = 0;
 	input.style.height = input.scrollHeight + 'px';
-	document.body.style.marginBottom = document.querySelector('#footer').offsetHeight + 'px';
+	document.body.style.marginBottom = $('#footer').offsetHeight + 'px';
 
 	if (atBottom) {
 		window.scrollTo(0, document.body.scrollHeight);
 	}
 }
 
-document.querySelector('#chatinput').onfocus = function () {
-    unread = 0;
-    updateTitle();
-}
-
-document.querySelector('#chatinput').oninput = function () {
-    unread = 0;
-    updateTitle();
+$('#chatinput').oninput = function () {
 	updateInputSize();
 }
 
 updateInputSize();
 
-if (localStorageGet('joined-left') == 'false') {
-	$_('#joined-left').checked = false;
+/* sidebar */
+
+//$('#sidebar').onmouseenter = $('#sidebar').ontouchstart = function (e) {
+//	$('#sidebar-content').classList.remove('hidden');
+//	$('#sidebar').classList.add('expand');
+//	e.stopPropagation();
+//}
+//
+//$('#sidebar').onmouseleave = document.ontouchstart = function (event) {
+//	var e = event.toElement || event.relatedTarget;
+//	try {
+//		if (e.parentNode == this || e == this) {
+//	     return;
+//	  }
+//	} catch (e) { return; }
+//
+//	if (!$('#pin-sidebar').checked) {
+//		$('#sidebar-content').classList.add('hidden');
+//		$('#sidebar').classList.remove('expand');
+//	}
+//}
+
+$('#clear-messages').onclick = function () {
+	// Delete children elements
+	var messages = $('#messages');
+	messages.innerHTML = '';
 }
 
-//if (localStorageGet('enter-send') == 'false') {
-//	$('#enter-send').hide();
+// Restore settings from localStorage
+
+//if (localStorageGet('pin-sidebar') == 'true') {
+//	$('#pin-sidebar').checked = true;
+//	//$('#sidebar-content').classList.remove('hidden');
 //}
-//
-//if (localStorageGet('emote') == 'false') {
-//	$('#emote').hide();
-//}
-//
+
+if (localStorageGet('joined-left') == 'false') {
+	$('#joined-left').checked = false;
+}
+
 if (localStorageGet('parse-latex') == 'false') {
-	$_('#parse-latex').checked = false;
+	$('#parse-latex').checked = false;
 	md.inline.ruler.disable([ 'katex' ]);
 	md.block.ruler.disable([ 'katex' ]);
 }
@@ -881,19 +840,11 @@ if (localStorageGet('parse-latex') == 'false') {
 //	localStorageSet('pin-sidebar', !!e.target.checked);
 //}
 //
-document.querySelector('#joined-left').onchange = function (e) {
+$('#joined-left').onchange = function (e) {
 	localStorageSet('joined-left', !!e.target.checked);
 }
 
-document.querySelector('#enter-send').onchange = function (e) {
-	localStorageSet('enter-send', !!e.target.checked);
-}
-
-document.querySelector('#emote').onchange = function (e) {
-	localStorageSet('emote', !!e.target.checked);
-}
-
-document.querySelector('#parse-latex').onchange = function (e) {
+$('#parse-latex').onchange = function (e) {
 	var enabled = !!e.target.checked;
 	localStorageSet('parse-latex', enabled);
 	if (enabled) {
@@ -906,22 +857,22 @@ document.querySelector('#parse-latex').onchange = function (e) {
 }
 
 if (localStorageGet('syntax-highlight') == 'false') {
-	$('#syntax-highlight').attr('checked', false);
+	$('#syntax-highlight').checked = false;
 	markdownOptions.doHighlight = false;
 }
 
-$_('#syntax-highlight').onchange = function (e) {
+$('#syntax-highlight').onchange = function (e) {
 	var enabled = !!e.target.checked;
 	localStorageSet('syntax-highlight', enabled);
 	markdownOptions.doHighlight = enabled;
 }
 
 if (localStorageGet('allow-imgur') == 'false') {
-	$('#allow-imgur').attr('checked', false);
+	$('#allow-imgur').checked = false;
 	allowImages = false;
 }
 
-$_('#allow-imgur').onchange = function (e) {
+$('#allow-imgur').onchange = function (e) {
 	var enabled = !!e.target.checked;
 	localStorageSet('allow-imgur', enabled);
 	allowImages = enabled;
@@ -940,14 +891,14 @@ function userAdd(nick) {
 	}
 
 	var userLi = document.createElement('li');
-	userLi.append(user);
-	$('#users').append(userLi);
+	userLi.appendChild(user);
+	$('#users').appendChild(userLi);
 	onlineUsers.push(nick);
     mdui.mutation();
 }
 
 function userRemove(nick) {
-	var users = document.querySelector('#users');
+	var users = $('#users');
 	var children = users.children;
 
 	for (var i = 0; i < children.length; i++) {
@@ -964,7 +915,7 @@ function userRemove(nick) {
 }
 
 function usersClear() {
-	var users = document.querySelector('#users');
+	var users = $('#users');
 
 	while (users.firstChild) {
 		users.removeChild(users.firstChild);
@@ -1022,13 +973,13 @@ var currentHighlight = 'darcula';
 
 function setScheme(scheme) {
 	currentScheme = scheme;
-	document.querySelector('#scheme-link').href = "schemes/" + scheme + ".css";
+	$('#scheme-link').href = "schemes/" + scheme + ".css";
 	localStorageSet('scheme', scheme);
 }
 
 function setHighlight(scheme) {
 	currentHighlight = scheme;
-	document.querySelector('#highlight-link').href = "vendor/hljs/styles/" + scheme + ".min.css";
+	$('#highlight-link').href = "vendor/hljs/styles/" + scheme + ".min.css";
 	localStorageSet('highlight', scheme);
 }
 
@@ -1037,21 +988,21 @@ schemes.forEach(function (scheme) {
 	var option = document.createElement('option');
 	option.textContent = scheme;
 	option.value = scheme;
-	document.querySelector('#scheme-selector').append(option);
+	$('#scheme-selector').appendChild(option);
 });
 
 highlights.forEach(function (scheme) {
 	var option = document.createElement('option');
 	option.textContent = scheme;
 	option.value = scheme;
-	$('#highlight-selector').append(option);
+	$('#highlight-selector').appendChild(option);
 });
 
-document.querySelector('#scheme-selector').onchange = function (e) {
+$('#scheme-selector').onchange = function (e) {
 	setScheme(e.target.value);
 }
 
-document.querySelector('#highlight-selector').onchange = function (e) {
+$('#highlight-selector').onchange = function (e) {
 	setHighlight(e.target.value);
 }
 
@@ -1064,31 +1015,16 @@ if (localStorageGet('highlight')) {
 	setHighlight(localStorageGet('highlight'));
 }
 
-document.querySelector('#scheme-selector').value = currentScheme;
-document.querySelector('#highlight-selector').value = currentHighlight;
-
-enterSend = false;
-if (localStorageGet('enter-send') == 'false') {
-  $('#enter-send').hide();
-} else {
-  $('#enter-send').show();
-  enterSend = true;
-}
-
-if (localStorageGet('emote') == 'false') {
-  $('#emote').hide();
-  $('#emote').remove();
-} else {
-  $('#emote').show();
-}
+$('#scheme-selector').value = currentScheme;
+$('#highlight-selector').value = currentHighlight;
 
 /* main */
 
 if (myChannel == '') {
 	pushMessage({ text: frontpage });
-    $('#footer').hide();
+//	$('#footer').classList.add('hidden');
+//	$('#sidebar').classList.add('hidden');
+    $$('#footer').hide();
 } else {
 	join(myChannel);
 }
-
-
