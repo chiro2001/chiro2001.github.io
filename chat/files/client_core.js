@@ -558,7 +558,7 @@ var COMMANDS = {
 
 		userRemove(nick);
 
-		if ($('#joined-left').checked) {
+		if ($('#joined-left').is(":checked")) {
 			pushMessage({ nick: '*', text: nick + " 退出聊天室" });
 		}
 	}
