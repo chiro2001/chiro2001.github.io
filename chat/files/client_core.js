@@ -216,7 +216,8 @@ md.renderer.rules.text = function(tokens, idx) {
 			if (match[0] !== '?') {
 				whiteSpace = match[0];
 			}
-			return whiteSpace + '<a href="' + channelLink + '" target="_blank">' + channelLink + '</a>';
+//			return whiteSpace + '<a href="' + channelLink + '" target="_blank">' + channelLink + '</a>';
+            return '<a rel="noreferrer" onclick="return verifyLink(this)" href="' + channelLink + '</a>';
 		});
 	}
 
@@ -229,7 +230,7 @@ function verifyLink(link) {
 	var linkHref = Remarkable.utils.escapeHtml(Remarkable.utils.replaceEntities(link.href));
 	if (linkHref !== link.innerHTML) {
 //		return confirm('请确认这是您希望跳转的链接: ' + linkHref);
-        window.location.href = linkHref;
+        self.window.location.href = linkHref;
         return;
 	}
 
@@ -473,6 +474,10 @@ function joined(channel, port) {
                 if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
                     if (localStorageGet('my-nick')) {
                       $('#chat-nick').val(localStorageGet('my-nick'));
+                        $('#chat-nick').bind('keydown',function(event){
+                        if(event.keyCode == "13")    
+                            nicked();
+                        });
                     }
                     dialogNick.open();
                 }else{
