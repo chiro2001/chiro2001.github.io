@@ -172,6 +172,7 @@ var imgHostWhitelist = [
 	'i.loli.net',
 	's1.ax1x.com',
 	'chat.henrize.kim',
+    'bed-1254016670.cos.ap-guangzhou.myqcloud.com'
 ];
 
 function getDomain(link) {
@@ -227,10 +228,12 @@ md.use(remarkableKatex);
 function verifyLink(link) {
 	var linkHref = Remarkable.utils.escapeHtml(Remarkable.utils.replaceEntities(link.href));
 	if (linkHref !== link.innerHTML) {
-		return confirm('请确认这是您希望跳转的链接: ' + linkHref);
+//		return confirm('请确认这是您希望跳转的链接: ' + linkHref);
+        window.location.href = linkHref;
+        return;
 	}
 
-	return true;
+	return;
 }
 
 var verifyNickname = function (nick) {
@@ -709,9 +712,10 @@ function updateTitle() {
     window.parent.postMessage({ title: title, tabId: tabId }, '*');
 }
 
-//$('#footer').onclick = function () {
-//	$('#chatinput').focus();
-//}
+$('#footer').onclick = function () {
+	$('#chatinput').focus();
+    window.scrollTo(0, document.body.scrollHeight);
+}
 
 function foo(data) {
 //    data = JSON.parse(d);
