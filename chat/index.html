@@ -645,7 +645,7 @@
 <script src="files/cbase.js"></script>
 <script type="application/javascript">
   resize = function() {
-    $$('.chat-frame').height($$('html').height() - $$('header').height() - 5);
+    $$('.chat-frame').height($$('html').height() - $$('header').height() - 3);
   };
   window.onresize = resize;
   $$(document).ready(resize);
@@ -668,7 +668,9 @@
     frames.find('chatinput').focus(false);
     if (frames) {
       for (i=0; i<frames.length; i++) {
-        frames[i].contentWindow.windowActive = false;
+        try {
+          frames[i].contentWindow.windowActive = false;
+        catch (___) {}
       }
     }
     var subWindow = $('#chat-frame-' + target)[0];
