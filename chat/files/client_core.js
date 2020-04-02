@@ -247,11 +247,9 @@ var frontpage = [
 	"欢迎来到Henrize的聊天室，这是一个简洁轻小的聊天室网站。",
 	"**继续访问本网站则代表您完全同意[《Henrize的聊天室服务协议》](http://chat.henrize.kim:3000/agreement.html)**。",
 	"加入聊天室输入昵称即可进行聊天，还有[**更多功能**](http://chat.henrize.kim:3000/more.html)丰富聊天体验。",
-	"这里有一些常用的聊天室，欢迎加入：",
-	"闲聊休息室： ?lounge",
+	"想找一些人来聊天？欢迎加入[**公共聊天室**](/?lounge)。",
 	"--------------------",
-	"站长邮箱：mail@to.henrize.kim",
-	"开源许可和制作人员：[版权页](http://chat.henrize.kim:3000/copyright.html)",
+	"[第三方程序](http://chat.henrize.kim:3000/third-party.html) [版权页](http://chat.henrize.kim:3000/copyright.html) [站长邮箱](mailto://mail@to.henrize.kim)",
 	"Hack.Chat & Henrize Chat Dev Team",
 	"2020/02/27",
 	"Have a nice chat!"

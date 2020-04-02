@@ -63,8 +63,7 @@
     <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white"
       mdui-drawer="{target: '#main-drawer', swipe: true}"><i class="mdui-icon material-icons">menu</i></span>
 <!--    <a href="/" class="mdui-typo-headline mdui-hidden-xs">Henrize 聊天室</a>-->
-    <div class="mdui-tab mdui-tab-centered" mdui-tab id="chat-tabs" style="width: 100%">
-      
+      <div class="mdui-tab mdui-tab-full-width" mdui-tab id="chat-tabs" style="width: 100%">
     </div>
     <div class="mdui-toolbar-spacer"></div>
     <button class="mdui-btn mdui-btn-icon" mdui-dialog="{target: '#chat-new-room'}"><i class="mdui-icon material-icons">content_copy</i></button>
@@ -108,7 +107,7 @@
 -->
     </ul>
   </div>
-  <div class="mdui-progress" id="wenku8-progress" style="display: none;">
+  <div class="mdui-progress" id="chat-progress" style="display: none;">
       <div class="mdui-progress-indeterminate"></div>
   </div>
 </header>
@@ -718,6 +717,7 @@
     mdui.mutation();
     resize();
     setTimeout(resize, 2000);
+      mdui.mutation();
   }
   
   function closeRoom(tid) {
@@ -756,6 +756,7 @@
 //      new mdui.Dialog($$('#chat-new-room')).open();
       dialogNewRoom.open();
     }
+      mdui.mutation();
     
 //    if (tid > 0) {
 //      var target2 = 'chat-frame-' + (tid - 1);
