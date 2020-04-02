@@ -16,16 +16,16 @@
     <link id="scheme-link" rel="stylesheet" href="files/a.css">
 -->
 
-    <link rel="stylesheet" href="files/katex.css">
-<!--    <script src="files/hm.js"></script><script src="files/katex.js"></script>-->
-    <script src="files/remarkableKatex.js"></script>
+    <link rel="stylesheet" href="css/katex.css">
+    <script src="js/katex.js"></script>
+    <script src="js/remarkableKatex.js"></script>
 
-    <script src="files/highlight.js"></script>
-    <link id="highlight-link" rel="stylesheet" href="files/hybrid.css">
+    <script src="js/highlight.js"></script>
+    <link id="highlight-link" rel="stylesheet" href="css/hybrid.css">
 <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/2.0.0/remarkable.min.js"></script>-->
     <script src="http://chat.henrize.kim:3000/vendor/remarkable/remarkable.min.js"></script>
   
-    <title>Henrize 聊天室</title>
+    <title>hack.chat</title>
 <!--    <link rel="stylesheet" href="mdui/css/mdui.css">-->
     <link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css">
     <script>
@@ -169,10 +169,10 @@
 </div>
 
 <div class="mdui-dialog" id="chat-dialog-nick">
-  <div class="mdui-dialog-title">NickName</div>
+  <div class="mdui-dialog-title">Please enter your nick</div>
   <div class="mdui-dialog-content">
     <div class="mdui-textfield mdui-textfield-floating-label">
-      <label class="mdui-textfield-label">NickName#Password(Optional)</label>
+      <label class="mdui-textfield-label">nick#password(optional)</label>
       <input class="mdui-textfield-input" type="text" value="" id="chat-nick" autofocus="">
     </div>
   </div>
@@ -196,6 +196,8 @@
   </div>
 </footer>
 
+<a id="file-download" style="display: none"></a>
+
 <!--<script src="files/jquery.min.js"></script>-->
 <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <!--    <script src="https://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/using/showdown.min.js"></script>-->
@@ -204,7 +206,7 @@
 <script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js"></script>
 <script>var $$ = mdui.JQ;</script>
 <script>var $_ = $</script>
-<script src="files/client_core.js"></script>
+<script src="js/client_core.js"></script>
 <script type="application/javascript">
   (function($){
     $.fn.extend({
@@ -234,8 +236,13 @@
         }
     })
   })(jQuery);
-  $('#emote').change(function() {
-    $('#chatinput').insertAtCaret(' ' + '``` ' + $('#emote').val() + ' ```' + ' ');
+  memote = $('#emote');
+  memote.change(function() {
+//    $('#chatinput').insertAtCaret(' ' + '``` ' + $('#emote').val() + ' ```' + ' ');
+      if (memote.val().includes('`') || memote.val().includes('^') || memote.val().includes('*'))
+          $('#chatinput').insertAtCaret(' ' + '``` ' + memote.val() + ' ```' + ' ');
+      else
+          $('#chatinput').insertAtCaret(' ' + memote.val() + ' ');
   });
   
   function sendClick() {

@@ -8,23 +8,15 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp">
   
-<!--    <link rel="manifest" href="http://chat.henrize.kim:3000/manifest.json">-->
-<!--
-    <link rel="stylesheet" href="files/style.css">
-    <link id="scheme-link" rel="stylesheet" href="files/a.css">
--->
+    <link rel="stylesheet" href="css/katex.css">
+    <script src="js/katex.js"></script>
+    <script src="js/remarkableKatex.js"></script>
 
-    <link rel="stylesheet" href="files/katex.css">
-<!--    <script src="files/hm.js"></script><script src="files/katex.js"></script>-->
-    <script src="files/remarkableKatex.js"></script>
-
-    <script src="files/highlight.js"></script>
-    <link id="highlight-link" rel="stylesheet" href="files/hybrid.css">
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/2.0.0/remarkable.min.js"></script>-->
+    <script src="js/highlight.js"></script>
+    <link id="highlight-link" rel="stylesheet" href="css/hybrid.css">
     <script src="http://chat.henrize.kim:3000/vendor/remarkable/remarkable.min.js"></script>
   
-    <title>Hack.Chat</title>
-<!--    <link rel="stylesheet" href="mdui/css/mdui.css">-->
+    <title>hack.chat</title>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/css/mdui.min.css">
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -62,35 +54,33 @@
   <div class="mdui-toolbar mdui-color-theme">
     <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white"
       mdui-drawer="{target: '#main-drawer', swipe: true}"><i class="mdui-icon material-icons">menu</i></span>
-<!--    <a href="/" class="mdui-typo-headline mdui-hidden-xs">Henrize 聊天室</a>-->
-    <div class="mdui-tab mdui-tab-centered" mdui-tab id="chat-tabs" style="width: 100%">
-      
+      <div class="mdui-tab mdui-tab-full-width" mdui-tab id="chat-tabs" style="width: 100%">
     </div>
     <div class="mdui-toolbar-spacer"></div>
     <button class="mdui-btn mdui-btn-icon" mdui-dialog="{target: '#chat-new-room'}"><i class="mdui-icon material-icons">content_copy</i></button>
     <button class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#chat-more_vert'}"><i class="mdui-icon material-icons">more_vert</i></button>
     <ul class="mdui-menu" id="chat-more_vert">
       <li class="mdui-menu-item">
-        <a href="javascript:;" class="mdui-ripple">Cancel</a>
+        <a href="javascript:;" class="mdui-ripple">Retract</a>
       </li>
       <li class="mdui-divider"></li>
       <li class="mdui-menu-item">
-        <a href="javascript:;" mdui-dialog="{target: '#chat-new-room'}" class="mdui-ripple">New Room</a>
+        <a href="javascript:;" mdui-dialog="{target: '#chat-new-room'}" class="mdui-ripple">New tab</a>
       </li>
       <li class="mdui-menu-item">
-        <a href="javascript:;" onclick="closeRoom(tabNow);" class="mdui-ripple">Close Room</a>
+        <a href="javascript:;" onclick="closeRoom(tabNow);" class="mdui-ripple">Close the current tab</a>
       </li>
       <li class="mdui-divider"></li>
       <li class="mdui-menu-item">
         <a href="javascript:;" onclick="new mdui.Dialog($('#chat-dialog-sidebar')).open();" class="mdui-ripple">Settings</a>
       </li>
       <li class="mdui-menu-item">
-        <a href="javascript:;" mdui-dialog="{target: '#dialog-docs-theme'}" class="mdui-ripple">Theme</a>
+        <a href="javascript:;" mdui-dialog="{target: '#dialog-docs-theme'}" class="mdui-ripple">Set up themes</a>
       </li>
       <li class="mdui-divider"></li>
       <li class="mdui-menu-item">
-<!--        <a href="javascript:;" mdui-dialog="{target: '#dialog-imgbed'}" class="mdui-ripple">图床</a>-->
-        <a href="https://sm.ms"  target="_blank" class="mdui-ripple">Image Bed</a>
+        <a href="javascript:;" mdui-dialog="{target: '#dialog-figurebed'}" class="mdui-ripple">Upload image</a>
+        <a href="https://sm.ms"  target="_blank" class="mdui-ripple">Upload image(new window)</a>
       </li>
       <li class="mdui-divider"></li>
       <li class="mdui-menu-item">
@@ -98,16 +88,11 @@
       </li>
       <li class="mdui-divider"></li>
       <li class="mdui-menu-item">
-        <a href="" class="mdui-ripple">Logout/Refresh</a>
+        <a href="" class="mdui-ripple">Refresh</a>
       </li>
-<!--
-      <li class="mdui-menu-item">
-        <a href="javascript:;" onclick="window.location.href = window.location.href.slice(0, window.location.href.indexOf('?'))" class="mdui-ripple">回到首页</a>
-      </li>
--->
     </ul>
   </div>
-  <div class="mdui-progress" id="wenku8-progress" style="display: none;">
+  <div class="mdui-progress" id="chat-progress" style="display: none;">
       <div class="mdui-progress-indeterminate"></div>
   </div>
 </header>
@@ -122,11 +107,11 @@
       </div>
       <div class="mdui-collapse-item-body mdui-list">
         <a href="https://github.com/LanceLiang2018/lanceliang2018.github.io/tree/master/chat"
-           class="mdui-list-item mdui-ripple">This page</a>
+           class="mdui-list-item mdui-ripple">Front end interface</a>
       </div>
       <div class="mdui-collapse-item-body mdui-list">
         <a href="https://hack.chat/"
-           class="mdui-list-item mdui-ripple">Main host</a>
+           class="mdui-list-item mdui-ripple">Official website</a>
       </div>
     </div>
   </div>
@@ -155,42 +140,37 @@
   </div>
 </div>
   
-<!--
-<div class="mdui-dialog" id="dialog-imgbed">
+<div class="mdui-dialog" id="dialog-figurebed">
+  <div class="mdui-dialog-title">Upload image</div>
   <div class="mdui-dialog-content">
     <form enctype="multipart/form-data">
-      <input name="file" type="file" id="file"/>
+      <input name="file" type="file" id="file" class="mdui-ripple"/>
     </form>
-    <button onclick="imgbedUpload()" class="mdui-btn mdui-ripple">上传</button>
-    <div class="mdui-typo" id="imgbed-result"></div>
+    <button onclick="figurebedUpload()" class="mdui-btn mdui-ripple mdui-color-theme">upload</button>
+    <button class="mdui-btn mdui-ripple btn-copy mdui-color-theme" style="display: none" data-clipboard-action="copy" data-clipboard-target="#bed-result">copy</button>
+    <div class="mdui-typo" id="figurebed-result"></div>
   </div>
-  <div class="mdui-dialog-actions">
-    <button class="mdui-btn mdui-ripple" onclick="openNewRoom()">ok</button>
-  </div>
-    <iframe src="https://sm.ms/"></iframe>
 </div>
--->
 
 <div class="mdui-dialog" id="chat-dialog-about">
   <div class="mdui-dialog-title">About</div>
   <div class="mdui-dialog-content">
     <div class="mdui-typo">
-      <h3><a href="/">Henrize Chat</a></h3>
-      <p>Source using hack.chat</p>
+      <h3><a href="/">Droid Chat</a></h3>
+      <p>Build the source code basing on hack.chat</p>
+      <p>Served by hack.chat</p>
+      <p>Front page by <a href="mailto://LanceLiang2018@163.com/">LanceLiang2018@163.com</a></p>
+      <p>Github: <a href="http://github.com/LanceLiang2018/DroidChat">Prohject</a> branch <code>en</code></p>
     </div>
-    <hr/>
-    <ul class="mdui-list">
-      <li class="mdui-list-item mdui-ripple"><a href="https://github.com/LanceLiang2018" style="height: 100%; width: 100%">Front End: Lance Liang</a></li>
-    </ul>
   </div>
 </div>
 
 <div class="mdui-dialog" id="chat-new-room">
-  <div class="mdui-dialog-title">Enter New Room</div>
+  <div class="mdui-dialog-title">Enter a new room</div>
   <div class="mdui-dialog-content">
     <div class="mdui-textfield mdui-textfield-floating-label">
-      <label class="mdui-textfield-label">Room Name</label>
-      <input class="mdui-textfield-input" type="text" value="lounge" id="chat-new-room-text">
+      <label class="mdui-textfield-label">What's the name of the room</label>
+      <input class="mdui-textfield-input" type="text" value="lounge" id="chat-new-room-text" autofocus="">
     </div>
   </div>
   <div class="mdui-dialog-actions">
@@ -202,79 +182,81 @@
     <div class="mdui-dialog-title">Settings</div>
     <div class="mdui-dialog-content mdui-typo">
       <div id="chat-sidebar-content">
-        <p>*Only avaliable for new rooms.*</p>
         <p>
           <label class="mdui-checkbox">
             <input type="checkbox" id="enter-send" checked=""/>
               <i class="mdui-checkbox-icon"></i>
-              Enter+Ctrl To Send
+              Press enter to wrap
           </label>
         </p>
         <p>
           <label class="mdui-checkbox">
             <input type="checkbox" id="emote" checked=""/>
               <i class="mdui-checkbox-icon"></i>
-              Emote
+              Using facial expressions
           </label>
         </p>
         <p>
           <label class="mdui-checkbox">
             <input type="checkbox" id="sound-switch"/>
               <i class="mdui-checkbox-icon"></i>
-               Sound notifications
+              Play the tone when @me
           </label>
         </p>
         <p>
           <label class="mdui-checkbox">
             <input type="checkbox" id="notify-switch"/>
               <i class="mdui-checkbox-icon"></i>
-               Screen notifcations
+              Browser prompt when @me
           </label>
         </p>
         <p>
           <label class="mdui-checkbox">
             <input type="checkbox" checked="" id="joined-left"/>
               <i class="mdui-checkbox-icon"></i>
-              Join/left notify
+              User join and exit reminders
           </label>
         </p>
         <p>
           <label class="mdui-checkbox">
             <input type="checkbox" checked="" id="parse-latex"/>
               <i class="mdui-checkbox-icon"></i>
-               Allow LaTeX
+              Enable LaTeX
           </label>
         </p>
         <p>
           <label class="mdui-checkbox">
             <input type="checkbox" checked="" id="syntax-highlight"/>
               <i class="mdui-checkbox-icon"></i>
-               Allow Hightlight
+              Enable highlight
           </label>
         </p>
         <p>
           <label class="mdui-checkbox">
             <input type="checkbox" checked="" id="allow-imgur"/>
               <i class="mdui-checkbox-icon"></i>
-              Allow Imgurl
+              Allow picture message
           </label>
         </p>
         <p>
-          </p><h4>Highlight scheme</h4>
+          </p><h4>Code highlight style</h4>
           <select id="highlight-selector" class="mdui-select" mdui-select><option value="agate">agate</option><option value="androidstudio">androidstudio</option><option value="atom-one-dark">atom-one-dark</option><option value="darcula" selected="selected">darcula</option><option value="github">github</option><option value="rainbow">rainbow</option><option value="tomorrow">tomorrow</option><option value="xcode">xcode</option><option value="zenburn">zenburn</option></select>
         <p></p>
         <p>
-          <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" id="clear-messages">Clear All Messages</button>
+          <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" onclick="downloadTabMessage()">Save chat record on this page</button>
+        </p>
+        <p>
+          <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" id="clear-messages">Clear chat record on this page</button>
         </p>
       </div>
     </div>
 </div>
   
 <div class="mdui-dialog mdui-dialog-open" id="dialog-docs-theme">
-  <div class="mdui-dialog-title">Setup Theme</div>
+  <div class="mdui-dialog-title">Set theme</div>
   <div class="mdui-dialog-content" style="height: 186px;">
 
-    <p class="mdui-typo-title">Theme Color</p>
+    <p class="mdui-typo-title">Theme color</p>
     <div class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3">
       <div class="mdui-col">
         <label class="mdui-radio mdui-m-b-1">
@@ -292,7 +274,7 @@
       </div>
     </div>
 
-    <p class="mdui-typo-title mdui-text-color-theme">Primary Color</p>
+    <p class="mdui-typo-title mdui-text-color-theme">Primary color</p>
     <form class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3">
       <div class="mdui-col mdui-text-color-amber">
         <label class="mdui-radio mdui-m-b-1">
@@ -429,7 +411,7 @@
       </div>
     </form>
 
-    <p class="mdui-typo-title mdui-text-color-theme-accent">Accent Color</p>
+    <p class="mdui-typo-title mdui-text-color-theme-accent">Accent color</p>
     <form class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3">
       <div class="mdui-col mdui-text-color-amber">
         <label class="mdui-radio mdui-m-b-1">
@@ -563,167 +545,17 @@
   </div>
 </footer>
 
-<!--
-<script type="application/javascript">
-  // Android 手机下, input 或 textarea 元素聚焦时, 主动滚一把
-  if (/Android/gi.test(navigator.userAgent)) {
-    window.addEventListener('resize', function () {
-      if (document.activeElement.tagName == 'INPUT' || document.activeElement.tagName == 'TEXTAREA') {
-          window.setTimeout(function () {
-          document.activeElement.scrollIntoViewIfNeeded();
-        }, 0);
-      }
-    })
-  }
-</script>
--->
-
-<!--<script src="files/jquery.min.js"></script>-->
 <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-<!--    <script src="https://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/using/showdown.min.js"></script>-->
-<!--    <script src="https://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/using/cos-js-sdk-v5.js"></script>-->
-<!--<script src="mdui/js/mdui.min.js"></script>-->
 <script src="//cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/js/mdui.min.js"></script>
+<script src="http://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/blog/cos/cos-js-sdk-v5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
 <script>var $$ = mdui.JQ;</script>
 <script>var $_ = $</script>
-<script src="files/client.js"></script>
+<script src="js/client.js"></script>
+<script src="js/cbase.js"></script>
+<script src="js/main.js"></script>
 <script type="application/javascript">
-  resize = function() {
-    $$('.chat-frame').height($$('html').height() - $$('header').height() - 5);
-  };
-  window.onresize = resize;
-  $$(document).ready(resize);
-  frameCount = 0;
-  tabNow = 0;
-  var gtabs = new Array();
-  
-  function tabShow(target) {
-//    console.log('tabshow', target);
-//    tabNow = ('' + target).slice(('' + target).lastIndexOf('-')+1);
-    tabNow = '' + target;
-    jQuery('.chat-frame').hide();
-    jQuery('.chat-tab').css('font-weight', '');
-    jQuery('#chat-frame-' + target).show();
-//    debugger;
-    jQuery('#chat-tab-' + target).removeClass('mdui-color-theme-accent');
-    jQuery('#chat-tab-' + target).css('font-weight', '600');
     
-    frames = $('.chat-frame');
-    frames.find('chatinput').focus(false);
-    if (frames) {
-      for (i=0; i<frames.length; i++) {
-        frames[i].contentWindow.windowActive = false;
-      }
-    }
-    var subWindow = $('#chat-frame-' + target)[0];
-    if (subWindow) {
-      subWindow.contentWindow.unread = 0;
-      subWindow.contentWindow.windowActive = true;
-      if (subWindow.contentWindow.updateTitle)
-        subWindow.contentWindow.updateTitle();
-    }
-  }
-  
-  function openNewRoom() {
-    if (!gtabs) {
-      gtabs = new Array();
-    }
-    gtabs.push('' + frameCount);
-    try {
-//      new mdui.Dialog('#chat-new-room').close();
-      dialogNewRoom.close();
-    } catch(e) {
-        console.log('chat-new-room close err', e);
-    }
-    var room = $$('#chat-new-room-text').val();
-//    console.log('going to', room);
-    var inst = new mdui.Tab('#chat-tabs');
-    var frames = $$('#chat-frames');
-    var tabs = $$('#chat-tabs');
-    var target = 'chat-frame-' + frameCount;
-    var target_tab = 'chat-tab-' + frameCount;
-    var mtab = $$('<a href="#' + target + '" class="mdui-ripple chat-tab" onclick="tabShow(\'' + frameCount + '\');" id="' + target_tab + '">' + room + '</a>');
-    var mframe = $$('<iframe src="core.html?' + room + '&tabId=' + frameCount + '" frameborder="0" width="100%" seamless class="chat-frame" id="' + target + '"></iframe>');
-    $$(tabs).append(mtab);
-    $$(frames).append(mframe);
-    tabShow(frameCount);
-    frameCount = frameCount + 1;
-    
-    mdui.mutation();
-    resize();
-    setTimeout(resize, 2000);
-  }
-  
-  function closeRoom(tid) {
-    if (!tid) {
-      tid = tabNow;
-    }
-    var target = 'chat-frame-' + tid;
-    var target_tab = 'chat-tab-' + tid;
-    $$('#' + target).remove();
-    $$('#' + target_tab).remove();
-    
-//    console.log('tid', tid);
-    var index = gtabs.indexOf(tid);
-//    delete gtabs[index];
-    gtabs[index] = undefined;
-    var found = false;
-    for (i=index; i<gtabs.length; i++) {
-      if (gtabs[i] != undefined) {
-//        var target2 = 'chat-frame-' + gtabs[i];
-        tabShow(gtabs[i]);
-        found = true;
-        break;
-      }
-    }
-    if (!found) {
-      for (i=index; i>=0; i--) {
-        if (gtabs[i] != undefined) {
-//          var target2 = 'chat-frame-' + gtabs[i];
-          tabShow(gtabs[i]);
-          found = true;
-          break;
-        }
-      }
-    }
-    if (!found) {
-//      new mdui.Dialog($$('#chat-new-room')).open();
-      dialogNewRoom.open();
-    }
-    
-//    if (tid > 0) {
-//      var target2 = 'chat-frame-' + (tid - 1);
-//      tabShow(target2);
-//    } else {
-//      
-//    }
-  }
-  
-  function imgbedUpload() {
-//    getToken('LanceLiang2018', '1352040930lxr').then(token => {
-//      uploadImage($('#file').get(0).files[0], token).then(url => {
-//        console.log(url);
-//        $('#imgbed-result').append($('<a href="' + url + '" target="_blank">图像链接</a>'));
-//        $('#imgbed-result').append($('<div class="mdui-textfield"><textarea class="mdui-textfield-input" type="text" autocomplete="off" autofocus="" value="![img](' + url + ')"></textarea></div>'));
-//      }).fail(function() {console.log('upload Failed');});
-//    }).fail(function() {console.log('getToken Failed')});
-//  }
-    uploadImage($_('#file').get(0).files[0], imgToken).then(url => {
-      console.log(url);
-      $('#imgbed-result').append($('<a href="' + url + '" target="_blank">图像链接</a>'));
-      $('#imgbed-result').append($('<div class="mdui-textfield"><textarea class="mdui-textfield-input" type="text" autocomplete="off" autofocus="" value="![img](' + url + ')"></textarea></div>'));
-    }).fail(function() {console.log('upload Failed');});
-  }
-  
-  dialogNewRoom = new mdui.Dialog('#chat-new-room', {
-      history: false
-  });
-//  setTimeout(function() {
-//    dialogNewRoom.open();
-//    console.log('Tryed');
-//  }, 2000);
-  dialogNewRoom.open();
-//  openNewRoom();
 </script>
 </body>
 </html>
