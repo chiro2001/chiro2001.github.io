@@ -502,33 +502,107 @@ function getToken(username, password) {
         }
       });
 }
-imgToken = 'PP8y8OFkPv17aBTnsy1KAuQqqvAP48VW';
-function uploadImage(f, token) {
-    var form = new FormData();
-    form.append('smfile', f);
-    form.append('Authorization', token)
 
-    return $.ajax({
-        type: 'POST',
-        url: 'https://sm.ms/api/v2/upload',
-        data: form,
-        cache: false,
-        contentType: false,
-        processData: false
-    }).then(d => {
-        var data = JSON.parse(d);
-        console.log(data.message);
-        if (data.success == true) {
-            return data.data.url;
-        } else {
-            if (data.code == 'image_repeated') {
-                return data.images;
-            }
-        }
-        console.log(data);
+function randomString(len) {
+    len = len || 32;
+    var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+    var maxPos = $chars.length;
+    var pwd = '';
+    for (i = 0; i < len; i++) {
+        pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+    }
+    return pwd;
+}
+
+function b64Encode(str) {
+  return btoa(encodeURIComponent(str));
+}
+
+function b64Decode(str) {
+  return decodeURIComponent(atob(str));
+}
+
+//imgToken = 'PP8y8OFkPv17aBTnsy1KAuQqqvAP48VW';
+function uploadImage(data, filename, callback) {
+    if (!filename) {
+        filename = randomString(6) + '.jpg';
+    }
+    filename = randomString(6) + '_' + filename;
+    console.log('upload image:', filename)
+    
+    if (!cbase) {
+        console.log("CBase error!");
         return;
+    }
+    cbase.write('imgs/' + filename, data).then(function(d) {
+//       // 等待程序反应
+//        var retry = 0;
+//        var wait = function() {
+//            try {
+//                cbase.read('result/img_s/' + filename + '.json').then(r => {
+//                    console.log(r);
+//                    try {
+//                        result = JSON.parse(r.Body)
+//                    } catch (e2) {
+//                        retry = retry + 1;
+//                        if (retry < 10)
+//                            setTimeout(wait, 1000);
+//                        else {
+//                            mdui.alert('图片转化失败！' + e2);
+//                            console.log(e2);
+//                        }
+//                    }
+//                });
+//            } catch (e) {
+//                mdui.alert('图片上传失败！' + e);
+//                console.log(e);
+//            }
+//        };
+//        setTimeout(wait, 8000);
+        
+        var retry = 0;
+        var wait = function() {
+            $.ajax({
+                url: 'http://bed-1254016670.cos.ap-guangzhou.myqcloud.com/result/imgs/' + filename + '.json'
+            }).success(function(r) {
+                console.log(r);
+//                try {
+//                    result = JSON.parse(r.Body)
+//                } catch (e2) {
+//                    mdui.alert('图片转化失败！' + e2);
+//                    console.log('图片转化失败！', e2);
+//                }
+                if (r.code == 'invalid_source') {
+                    callback({
+                        'success': false,
+                        'message': '图片转化错误(' + r.message + ')，返回cos_url',
+                        'cos_url': 'http://bed-1254016670.cos.ap-guangzhou.myqcloud.com/imgs/' + filename
+                    });
+                }
+                callback(r);
+                return;
+            }).fail(function(e) {
+                retry ++;
+                if (retry > 10) {
+//                    mdui.snackbar('图片转化超时！' + e);
+//                    console.log('图片转化超时！', e);
+                    callback({
+                        'success': false,
+                        'message': '图片转化超时，返回cos_url',
+                        'cos_url': 'http://bed-1254016670.cos.ap-guangzhou.myqcloud.com/imgs/' + filename
+                    });
+                    return;
+                }
+                setTimeout(wait, 1000);
+            });
+        };
+        mdui.snackbar("上传完毕，等待图片转化...");
+        console.log('upload ok! wait for processing...')
+        setTimeout(wait, 10000);
     });
 }
+//x my api: http://service-47e2cy1w-1254016670.gz.apigw.tencentcs.com/
+// use cos
 
 //$('#send').click(function() {
 //    getToken('LanceLiang2018', '1352040930lxr').then(token => {

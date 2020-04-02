@@ -69,6 +69,7 @@
     <div class="mdui-toolbar-spacer"></div>
     <button class="mdui-btn mdui-btn-icon" mdui-dialog="{target: '#chat-new-room'}"><i class="mdui-icon material-icons">content_copy</i></button>
     <button class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#chat-more_vert'}"><i class="mdui-icon material-icons">more_vert</i></button>
+<!--    <button class="mdui-btn mdui-btn-icon" mdui-dialog="{target: '#chat-dialog-more'}"><i class="mdui-icon material-icons">more_vert</i></button>-->
     <ul class="mdui-menu" id="chat-more_vert">
       <li class="mdui-menu-item">
         <a href="javascript:;" class="mdui-ripple">收起</a>
@@ -89,8 +90,8 @@
       </li>
       <li class="mdui-divider"></li>
       <li class="mdui-menu-item">
-<!--        <a href="javascript:;" mdui-dialog="{target: '#dialog-imgbed'}" class="mdui-ripple">图床</a>-->
-        <a href="https://sm.ms"  target="_blank" class="mdui-ripple">图床</a>
+        <a href="javascript:;" mdui-dialog="{target: '#dialog-figurebed'}" class="mdui-ripple">图床</a>
+        <a href="https://sm.ms"  target="_blank" class="mdui-ripple">图床(新窗口)</a>
       </li>
       <li class="mdui-divider"></li>
       <li class="mdui-menu-item">
@@ -155,21 +156,18 @@
   </div>
 </div>
   
-<!--
-<div class="mdui-dialog" id="dialog-imgbed">
+<div class="mdui-dialog" id="dialog-figurebed">
+  <div class="mdui-dialog-title">图床</div>
   <div class="mdui-dialog-content">
     <form enctype="multipart/form-data">
-      <input name="file" type="file" id="file"/>
+      <input name="file" type="file" id="file" class="mdui-ripple"/>
     </form>
-    <button onclick="imgbedUpload()" class="mdui-btn mdui-ripple">上传</button>
-    <div class="mdui-typo" id="imgbed-result"></div>
+    <button onclick="figurebedUpload()" class="mdui-btn mdui-ripple mdui-color-theme">上传</button>
+    <button class="mdui-btn mdui-ripple btn-copy mdui-color-theme" style="display: none" data-clipboard-action="copy" data-clipboard-target="#bed-result">复制</button>
+    <div class="mdui-typo" id="figurebed-result"></div>
   </div>
-  <div class="mdui-dialog-actions">
-    <button class="mdui-btn mdui-ripple" onclick="openNewRoom()">ok</button>
-  </div>
-    <iframe src="https://sm.ms/"></iframe>
+<!--  <div class="mdui-dialog-actions"></div>-->
 </div>
--->
 
 <div class="mdui-dialog" id="chat-dialog-about">
   <div class="mdui-dialog-title">关于</div>
@@ -188,6 +186,44 @@
     </ul>
   </div>
 </div>
+    
+<!--
+<div class="mdui-dialog" id="chat-dialog-more">
+  <div class="mdui-dialog-content">
+    <div class="">
+    <ul class="mdui-list">
+      <li class="mdui-list-item mdui-ripple">
+        <a href="javascript:;" mdui-dialog="{target: '#chat-new-room'}" class="mdui-ripple" style="height: 100%; width: 100%">新窗口</a>
+      </li>
+      <li class="mdui-list-item mdui-ripple">
+        <a href="javascript:;" onclick="closeRoom(tabNow);" class="mdui-ripple" style="height: 100%; width: 100%">关闭当前窗口</a>
+      </li>
+      <li class="mdui-divider"></li>
+      <li class="mdui-list-item mdui-ripple">
+        <a href="javascript:;" onclick="new mdui.Dialog($('#chat-dialog-sidebar')).open();" class="mdui-ripple" style="height: 100%; width: 100%">设置</a>
+      </li>
+      <li class="mdui-list-item mdui-ripple">
+        <a href="javascript:;" mdui-dialog="{target: '#dialog-docs-theme'}" class="mdui-ripple" style="height: 100%; width: 100%">设置主题</a>
+      </li>
+      <li class="mdui-divider"></li>
+      <li class="mdui-list-item mdui-ripple">
+        <a href="javascript:;" mdui-dialog="{target: '#dialog-figurebed'}" class="mdui-ripple" style="height: 100%; width: 100%">图床</a>
+      </li>
+      <li class="mdui-list-item mdui-ripple">
+        <a href="https://sm.ms"  target="_blank" class="mdui-ripple" style="height: 100%; width: 100%">图床(新窗口)</a>
+      </li>
+      <li class="mdui-divider"></li>
+      <li class="mdui-list-item mdui-ripple">
+        <a href="javascript:;" mdui-dialog="{target: '#chat-dialog-about'}" class="mdui-ripple" style="height: 100%; width: 100%">关于</a>
+      </li>
+      <li class="mdui-divider"></li>
+      <li class="mdui-list-item mdui-ripple">
+        <a href="" class="mdui-ripple" style="height: 100%; width: 100%">登出/刷新</a>
+      </li>
+    </ul>
+  </div>
+</div>
+-->
 
 <div class="mdui-dialog" id="chat-new-room">
   <div class="mdui-dialog-title">进入新的房间</div>
@@ -602,9 +638,12 @@
 <!--    <script src="https://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/using/cos-js-sdk-v5.js"></script>-->
 <!--<script src="mdui/js/mdui.min.js"></script>-->
 <script src="//cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/js/mdui.min.js"></script>
+<script src="http://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/blog/cos/cos-js-sdk-v5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
 <script>var $$ = mdui.JQ;</script>
 <script>var $_ = $</script>
 <script src="files/client.js"></script>
+<script src="files/cbase.js"></script>
 <script type="application/javascript">
   resize = function() {
     $$('.chat-frame').height($$('html').height() - $$('header').height() - 5);
@@ -716,22 +755,101 @@
 //      
 //    }
   }
-  
-  function imgbedUpload() {
+    
+function readfile(input, callback) {  
+    var filename = input.files[0].name
+    //支持chrome IE10  
+    if (window.FileReader) {  
+        var file = input.files[0];  
+//        filename = file.name.split(".")[0];  
+        var reader = new FileReader();  
+        reader.onload = function() {  
+//            console.log(this.result);  
+            uploadImage(this.result, filename, callback);
+        }  
+        reader.readAsText(file);  
+    }   
+    //支持IE 7 8 9 10  
+    else if (typeof window.ActiveXObject != 'undefined'){  
+        var xmlDoc;   
+        xmlDoc = new ActiveXObject("Microsoft.XMLDOM");   
+        xmlDoc.async = false;   
+        xmlDoc.load(input.value);   
+//        console.log(xmlDoc.xml);   
+        uploadImage(xmlDoc.xml, filename, callback);
+    }   
+    //支持FF  
+    else if (document.implementation && document.implementation.createDocument) {   
+        var xmlDoc;   
+        xmlDoc = document.implementation.createDocument("", "", null);   
+        xmlDoc.async = false;   
+        xmlDoc.load(input.value);   
+//        console.log(xmlDoc.xml);
+        uploadImage(xmlDoc.xml, filename, callback);
+    } else {   
+        alert('读取文件错误');   
+    }   
+}
+
+function figurebedUpload() {
 //    getToken('LanceLiang2018', '1352040930lxr').then(token => {
 //      uploadImage($('#file').get(0).files[0], token).then(url => {
 //        console.log(url);
-//        $('#imgbed-result').append($('<a href="' + url + '" target="_blank">图像链接</a>'));
-//        $('#imgbed-result').append($('<div class="mdui-textfield"><textarea class="mdui-textfield-input" type="text" autocomplete="off" autofocus="" value="![img](' + url + ')"></textarea></div>'));
+//        $('#figurebed-result').append($('<a href="' + url + '" target="_blank">图像链接</a>'));
+//        $('#figurebed-result').append($('<div class="mdui-textfield"><textarea class="mdui-textfield-input" type="text" autocomplete="off" autofocus="" value="![img](' + url + ')"></textarea></div>'));
 //      }).fail(function() {console.log('upload Failed');});
 //    }).fail(function() {console.log('getToken Failed')});
-//  }
-    uploadImage($_('#file').get(0).files[0], imgToken).then(url => {
-      console.log(url);
-      $('#imgbed-result').append($('<a href="' + url + '" target="_blank">图像链接</a>'));
-      $('#imgbed-result').append($('<div class="mdui-textfield"><textarea class="mdui-textfield-input" type="text" autocomplete="off" autofocus="" value="![img](' + url + ')"></textarea></div>'));
-    }).fail(function() {console.log('upload Failed');});
-  }
+//}    
+  
+//    readfile($('#file').get(0), function(url) {
+//        console.log(url);
+//        $('#figurebed-result').append($('<a href="' + url + '" target="_blank">图像链接</a>'));
+//        $('#figurebed-result').append($('<div class="mdui-textfield"><textarea class="mdui-textfield-input" type="text" autocomplete="off" autofocus="" value="![img](' + url + ')"></textarea></div>'));
+//    });
+
+//    uploadImage($('#file').get(0).files[0], imgToken).then(url => {
+//        console.log(url);
+//        $('#figurebed-result').append($('<a href="' + url + '" target="_blank">图像链接</a>'));
+//        $('#figurebed-result').append($('<div class="mdui-textfield"><textarea class="mdui-textfield-input" type="text" autocomplete="off" autofocus="" value="![img](' + url + ')"></textarea></div>'));
+//    }).fail(function() {console.log('upload Failed');});
+    $('.btn-copy').hide();
+    if (!$('#file').get(0).files[0]) {
+        mdui.snackbar('请先选择文件');
+        return;
+    }
+    $('#figurebed-result').empty();
+    uploadImage($('#file').get(0).files[0], $('#file').get(0).files[0].name, function(r) {
+        console.log(r.message)
+        if (r.success && !r.cos_url) {
+            url = r.data.url;
+        } else {
+            mdui.snackbar(r.message);
+            if (r.cos_url) {
+                url = r.cos_url;
+            } else
+                return;
+        }
+        url = encodeURI(url);
+        console.log(url);
+        $('#figurebed-result').append($('<a href="' + url + '" target="_blank">图像链接</a>'));
+        var tmpText = $('<div class="mdui-textfield"><textarea id="bed-result" class="mdui-textfield-input" type="text" autocomplete="off" autofocus=""></textarea></div>');
+        $('.mdui-textfield-input', tmpText).val('![img](' + url + ')');
+        $('#figurebed-result').append(tmpText);
+        $('.btn-copy').fadeIn('slow');
+//        setClipboard('.btn-copy', $('.mdui-textfield-input', tmpText).val())
+        new mdui.Dialog('#dialog-figurebed').handleUpdate();
+    });
+}
+
+$(document).ready(function(){  
+    var clipboard = new ClipboardJS('.btn-copy');
+    clipboard.on('success', function(e) {
+        alert('成功');
+    });
+    clipboard.on('error', function(e) {
+        alert('失败');
+    });
+});
   
   dialogNewRoom = new mdui.Dialog('#chat-new-room', {
       history: false
@@ -739,9 +857,11 @@
 //  setTimeout(function() {
 //    dialogNewRoom.open();
 //    console.log('Tryed');
-//  }, 2000);
-  dialogNewRoom.open();
+//  }, 200);
+//    dialogNewRoom.open();
+//    mdui.mutation();
 //  openNewRoom();
+    cbase = new CBase();
 </script>
 </body>
 </html>
