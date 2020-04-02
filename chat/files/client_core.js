@@ -217,7 +217,7 @@ md.renderer.rules.text = function(tokens, idx) {
 				whiteSpace = match[0];
 			}
 //			return whiteSpace + '<a href="' + channelLink + '" target="_blank">' + channelLink + '</a>';
-            return '<a rel="noreferrer" onclick="return verifyLink(this)" href="' + channelLink + '</a>';
+            return whiteSpace + '<a rel="noreferrer" onclick="return verifyLink(this)" href="' + channelLink + '">' + channelLink + '</a>';
 		});
 	}
 
@@ -230,11 +230,12 @@ function verifyLink(link) {
 	var linkHref = Remarkable.utils.escapeHtml(Remarkable.utils.replaceEntities(link.href));
 	if (linkHref !== link.innerHTML) {
 //		return confirm('请确认这是您希望跳转的链接: ' + linkHref);
-        self.window.location.href = linkHref;
-        return;
+//        self.window.location.href = linkHref;
+        window.parent.postMessage({ link: linkHref, tabId: tabId }, '*');
+        return false;
 	}
 
-	return;
+	return false;
 }
 
 var verifyNickname = function (nick) {

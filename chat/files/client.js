@@ -631,4 +631,9 @@ window.addEventListener('message', (event) => {
         else
             console.log('update title err', target_tab);
     }
+    if (op.link) {
+        var target_frame = 'chat-frame-' + op.tabId;
+        m_target_frame = jQuery('#' + target_frame);
+        m_target_frame.attr('src', op.link);
+    }
 });

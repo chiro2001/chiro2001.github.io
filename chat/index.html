@@ -687,7 +687,7 @@
         }
     });
   
-  function openNewRoom() {
+  function openNewRoom(room) {
     if (!gtabs) {
       gtabs = new Array();
     }
@@ -698,7 +698,10 @@
     } catch(e) {
         console.log('chat-new-room close err', e);
     }
-    var room = $$('#chat-new-room-text').val();
+    if (room != '_index')
+      room = $$('#chat-new-room-text').val();
+    else
+      room = '';
 //    console.log('going to', room);
     var inst = new mdui.Tab('#chat-tabs');
     var frames = $$('#chat-frames');
@@ -861,9 +864,9 @@ $(document).ready(function(){
         history: false
     });
     cbase = new CBase();
-    if (window.location.host.indexOf('localhost') == -1)
-        dialogNewRoom.open();
-
+//    if (window.location.host.indexOf('localhost') == -1)
+//        dialogNewRoom.open();
+    openNewRoom('_index');
 </script>
 </body>
 </html>
