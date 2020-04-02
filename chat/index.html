@@ -844,24 +844,20 @@ function figurebedUpload() {
 $(document).ready(function(){  
     var clipboard = new ClipboardJS('.btn-copy');
     clipboard.on('success', function(e) {
-        alert('成功');
+        mdui.snackbar('复制成功');
     });
     clipboard.on('error', function(e) {
-        alert('失败');
+        mdui.snackbar('复制失败');
     });
 });
   
   dialogNewRoom = new mdui.Dialog('#chat-new-room', {
       history: false
   });
-//  setTimeout(function() {
-//    dialogNewRoom.open();
-//    console.log('Tryed');
-//  }, 200);
-//    dialogNewRoom.open();
-//    mdui.mutation();
-//  openNewRoom();
     cbase = new CBase();
+    if (window.location.host.indexOf('localhost') == -1)
+        dialogNewRoom.open();
+
 </script>
 </body>
 </html>
