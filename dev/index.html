@@ -160,10 +160,10 @@
   <div class="mdui-dialog-title">图床</div>
   <div class="mdui-dialog-content">
     <form enctype="multipart/form-data">
-      <input name="file" type="file" id="file" class="mdui-btn mdui-ripple"/>
+      <input name="file" type="file" id="file" class="mdui-ripple"/>
     </form>
-    <button onclick="figurebedUpload()" class="mdui-btn mdui-ripple">上传</button>
-    <button class="mdui-btn mdui-ripple btn-copy">复制</button>
+    <button onclick="figurebedUpload()" class="mdui-btn mdui-ripple mdui-color-theme">上传</button>
+    <button class="mdui-btn mdui-ripple btn-copy mdui-color-theme" style="display: none">复制</button>
     <div class="mdui-typo" id="figurebed-result"></div>
   </div>
 <!--  <div class="mdui-dialog-actions"></div>-->
@@ -827,21 +827,23 @@ function figurebedUpload() {
             } else
                 return;
         }
+        url = encodeURI(url);
         console.log(url);
+        $('#figurebed-result').empty();
         $('#figurebed-result').append($('<a href="' + url + '" target="_blank">图像链接</a>'));
         var tmpText = $('<div class="mdui-textfield"><textarea class="mdui-textfield-input" type="text" autocomplete="off" autofocus=""></textarea></div>');
         $('.mdui-textfield-input', tmpText).val('![img](' + url + ')');
         $('#figurebed-result').append(tmpText);
-        new mdui.Dialog('#dialog-figurebed').handleUpdate();
-        
         $('.btn-copy').fadeIn('slow');
+        setClipboard('.btn-copy', $('.mdui-textfield-input', tmpText).val())
+        new mdui.Dialog('#dialog-figurebed').handleUpdate();
     });
 }
 
-function setClipboard(text) {
-    var clipboard = new Clipboard('.btn-copy', {
+function setClipboard(btn, text) {
+    var clipboard = new Clipboard(btn, {
         text: function() {
-            return content;
+            return text;
         }
     });
     clipboard.on('success', function(e) {
@@ -854,13 +856,14 @@ function setClipboard(text) {
 }
   
   dialogNewRoom = new mdui.Dialog('#chat-new-room', {
-      history: true
+      history: false
   });
 //  setTimeout(function() {
 //    dialogNewRoom.open();
 //    console.log('Tryed');
 //  }, 200);
     dialogNewRoom.open();
+//    mdui.mutation();
 //  openNewRoom();
     cbase = new CBase();
 </script>
