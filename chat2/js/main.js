@@ -1,5 +1,5 @@
 resize = function() {
-    $('.chat-frame').height($('html').height() - $('header').height() - 3);
+    $('.chat-frame').height($('html').height() - $('header').height() - 4);
   };
   window.onresize = resize;
   $(document).ready(resize);

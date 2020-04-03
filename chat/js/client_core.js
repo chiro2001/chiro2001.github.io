@@ -736,7 +736,7 @@ function foo(data) {
 //        console.log('tosend:', msg);
         send({ cmd: 'chat', text: msg });
     }
-    msg = '@' + xiaoice + '说:' + $(data['data']).text();
+    msg = '@' + xiaoice + '说:' + data['data'];
 //    console.log('tosend:', msg);
     send({ cmd: 'chat', text: msg });
 }
