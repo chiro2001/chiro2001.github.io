@@ -631,8 +631,13 @@ window.addEventListener('message', (event) => {
             console.log('update title err', target_tab);
     }
     if (op.link) {
-        var target_frame = 'chat-frame-' + op.tabId;
-        m_target_frame = jQuery('#' + target_frame);
-        m_target_frame.attr('src', op.link);
+        if (op.link.startsWith(window.location.href + 'core.html')) {
+            var room = op.link.slice(0, (window.location.href + 'core.html').length+1);
+            openNewRoom(room);
+        } else {
+            var target_frame = 'chat-frame-' + op.tabId;
+            m_target_frame = jQuery('#' + target_frame);
+            m_target_frame.attr('src', op.link);
+        }
     }
 });
