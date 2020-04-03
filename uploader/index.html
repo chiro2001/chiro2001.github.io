@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" style="height: 100%">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+  
+<!--    <link rel="stylesheet" href="css/katex.css">-->
+<!--    <script src="js/katex.js"></script>-->
+<!--    <script src="js/remarkableKatex.js"></script>-->
+
+<!--    <script src="js/highlight.js"></script>-->
+<!--    <link id="highlight-link" rel="stylesheet" href="css/hybrid.css">-->
+<!--    <script src="http://chat.henrize.kim:3000/vendor/remarkable/remarkable.min.js"></script>-->
+  
+    <title>Henrize 聊天室</title>
+    <link rel="stylesheet" href="css/mdui.min.css">
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-88818678-1');
+    </script>
+    <style type="text/css">
+    .round_icon{
+      width: 34px;
+      height: 34px;
+      display: flex;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    </style>
+</head>
+<body class="mdui-loaded mdui-theme-primary-pink mdui-theme-accent-yellow mdui-theme-layout-dark mdui-typo">
+  <h1>Lance的免费图床</h1>
+    <p>可以选择多张图片</p>
+<div class="mdui-progress" style="width: 100%">
+  <div class="mdui-progress-determinate" style=""></div>
+</div>
+
+
+  <form enctype="multipart/form-data">
+    <input name="file" type="file" id="file" multiple="" class="mdui-btn mdui-ripple" accept="image/*"/>
+  </form>
+  <button onclick="figurebedUpload()" class="mdui-btn mdui-ripple mdui-color-theme">上传</button>
+  <button class="mdui-btn mdui-ripple btn-copy mdui-color-theme" style="display: none" data-clipboard-action="copy" data-clipboard-target="#bed-result">复制Markdown</button>
+  <div class="mdui-typo" id="figurebed-result">
+    <div class="mdui-textfield">
+      <textarea id="bed-result" class="mdui-textfield-input" type="text" autocomplete="off"></textarea>
+    </div>
+  </div>
+
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="js/mdui.min.js"></script>
+<script src="http://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/blog/cos/cos-js-sdk-v5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+<script>var $$ = mdui.JQ;</script>
+<script>var $_ = $</script>
+<!--<script src="js/client.js"></script>-->
+<script src="js/cbase.js"></script>
+<script src="js/main.js"></script>
+<script type="application/javascript">
+    
+</script>
+</body>
+</html>
