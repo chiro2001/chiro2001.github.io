@@ -32,7 +32,7 @@ function mainActivity() {
     });
     
     $('.nmb-icon-search').click(function() {
-        parent.window.iframeNew('static/activity_search.html', 'search');
+        parent.window.iframeNew('activity_search.html', 'search');
     });
     
     // 点击刷新
@@ -89,11 +89,11 @@ function threadMakeDom(thread) {
         $('.nmb-card-img', thread_dom).click(function() {
 //            console.log('click img:', thread.img);
             $('.nmb-thread', thread_dom).unbind('click');
-            parent.window.iframeNew('static/activity_image.html?' + SETTINGS.CDN_IMG + thread.img + thread.ext, 'img-' + thread.img.slice(thread.img.indexOf('/')+1));
+            parent.window.iframeNew('activity_image.html?' + SETTINGS.CDN_IMG + thread.img + thread.ext, 'img-' + thread.img.slice(thread.img.indexOf('/')+1));
             setTimeout(function() {
                 $('.nmb-thread', thread_dom).click(function() {
                     console.log('(img)click:', thread);
-                    parent.window.iframeNew('static/activity_thread.html?' + thread.id, 'thread-' + thread.id);
+                    parent.window.iframeNew('activity_thread.html?' + thread.id, 'thread-' + thread.id);
                 });
             }, 200);
         });
@@ -108,7 +108,7 @@ function threadMakeDom(thread) {
     $('.nmb-thread', thread_dom).height($('.mdui-card', thread_dom) - 20);
     $('.nmb-thread', thread_dom).click(function() {
         console.log('click:', thread);
-        parent.window.iframeNew('static/activity_thread.html?' + thread.id, 'thread-' + thread.id);
+        parent.window.iframeNew('activity_thread.html?' + thread.id, 'thread-' + thread.id);
     });
     
     return thread_dom;

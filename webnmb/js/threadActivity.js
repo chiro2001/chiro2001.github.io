@@ -102,7 +102,7 @@ function replyMakeDom(reply) {
         var url_img = SETTINGS.CDN_THUMB + reply.img + reply.ext;
         $('.nmb-card-img', reply_dom).attr('src', url_img);
         $('.nmb-card-img', reply_dom).click(function() {
-            parent.window.iframeNew('static/activity_image.html?' + SETTINGS.CDN_IMG + reply.img + reply.ext, 'img-' + reply.img.slice(reply.img.indexOf('/')+1));
+            parent.window.iframeNew('activity_image.html?' + SETTINGS.CDN_IMG + reply.img + reply.ext, 'img-' + reply.img.slice(reply.img.indexOf('/')+1));
         });
         $('.nmb-card-img', reply_dom).show();
         $('.nmb-card-img', reply_dom).load(function() {
