@@ -1,5 +1,5 @@
 //NMB_HOST = '/adnmb';
-NMB_HOST = 'https://cors-anywhere.herokuapp.com/https://adnmb2.com/Api';
+NMB_HOST = 'http://server.chiro.work:2333/https://adnmb.com/Api';
 
 SETTINGS = {
     HOST : NMB_HOST,
